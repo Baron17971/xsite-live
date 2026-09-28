@@ -2026,3 +2026,20 @@ main:has(#theme-coral:target) .teacher-panel{
 main:has(#theme-cocoa:target) .teacher-panel{
   background:linear-gradient(135deg,#493A35 0%,#57443D 52%,#77816C 132%);
 }
+
+
+/* Focused teacher section spacing after removing legacy manifesto/feature blocks */
+.section-anchor{
+  position:absolute;
+  top:-110px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+  pointer-events:none;
+}
+.teacher-panel{
+  margin-top:72px;
+}
+@media(max-width:680px){
+  .teacher-panel{margin-top:44px}
+}
