@@ -149,6 +149,48 @@ export default function Home() {
         <div className="hero-art" role="img" aria-label="תלמידים לומדים יחד"></div>
       </section>
 
+
+      <section className="principles-section" aria-labelledby="principles-title">
+        <div className="principles-head">
+          <p className="eyebrow">העקרונות שמאחורי Xsite</p>
+          <h2 id="principles-title">מה הופך כלי דיגיטלי לחוויה לימודית טובה?</h2>
+        </div>
+
+        <div className="principles-grid">
+          <article className="principle-card">
+            <span className="principle-number">01</span>
+            <div>
+              <h3>מעורבות פעילה</h3>
+              <p>התלמיד לא רק צופה, אלא בוחר, מגיב, יוצר, מתחרה, משתף או פותר.</p>
+            </div>
+          </article>
+
+          <article className="principle-card">
+            <span className="principle-number">02</span>
+            <div>
+              <h3>פשטות בהפעלה</h3>
+              <p>כניסה מהירה, הוראות ברורות, מינימום שלבים למורה ולתלמיד. הטכנולוגיה לא אמורה להפריע לשיעור.</p>
+            </div>
+          </article>
+
+          <article className="principle-card">
+            <span className="principle-number">03</span>
+            <div>
+              <h3>למידה עם מטרה</h3>
+              <p>המשחקיות תמיד משרתת יעד לימודי ברור: תרגול, שליפה, חזרה, הבנה, שיח, יצירה או הערכה.</p>
+            </div>
+          </article>
+
+          <article className="principle-card">
+            <span className="principle-number">04</span>
+            <div>
+              <h3>חוויה חכמה ומדויקת</h3>
+              <p>עיצוב בוגר, משוב מיידי, קצב נכון לכיתה והתאמה אמיתית לסיטואציה הוראתית.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="apps" className="apps-section">
         <div className="apps-heading">
           <div>
