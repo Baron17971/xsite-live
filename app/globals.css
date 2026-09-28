@@ -3168,3 +3168,49 @@ main:has(#theme-botanical:target) .app-card.linkit .app-content{
   object-fit:contain;
   object-position:center;
 }
+
+
+/* Login modal RTL alignment */
+.login-modal{
+  direction:rtl;
+  text-align:right;
+}
+.login-modal .eyebrow,
+.login-modal h2,
+.login-modal .login-subtitle,
+.login-modal label,
+.login-modal input,
+.login-modal .login-error{
+  text-align:right;
+}
+.login-modal .google-login-button{
+  direction:rtl;
+  flex-direction:row;
+  justify-content:center;
+}
+.login-modal .google-login-button .google-g{
+  order:0;
+}
+.login-modal .google-login-button span:not(.google-g){
+  order:1;
+}
+.login-modal .basic-login-form{
+  direction:rtl;
+}
+.login-modal .basic-login-form label{
+  align-items:stretch;
+}
+.login-modal .basic-login-form input{
+  direction:rtl;
+  text-align:right;
+}
+.login-modal .login-close{
+  left:auto;
+  right:14px;
+}
+.login-modal .login-divider{
+  direction:rtl;
+}
+.login-modal .basic-login-submit{
+  text-align:center;
+}
