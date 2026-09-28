@@ -2462,3 +2462,62 @@ main:has(#theme-cocoa:target) .teacher-panel{
     text-align:right;
   }
 }
+
+
+/* Mobile header visual correction: logo flush-left, auth contents tight/right-aligned */
+@media(max-width:680px){
+  .topbar{
+    grid-template-columns:minmax(0,1fr) auto;
+    grid-template-areas:
+      "logo auth"
+      "nav nav";
+    direction:ltr;
+    padding-left:8px;
+    padding-right:14px;
+  }
+
+  .brandmark{
+    grid-area:logo;
+    justify-self:start;
+    width:174px;
+    min-width:174px;
+    overflow:hidden;
+  }
+
+  .site-logo-monochrome{
+    width:174px;
+    height:62px;
+    -webkit-mask-size:174px auto;
+    mask-size:174px auto;
+    -webkit-mask-position:-88px center;
+    mask-position:-88px center;
+  }
+
+  .auth-actions{
+    grid-area:auth;
+    justify-self:end;
+    direction:rtl;
+  }
+
+  .auth-button-with-avatar{
+    direction:rtl;
+    display:inline-flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:flex-start;
+    gap:7px;
+    text-align:right;
+    white-space:nowrap;
+    padding:7px 12px 7px 15px;
+  }
+
+  .auth-button-with-avatar .user-avatar,
+  .auth-button-with-avatar span:not(.user-avatar){
+    order:initial;
+  }
+
+  .auth-button-with-avatar span:not(.user-avatar){
+    text-align:right;
+    line-height:1;
+  }
+}
