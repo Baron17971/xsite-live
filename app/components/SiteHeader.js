@@ -8,7 +8,8 @@ const themes = [
   ['mauve','סגלגל + מאוב'],
   ['ink','כחול דיו + טורקיז'],
   ['coral','טורקיז + קורל'],
-  ['cocoa','קקאו + סלרי + אפרסק']
+  ['cocoa','קקאו + סלרי + אפרסק'],
+  ['botanical','בוטני חם']
 ];
 
 function loadGoogleScript(){
