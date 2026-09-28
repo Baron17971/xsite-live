@@ -432,6 +432,8 @@ transform:rotate(-17deg);pointer-events:none}
 }
 .app-card.bingo .app-card-image{
   object-position:center top;
+  transform:translateY(-6px);
+  height:calc(100% + 6px);
 }
 .app-card.cloud .app-preview,
 .app-card.linkit .app-preview{
