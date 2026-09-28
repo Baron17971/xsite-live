@@ -50,15 +50,15 @@ export default function Home() {
 
       <section className="hero">
         <div className="hero-copy">
-          <p className="eyebrow">Xsite · למידה שמרגישה אחרת</p>
-          <h1>למידה שמדליקה<br/><span>סקרנות.</span></h1>
-          <p className="lead">משחקים, פעילויות וכלים חכמים למורים ולתלמידים בוגרים — בשפה עיצובית נעימה, חכמה ולא ילדותית.</p>
+          <p className="eyebrow">משחקים, פעילויות וכלים חכמים ללמידה</p>
+          <h1>למידה שמדליקה<br/><span>סקרנות</span></h1>
+          <p className="lead">מרחב למורים ולתלמידים בוגרים שמחבר בין משחקיות, יצירה, חשיבה וכלים דיגיטליים — בצורה חכמה, יפה ומדויקת לכיתה.</p>
           <div className="hero-buttons">
             <button className="primary large">לגלות את Xsite <span>←</span></button>
             <button className="soft large">אני מורה</button>
           </div>
           <div className="hero-mini">
-            <span>קהילה</span><i>·</i><span>ידע</span><i>·</i><span>יצירה</span><i>·</i><span>משחוק</span>
+            <span>לכיתה אמיתית</span><i>·</i><span>לתלמידים בוגרים</span><i>·</i><span>למורים שרוצים יותר</span>
           </div>
         </div>
         <div className="hero-art" role="img" aria-label="תלמידים לומדים יחד"></div>
