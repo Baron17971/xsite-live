@@ -72,6 +72,7 @@ const benefits = [
 export default function Home() {
   return (
     <main>
+      <ThemeSwitcher />
       <header className="topbar">
         <a className="brandmark" href="#" aria-label="Xsite">
           <img src="/Xsite-logo-transparent.png" alt="Xsite" className="site-logo" />
