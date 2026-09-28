@@ -837,3 +837,220 @@ main:has(#theme-sage:target) .theme-card-sage{
 
 main:has(#theme-mauve:target) .theme-card-cream,
 main:has(#theme-mauve:target) .theme-card-sage{display:none}
+
+
+/* Additional Xsite theme previews */
+main:has(#theme-ink:target){
+  --burgundy:#243B53;
+  --wine:#33506C;
+  --rose:#7FB4AE;
+  --blush:#DCEAE7;
+  --cream:#F7F3EA;
+  --cream-2:#EEF1EC;
+  --ink:#24313D;
+  --muted:#66757B;
+  --line:#D6E0DC;
+  --sage:#8EB8B2;
+  --sage-soft:#E5EFEC;
+  --teal:#6FA6A1;
+  --teal-deep:#3F7773;
+  --teal-soft:#E1EEEB;
+  --theme-primary:#243B53;
+  --theme-secondary:#6FA6A1;
+  --theme-soft:#E5EFEC;
+  --theme-surface:#F7F3EA;
+  --theme-panel:#EEF1EC;
+  --theme-accent:#8EB8B2;
+  --theme-border:#D6E0DC;
+  --theme-ink:#24313D;
+  --theme-muted:#66757B;
+}
+main:has(#theme-ink:target) .topbar{
+  border-bottom-color:rgba(111,166,161,.42);
+  background:linear-gradient(90deg,rgba(247,243,234,.98),rgba(229,239,236,.96));
+}
+main:has(#theme-ink:target) .primary{
+  background:linear-gradient(180deg,#33506C,#243B53);
+  box-shadow:0 10px 24px rgba(36,59,83,.18);
+}
+main:has(#theme-ink:target) .primary:hover{background:linear-gradient(180deg,#3F5C76,#29435D)}
+main:has(#theme-ink:target) .hero,
+main:has(#theme-ink:target) .hero-copy{
+  background:linear-gradient(135deg,#F8F5EE 0%,#EEF2EE 62%,#DDEBE8 100%);
+}
+main:has(#theme-ink:target) .hero-art{
+  background-image:linear-gradient(90deg,rgba(247,243,234,0) 76%,rgba(247,243,234,.90) 100%),url('/hero-xsite.png');
+}
+main:has(#theme-ink:target) .manifesto{
+  background:linear-gradient(120deg,#FBF9F3 0%,#EEF3F0 48%,#DCEBE8 100%);
+  border-color:#CFDDD9;
+}
+main:has(#theme-ink:target) .feature-section,
+main:has(#theme-ink:target) .closing{
+  background:linear-gradient(180deg,rgba(225,238,235,.82),rgba(247,243,234,0) 44%);
+}
+main:has(#theme-ink:target) .apps-section{
+  background:linear-gradient(180deg,rgba(218,235,232,.92) 0%,rgba(247,243,234,0) 38%);
+  border-top-color:rgba(111,166,161,.52);
+}
+main:has(#theme-ink:target) .teacher-panel{
+  background:linear-gradient(135deg,#243B53 0%,#34536C 48%,#5D918D 128%);
+}
+main:has(#theme-ink:target) .feature-visual{
+  background:linear-gradient(145deg,#E9ECE8 0%,#F4F1E8 56%,#D9E9E6 100%);
+}
+
+main:has(#theme-coral:target){
+  --burgundy:#2E6F72;
+  --wine:#3D7F82;
+  --rose:#D98578;
+  --blush:#F1D9D2;
+  --cream:#FBF3E9;
+  --cream-2:#F6ECE2;
+  --ink:#33494A;
+  --muted:#6C7773;
+  --line:#DFD9D1;
+  --sage:#86B6B1;
+  --sage-soft:#E2F0ED;
+  --teal:#2E6F72;
+  --teal-deep:#245B5E;
+  --teal-soft:#DDEDEA;
+  --theme-primary:#2E6F72;
+  --theme-secondary:#D98578;
+  --theme-soft:#F3DDD6;
+  --theme-surface:#FBF3E9;
+  --theme-panel:#F6ECE2;
+  --theme-accent:#D98578;
+  --theme-border:#DFD9D1;
+  --theme-ink:#33494A;
+  --theme-muted:#6C7773;
+}
+main:has(#theme-coral:target) .topbar{
+  border-bottom-color:rgba(46,111,114,.34);
+  background:linear-gradient(90deg,rgba(251,243,233,.98),rgba(226,240,237,.96));
+}
+main:has(#theme-coral:target) .primary{
+  background:linear-gradient(180deg,#3A7D80,#2E6F72);
+  box-shadow:0 10px 24px rgba(46,111,114,.18);
+}
+main:has(#theme-coral:target) .primary:hover{background:linear-gradient(180deg,#438A8D,#286368)}
+main:has(#theme-coral:target) .hero,
+main:has(#theme-coral:target) .hero-copy{
+  background:linear-gradient(135deg,#FFF8F0 0%,#F7EEE6 52%,#E3F0ED 100%);
+}
+main:has(#theme-coral:target) .hero-art{
+  background-image:linear-gradient(90deg,rgba(251,243,233,0) 76%,rgba(251,243,233,.90) 100%),url('/hero-xsite.png');
+}
+main:has(#theme-coral:target) .manifesto{
+  background:linear-gradient(120deg,#FFFAF4 0%,#F7E9E4 48%,#DDEDEA 100%);
+  border-color:#DDD8D0;
+}
+main:has(#theme-coral:target) .feature-section,
+main:has(#theme-coral:target) .closing{
+  background:linear-gradient(180deg,rgba(226,240,237,.82),rgba(251,243,233,0) 44%);
+}
+main:has(#theme-coral:target) .apps-section{
+  background:linear-gradient(180deg,rgba(240,220,213,.72) 0%,rgba(251,243,233,0) 40%);
+  border-top-color:rgba(217,133,120,.46);
+}
+main:has(#theme-coral:target) .teacher-panel{
+  background:linear-gradient(135deg,#245B5E 0%,#2E6F72 48%,#C7776D 135%);
+}
+main:has(#theme-coral:target) .feature-visual{
+  background:linear-gradient(145deg,#F1DDD5 0%,#F8EEE5 54%,#DDECE9 100%);
+}
+
+main:has(#theme-cocoa:target){
+  --burgundy:#54403A;
+  --wine:#6A5148;
+  --rose:#D8A78B;
+  --blush:#F1D9C9;
+  --cream:#FFF5EC;
+  --cream-2:#F5E9DE;
+  --ink:#453934;
+  --muted:#766A62;
+  --line:#E4DDD2;
+  --sage:#A9B89A;
+  --sage-soft:#EAF0E3;
+  --teal:#A9B89A;
+  --teal-deep:#66745C;
+  --teal-soft:#EAF0E3;
+  --theme-primary:#54403A;
+  --theme-secondary:#A9B89A;
+  --theme-soft:#F4E2D5;
+  --theme-surface:#FFF5EC;
+  --theme-panel:#F5E9DE;
+  --theme-accent:#F4C8AD;
+  --theme-border:#E4DDD2;
+  --theme-ink:#453934;
+  --theme-muted:#766A62;
+}
+main:has(#theme-cocoa:target) .topbar{
+  border-bottom-color:rgba(169,184,154,.42);
+  background:linear-gradient(90deg,rgba(255,245,236,.98),rgba(234,240,227,.96));
+}
+main:has(#theme-cocoa:target) .primary{
+  background:linear-gradient(180deg,#6A5148,#54403A);
+  box-shadow:0 10px 24px rgba(84,64,58,.18);
+}
+main:has(#theme-cocoa:target) .primary:hover{background:linear-gradient(180deg,#755A50,#5B453E)}
+main:has(#theme-cocoa:target) .hero,
+main:has(#theme-cocoa:target) .hero-copy{
+  background:linear-gradient(135deg,#FFF8F1 0%,#F8E9DD 58%,#E7EDDF 100%);
+}
+main:has(#theme-cocoa:target) .hero-art{
+  background-image:linear-gradient(90deg,rgba(255,245,236,0) 76%,rgba(255,245,236,.90) 100%),url('/hero-xsite.png');
+}
+main:has(#theme-cocoa:target) .manifesto{
+  background:linear-gradient(120deg,#FFFBF6 0%,#F7E9DE 46%,#E8EEDF 100%);
+  border-color:#DEDCCE;
+}
+main:has(#theme-cocoa:target) .feature-section,
+main:has(#theme-cocoa:target) .closing{
+  background:linear-gradient(180deg,rgba(234,240,227,.82),rgba(255,245,236,0) 44%);
+}
+main:has(#theme-cocoa:target) .apps-section{
+  background:linear-gradient(180deg,rgba(244,200,173,.34) 0%,rgba(255,245,236,0) 40%);
+  border-top-color:rgba(169,184,154,.50);
+}
+main:has(#theme-cocoa:target) .teacher-panel{
+  background:linear-gradient(135deg,#54403A 0%,#695148 46%,#7E8D70 130%);
+}
+main:has(#theme-cocoa:target) .feature-visual{
+  background:linear-gradient(145deg,#F4DDCE 0%,#FAEEE4 54%,#E7EEDC 100%);
+}
+
+main:has(#theme-ink:target) .theme-option-ink,
+main:has(#theme-coral:target) .theme-option-coral,
+main:has(#theme-cocoa:target) .theme-option-cocoa{
+  border-color:var(--theme-secondary);
+  background:var(--theme-soft);
+  color:var(--theme-primary);
+}
+
+.ink-swatches i:nth-child(1){background:#243B53}
+.ink-swatches i:nth-child(2){background:#6FA6A1}
+.ink-swatches i:nth-child(3){background:#F7F3EA}
+.coral-swatches i:nth-child(1){background:#2E6F72}
+.coral-swatches i:nth-child(2){background:#D98578}
+.coral-swatches i:nth-child(3){background:#FBF3E9}
+.cocoa-swatches i:nth-child(1){background:#54403A}
+.cocoa-swatches i:nth-child(2){background:#A9B89A}
+.cocoa-swatches i:nth-child(3){background:#F4C8AD}
+
+main:has(#theme-ink:target) .theme-card-mauve,
+main:has(#theme-coral:target) .theme-card-mauve,
+main:has(#theme-cocoa:target) .theme-card-mauve{display:none}
+
+main:has(#theme-ink:target) .theme-card-cream{
+  display:block;
+  filter:hue-rotate(145deg) saturate(.68) brightness(.98);
+}
+main:has(#theme-coral:target) .theme-card-cream{
+  display:block;
+  filter:hue-rotate(105deg) saturate(.82) brightness(1.01);
+}
+main:has(#theme-cocoa:target) .theme-card-cream{
+  display:block;
+  filter:hue-rotate(38deg) saturate(.62) sepia(.12) brightness(1.02);
+}
