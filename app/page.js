@@ -38,8 +38,7 @@ const apps = [
       ['מתאים ל־', 'חזרה לקראת מבחן, תרגול מושגים, סיכום יחידה, שיעור פתיחה ומשחק כיתתי שיתופי.'],
       ['החוויה', 'קצבית ומתגמלת, עם רמזים, תורות, אנימציית הצלחה ומטרה משותפת שמחזיקה את הכיתה בתוך המשחק.']
     ]
-  }
-,
+  },
   {
     name: 'MAPI',
     eyebrow: 'מסלול למידה אינטראקטיבי',
@@ -52,7 +51,8 @@ const apps = [
       ['בסיום', 'מתקבל ריכוז של תשובות התלמיד שאפשר להעביר למורה.'],
       ['מתאים ל־', 'למידה עצמאית, חקר מונחה, צפייה פעילה, משימות תחנתיות וסיכום תהליך למידה.']
     ]
-  },];
+  }
+];
 
 const benefits = [
   {title:'מוכנים לכיתה', text:'כלים שנפתחים מהר, ברורים להפעלה ולא דורשים התעסקות מיותרת.'},
@@ -179,7 +179,10 @@ export default function Home() {
                   </>
                 )}
                 {app.kind === 'mapi' && (
-                  <img className="app-card-image" src="/mapi-card.png" alt="MAPI" />
+                  <div className="app-card-image mapi-card-art" role="img" aria-label="MAPI">
+                    <span className="mapi-card-title">MAPI</span>
+                    <span className="mapi-card-tagline">תמונה אחת, אלף מילים</span>
+                  </div>
                 )}
               </div>
               <div className="app-content">
