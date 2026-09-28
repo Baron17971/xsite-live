@@ -7,6 +7,7 @@ const apps = [
     description: 'בינגו לימודי שמאפשר למורה להפעיל כיתה שלמה סביב מושגים, שאלות ואתגר.',
     href: 'https://classroom-bingo-live.vercel.app',
     image: '/xsite-bingo-baclass-new-palette.png',
+    kind: 'bingo',
     tags: ['משחקיות','חזרה ותרגול','כיתה שלמה'],
     details: [
       ['מה עושים?', 'כל תלמיד מקבל כרטיס בינגו אישי עם מושגים מהנושא הנלמד. נשאלת שאלה, מסמנים את התשובה בכרטיס — שורה, טור או לוח מלא.'],
@@ -19,6 +20,7 @@ const apps = [
     description: 'יוצרים ענן מילים כיתתי חי מתשובות התלמידים — בזמן אמת או בחשיפה משותפת בסיום.',
     href: 'https://hebrew-wordcloud-live.vercel.app',
     image: '/xsite-milim-leanan-new-palette.png',
+    kind: 'cloud',
     tags: ['שיתוף','פתיחת שיעור','רפלקציה'],
     details: [
       ['מה עושים?', 'המורה מציג שאלה, התלמידים מצטרפים בקוד ושולחים מילה או צירוף קצר.'],
@@ -31,6 +33,7 @@ const apps = [
     description: 'משחק כיתתי שבו כל תשובה נכונה פותחת חוליה בשרשרת וחושפת עוד אות במשפט מסתורין.',
     href: 'https://linkup-classroom-live.vercel.app',
     image: '/xsite-linkit-new-palette.png',
+    kind: 'linkit',
     tags: ['משחקיות','שליפה','שיתוף'],
     details: [
       ['מה עושים?', 'המורה בונה מאגר שאלות ומשפט מסתורין, והתלמידים משתתפים בתורם דרך חדר כיתתי.'],
@@ -72,7 +75,36 @@ export default function AppsPage(){
           {apps.map((app) => (
             <article className="catalog-card" key={app.name}>
               <div className="catalog-image-wrap">
-                <img src={app.image} alt={app.name} className="catalog-image" />
+                {app.kind === 'bingo' && (
+                  <>
+                    <img className="catalog-image theme-card theme-card-mauve" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />
+                    <img className="catalog-image theme-card theme-card-cream" src="/bingo-card.png.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-sage" src="/bingo-card.png.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-ink" src="/bingo-card-ink-teal.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-coral" src="/bingo-card-teal-coral.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-cocoa" src="/bingo-card-cocoa-celery.png" alt="" aria-hidden="true" />
+                  </>
+                )}
+                {app.kind === 'cloud' && (
+                  <>
+                    <img className="catalog-image theme-card theme-card-mauve" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />
+                    <img className="catalog-image theme-card theme-card-cream" src="/wordcloud-card.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-sage" src="/wordcloud-card.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-ink" src="/wordcloud-card-ink-teal.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-coral" src="/wordcloud-card-teal-coral.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-cocoa" src="/wordcloud-card-cocoa-celery.png" alt="" aria-hidden="true" />
+                  </>
+                )}
+                {app.kind === 'linkit' && (
+                  <>
+                    <img className="catalog-image theme-card theme-card-mauve" src="/xsite-linkit-new-palette.png" alt="LinkIt" />
+                    <img className="catalog-image theme-card theme-card-cream" src="/linkit-card.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-sage" src="/linkit-card.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-ink" src="/linkit-card-ink-teal.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-coral" src="/linkit-card-teal-coral.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-cocoa" src="/linkit-card-cocoa-celery.png" alt="" aria-hidden="true" />
+                  </>
+                )}
               </div>
               <div className="catalog-card-body">
                 <p className="feature-eyebrow">{app.eyebrow}</p>
