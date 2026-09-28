@@ -72,7 +72,41 @@ const benefits = [
 export default function Home() {
   return (
     <main>
-      <ThemeSwitcher />
+      <details className="theme-switcher">
+        <summary className="theme-trigger" aria-label="בחירת ערכת עיצוב זמנית">
+          <span className="theme-trigger-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          Themes
+        </summary>
+        <div className="theme-panel">
+          <div className="theme-panel-head">
+            <strong>ערכת עיצוב</strong>
+            <span>כלי בנייה זמני</span>
+          </div>
+          <div className="theme-options">
+            <div className="theme-choice">
+              <input className="theme-radio" type="radio" id="theme-cream" name="xsite-theme" />
+              <label className="theme-option" htmlFor="theme-cream">
+                <span className="theme-swatches" aria-hidden="true"><i style={{background:"#8F1D4F"}}></i><i style={{background:"#FFF3E2"}}></i><i style={{background:"#D9A6B6"}}></i></span>
+                <span>בורדו + שמנת</span><b className="theme-check" aria-hidden="true">✓</b>
+              </label>
+            </div>
+            <div className="theme-choice">
+              <input className="theme-radio" type="radio" id="theme-sage" name="xsite-theme" />
+              <label className="theme-option" htmlFor="theme-sage">
+                <span className="theme-swatches" aria-hidden="true"><i style={{background:"#8F1D4F"}}></i><i style={{background:"#A8B7A2"}}></i><i style={{background:"#F7F0E6"}}></i></span>
+                <span>בורדו + מרווה</span><b className="theme-check" aria-hidden="true">✓</b>
+              </label>
+            </div>
+            <div className="theme-choice">
+              <input className="theme-radio" type="radio" id="theme-mauve" name="xsite-theme" defaultChecked />
+              <label className="theme-option" htmlFor="theme-mauve">
+                <span className="theme-swatches" aria-hidden="true"><i style={{background:"#6F3D58"}}></i><i style={{background:"#C991A3"}}></i><i style={{background:"#A7A4B3"}}></i></span>
+                <span>סגלגל + מאוב</span><b className="theme-check" aria-hidden="true">✓</b>
+              </label>
+            </div>
+          </div>
+        </div>
+      </details>
       <header className="topbar">
         <a className="brandmark" href="#" aria-label="Xsite">
           <img src="/Xsite-logo-transparent.png" alt="Xsite" className="site-logo" />
