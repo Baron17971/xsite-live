@@ -3224,7 +3224,7 @@ main:has(#theme-botanical:target) .app-card-image.theme-card-botanical{
 main:has(#theme-botanical:target) .app-card.bingo .app-card-image.theme-card-botanical{
   height:100%;
   transform:none;
-  object-position:center;
+  object-position:center 8%;
 }
 
 main:has(#theme-botanical:target) .catalog-image-wrap{
@@ -3237,4 +3237,10 @@ main:has(#theme-botanical:target) .catalog-image.theme-card-botanical{
   object-fit:cover;
   object-position:center;
   display:block;
+}
+
+
+/* Botanical Bingo: preserve more of the top edge; let any crop fall lower */
+main:has(#theme-botanical:target) .catalog-card:first-child .catalog-image.theme-card-botanical{
+  object-position:center 8%;
 }
