@@ -154,13 +154,13 @@ export default function Home() {
             <article className={`app-card ${app.kind}`} key={app.name}>
               <div className="app-preview">
                 {app.kind === 'bingo' && (
-                  <img className="app-card-image palette-art-new" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />\n                  <img className="app-card-image palette-art-legacy" src="/bingo-card.png.png" alt="" aria-hidden="true" />
+                  <img className="app-card-image" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />\n                  <img className="app-card-image palette-art-legacy" src="/bingo-card.png.png" alt="" aria-hidden="true" />
                 )}
                 {app.kind === 'cloud' && (
-                  <img className="app-card-image palette-art-new" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />\n                  <img className="app-card-image palette-art-legacy" src="/wordcloud-card.png" alt="" aria-hidden="true" />
+                  <img className="app-card-image" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />\n                  <img className="app-card-image palette-art-legacy" src="/wordcloud-card.png" alt="" aria-hidden="true" />
                 )}
                 {app.kind === 'linkit' && (
-                  <img className="app-card-image palette-art-new" src="/xsite-linkit-new-palette.png" alt="LinkIt" />\n                  <img className="app-card-image palette-art-legacy" src="/linkit-card.png" alt="" aria-hidden="true" />
+                  <img className="app-card-image" src="/xsite-linkit-new-palette.png" alt="LinkIt" />\n                  <img className="app-card-image palette-art-legacy" src="/linkit-card.png" alt="" aria-hidden="true" />
                 )}
               </div>
               <div className="app-content">
