@@ -51,6 +51,7 @@ export default function AppsPage(){
       <div id="theme-ink" className="theme-anchor"></div>
       <div id="theme-coral" className="theme-anchor"></div>
       <div id="theme-cocoa" className="theme-anchor"></div>
+      <div id="theme-botanical" className="theme-anchor"></div>
       <SiteHeader active="apps" />
 
 
@@ -83,6 +84,7 @@ export default function AppsPage(){
                     <img className="catalog-image theme-card theme-card-ink" src="/bingo-card-ink-teal.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-coral" src="/bingo-card-teal-coral.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-cocoa" src="/bingo-card-cocoa-celery.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-botanical" src="/bingo-botanical.png" alt="" aria-hidden="true" />
                   </>
                 )}
                 {app.kind === 'cloud' && (
@@ -93,6 +95,7 @@ export default function AppsPage(){
                     <img className="catalog-image theme-card theme-card-ink" src="/wordcloud-card-ink-teal.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-coral" src="/wordcloud-card-teal-coral.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-cocoa" src="/wordcloud-card-cocoa-celery.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-botanical" src="/wordcloud-botanical.png" alt="" aria-hidden="true" />
                   </>
                 )}
                 {app.kind === 'linkit' && (
@@ -103,6 +106,7 @@ export default function AppsPage(){
                     <img className="catalog-image theme-card theme-card-ink" src="/linkit-card-ink-teal.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-coral" src="/linkit-card-teal-coral.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-cocoa" src="/linkit-card-cocoa-celery.png" alt="" aria-hidden="true" />
+                    <img className="catalog-image theme-card theme-card-botanical" src="/linkit-botanical.png" alt="" aria-hidden="true" />
                   </>
                 )}
               </div>
