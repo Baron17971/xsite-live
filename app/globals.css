@@ -29,8 +29,8 @@ nav{display:flex;justify-content:center;gap:28px;font-size:15px}
 nav a{padding:28px 0 24px;border-bottom:2px solid transparent;transition:color .2s ease,border-color .2s ease}nav a:hover{color:var(--teal-deep);border-color:rgba(165,111,132,.34)}
 nav a.active{color:var(--burgundy);border-color:var(--teal);font-weight:700}
 .actions{display:flex;gap:10px}
-.primary{background:linear-gradient(180deg,#A9153D,#830B29);color:#fff;padding:12px 22px;border-radius:999px;box-shadow:0 10px 24px rgba(139,15,45,.16);transition:.25s ease;font-weight:700}
-.primary:hover{transform:translateY(-1px);box-shadow:0 14px 28px rgba(139,15,45,.22)}
+.primary{background:linear-gradient(180deg,#8A526D,#6F3D58);color:#fff;padding:12px 22px;border-radius:999px;box-shadow:0 10px 24px rgba(111,61,88,.18);transition:.25s ease;font-weight:700}
+.primary:hover{transform:translateY(-1px);background:linear-gradient(180deg,#956078,#74445E);box-shadow:0 14px 28px rgba(111,61,88,.24)}
 .ghost,.soft{background:rgba(255,255,255,.72);color:var(--burgundy);padding:12px 20px;border-radius:999px;border:1px solid #DCCDD5;backdrop-filter:blur(8px);transition:.22s ease}
 .soft{background:linear-gradient(135deg,var(--sage-soft),var(--teal-soft));color:#66505F;border-color:#DCCDD5}
 .soft:hover{background:#E9DEE4;border-color:#CBB7C1;color:var(--teal-deep)}
@@ -83,7 +83,7 @@ transform:rotate(-17deg);pointer-events:none}
 .teacher-copy .eyebrow{color:#F6DADB}
 .teacher-copy h2{color:#fff}
 .teacher-copy>p:not(.eyebrow){font-size:18px;line-height:1.7;color:#F8E9E4;max-width:620px}
-.teacher-copy .primary{background:#FFF8F1;color:var(--burgundy);box-shadow:none;margin-top:8px}
+.teacher-copy .primary{background:linear-gradient(135deg,#F7F0F4,#E9DDE4);color:var(--burgundy);border:1px solid #D7C4CE;box-shadow:none;margin-top:8px}
 .benefits{display:grid;gap:12px}
 .benefit-card{background:rgba(235,222,228,.14);border:1px solid rgba(220,200,210,.28);border-radius:18px;padding:18px 20px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;backdrop-filter:blur(8px)}
 .benefit-number{font-size:13px;border:1px solid rgba(255,255,255,.32);width:38px;height:38px;border-radius:50%;display:grid;place-items:center}
