@@ -1,3 +1,5 @@
+import SiteHeader from './components/SiteHeader';
+
 const apps = [
   {
     name: 'Bingo',
@@ -54,60 +56,9 @@ export default function Home() {
       <div id="theme-ink" className="theme-anchor"></div>
       <div id="theme-coral" className="theme-anchor"></div>
       <div id="theme-cocoa" className="theme-anchor"></div>
-      <div className="theme-switcher">
-        <a className="theme-trigger" href="#theme-menu" aria-label="בחירת ערכת עיצוב זמנית">
-          <span className="theme-trigger-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-          Themes
-        </a>
-        <div id="theme-menu" className="theme-panel">
-          <div className="theme-panel-head">
-            <strong>ערכת עיצוב</strong>
-            <span>כלי בנייה זמני</span>
-          </div>
-          <div className="theme-options">
-            <a className="theme-option theme-option-cream" href="#theme-cream">
-              <span className="theme-swatches cream-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>בורדו + שמנת</span>
-            </a>
-            <a className="theme-option theme-option-sage" href="#theme-sage">
-              <span className="theme-swatches sage-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>בורדו + מרווה</span>
-            </a>
-            <a className="theme-option theme-option-mauve" href="#theme-mauve">
-              <span className="theme-swatches mauve-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>סגלגל + מאוב</span>
-            </a>
-            <a className="theme-option theme-option-ink" href="#theme-ink">
-              <span className="theme-swatches ink-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>כחול דיו + טורקיז</span>
-            </a>
-            <a className="theme-option theme-option-coral" href="#theme-coral">
-              <span className="theme-swatches coral-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>טורקיז + קורל</span>
-            </a>
-            <a className="theme-option theme-option-cocoa" href="#theme-cocoa">
-              <span className="theme-swatches cocoa-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>קקאו + סלרי + אפרסק</span>
-            </a>
-          </div>
-        </div>
-      </div>
-      <header className="topbar">
-        <a className="brandmark" href="#" aria-label="Xsite">
-          <span className="site-logo-monochrome" aria-hidden="true"></span>
-        </a>
-        <nav>
-          <a className="active" href="#">בית</a>
-          <a href="/apps">אפליקציות</a>
-          <a href="#teachers">למורים</a>
-          <a href="#how">איך זה עובד</a>
-          <a href="#about">אודות</a>
-        </nav>
-        <div className="actions">
-          <button className="ghost">כניסה</button>
-          <button className="primary">מתחילים</button>
-        </div>
-      </header>
+      <SiteHeader active="home" />
+
+
 
       <section className="hero">
         <div className="hero-copy">
