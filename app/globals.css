@@ -3389,3 +3389,158 @@ main:has(#theme-botanical:target) .catalog-card:first-child .catalog-image.theme
     flex-wrap:wrap;
   }
 }
+
+
+/* Botanical catalog page */
+main.catalog-page:has(#theme-botanical:target){
+  background:
+    radial-gradient(circle at 10% 8%, rgba(229,111,130,.10), transparent 24%),
+    radial-gradient(circle at 90% 16%, rgba(214,162,79,.10), transparent 22%),
+    radial-gradient(circle at 16% 78%, rgba(143,162,138,.11), transparent 26%),
+    linear-gradient(180deg,#FBF7EF 0%,#F8F3E8 56%,#F5F0E5 100%);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-hero{
+  position:relative;
+  padding-top:76px;
+  padding-bottom:34px;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-hero:before{
+  content:"";
+  position:absolute;
+  inset:20px -24px auto;
+  height:210px;
+  pointer-events:none;
+  background:
+    radial-gradient(90% 42% at 14% 28%, transparent 0 56%, rgba(229,111,130,.15) 57%, transparent 62%),
+    radial-gradient(90% 42% at 82% 30%, transparent 0 56%, rgba(143,162,138,.16) 57%, transparent 62%),
+    radial-gradient(80% 36% at 50% 8%, transparent 0 57%, rgba(214,162,79,.12) 58%, transparent 63%);
+  opacity:.95;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-hero > *{
+  position:relative;
+  z-index:1;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-hero .eyebrow{
+  color:#B76477;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-hero h1{
+  color:#5F6F56;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-hero h1 span{
+  color:#B76477;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-hero .lead{
+  color:#6B6058;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-toolbar{
+  gap:9px;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-filter{
+  background:rgba(255,251,245,.82);
+  color:#6B6058;
+  border-color:rgba(135,146,118,.24);
+  box-shadow:0 6px 16px rgba(90,80,72,.04);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-filter:nth-child(2n){
+  border-color:rgba(229,111,130,.24);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-filter.active{
+  background:#8FA28A;
+  color:#FFFDF8;
+  border-color:#8FA28A;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card{
+  background:rgba(255,252,246,.90);
+  border-color:rgba(135,146,118,.24);
+  box-shadow:0 18px 42px rgba(90,80,72,.07);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card:nth-child(2){
+  border-color:rgba(229,111,130,.24);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card:nth-child(3){
+  border-color:rgba(214,162,79,.28);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card-body h2{
+  color:#5F6F56;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card-body>p:not(.feature-eyebrow){
+  color:#6B6058;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card .feature-eyebrow{
+  color:#B76477;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-tags span{
+  background:rgba(247,243,234,.88);
+  color:#667761;
+  border-color:rgba(135,146,118,.24);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-tags span:nth-child(2n){
+  background:rgba(229,111,130,.10);
+  color:#B76477;
+  border-color:rgba(229,111,130,.20);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-details div{
+  background:rgba(255,251,245,.72);
+  border-color:rgba(135,146,118,.18);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-details strong{
+  color:#667761;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-details span{
+  color:#6B6058;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-open{
+  background:linear-gradient(180deg,#8FA28A,#74856F);
+  color:#FFFDF8;
+  border-color:rgba(116,133,111,.28);
+  box-shadow:0 9px 20px rgba(116,133,111,.14);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-open:hover{
+  background:linear-gradient(180deg,#97AA92,#6B7B66);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card-coming{
+  background:
+    radial-gradient(circle at 82% 18%, rgba(229,111,130,.12), transparent 26%),
+    radial-gradient(circle at 18% 82%, rgba(214,162,79,.12), transparent 24%),
+    linear-gradient(145deg,#FFF9F2,#F2EEE4);
+  border-color:rgba(183,100,119,.28);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-coming-mark{
+  color:#B76477;
+  background:rgba(229,111,130,.11);
+  border-color:rgba(229,111,130,.24);
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card-coming h2{
+  color:#5F6F56;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card-coming p{
+  color:#6B6058;
+}
