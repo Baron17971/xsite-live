@@ -1,4 +1,4 @@
-import ThemeSwitcher from "./ThemeSwitcher";\n\nconst apps = [
+const apps = [
   {
     name: 'Bingo',
     eyebrow: 'משחק כיתתי חי',
@@ -72,41 +72,35 @@ const benefits = [
 export default function Home() {
   return (
     <main>
-      <details className="theme-switcher">
-        <summary className="theme-trigger" aria-label="בחירת ערכת עיצוב זמנית">
+      <div id="theme-cream" className="theme-anchor"></div>
+      <div id="theme-sage" className="theme-anchor"></div>
+      <div id="theme-mauve" className="theme-anchor"></div>
+      <div className="theme-switcher">
+        <a className="theme-trigger" href="#theme-menu" aria-label="בחירת ערכת עיצוב זמנית">
           <span className="theme-trigger-dots" aria-hidden="true"><i></i><i></i><i></i></span>
           Themes
-        </summary>
-        <div className="theme-panel">
+        </a>
+        <div id="theme-menu" className="theme-panel">
           <div className="theme-panel-head">
             <strong>ערכת עיצוב</strong>
             <span>כלי בנייה זמני</span>
           </div>
           <div className="theme-options">
-            <div className="theme-choice">
-              <input className="theme-radio" type="radio" id="theme-cream" name="xsite-theme" />
-              <label className="theme-option" htmlFor="theme-cream">
-                <span className="theme-swatches" aria-hidden="true"><i style={{background:"#8F1D4F"}}></i><i style={{background:"#FFF3E2"}}></i><i style={{background:"#D9A6B6"}}></i></span>
-                <span>בורדו + שמנת</span><b className="theme-check" aria-hidden="true">✓</b>
-              </label>
-            </div>
-            <div className="theme-choice">
-              <input className="theme-radio" type="radio" id="theme-sage" name="xsite-theme" />
-              <label className="theme-option" htmlFor="theme-sage">
-                <span className="theme-swatches" aria-hidden="true"><i style={{background:"#8F1D4F"}}></i><i style={{background:"#A8B7A2"}}></i><i style={{background:"#F7F0E6"}}></i></span>
-                <span>בורדו + מרווה</span><b className="theme-check" aria-hidden="true">✓</b>
-              </label>
-            </div>
-            <div className="theme-choice">
-              <input className="theme-radio" type="radio" id="theme-mauve" name="xsite-theme" defaultChecked />
-              <label className="theme-option" htmlFor="theme-mauve">
-                <span className="theme-swatches" aria-hidden="true"><i style={{background:"#6F3D58"}}></i><i style={{background:"#C991A3"}}></i><i style={{background:"#A7A4B3"}}></i></span>
-                <span>סגלגל + מאוב</span><b className="theme-check" aria-hidden="true">✓</b>
-              </label>
-            </div>
+            <a className="theme-option theme-option-cream" href="#theme-cream">
+              <span className="theme-swatches cream-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>בורדו + שמנת</span>
+            </a>
+            <a className="theme-option theme-option-sage" href="#theme-sage">
+              <span className="theme-swatches sage-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>בורדו + מרווה</span>
+            </a>
+            <a className="theme-option theme-option-mauve" href="#theme-mauve">
+              <span className="theme-swatches mauve-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>סגלגל + מאוב</span>
+            </a>
           </div>
         </div>
-      </details>
+      </div>
       <header className="topbar">
         <a className="brandmark" href="#" aria-label="Xsite">
           <img src="/Xsite-logo-transparent.png" alt="Xsite" className="site-logo" />
@@ -154,13 +148,13 @@ export default function Home() {
             <article className={`app-card ${app.kind}`} key={app.name}>
               <div className="app-preview">
                 {app.kind === 'bingo' && (
-                  <img className="app-card-image" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />\n                  <img className="app-card-image palette-art-legacy" src="/bingo-card.png.png" alt="" aria-hidden="true" />
+                  <img className="app-card-image" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />
                 )}
                 {app.kind === 'cloud' && (
-                  <img className="app-card-image" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />\n                  <img className="app-card-image palette-art-legacy" src="/wordcloud-card.png" alt="" aria-hidden="true" />
+                  <img className="app-card-image" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />
                 )}
                 {app.kind === 'linkit' && (
-                  <img className="app-card-image" src="/xsite-linkit-new-palette.png" alt="LinkIt" />\n                  <img className="app-card-image palette-art-legacy" src="/linkit-card.png" alt="" aria-hidden="true" />
+                  <img className="app-card-image" src="/xsite-linkit-new-palette.png" alt="LinkIt" />
                 )}
               </div>
               <div className="app-content">
