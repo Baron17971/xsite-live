@@ -33,8 +33,7 @@ export default function Home() {
     <main>
       <header className="topbar">
         <a className="brandmark" href="#" aria-label="Xsite">
-          <span className="x-symbol">✦</span>
-          <span className="brand">Xsite</span>
+          <img src="/Xsite-logo-tras.png" alt="Xsite" className="site-logo" />
         </a>
         <nav>
           <a className="active" href="#">בית</a>
