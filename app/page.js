@@ -118,7 +118,10 @@ export default function Home() {
       </div>
       <header className="topbar">
         <a className="brandmark" href="#" aria-label="Xsite">
-          <img src="/Xsite-logo-transparent.png" alt="Xsite" className="site-logo" />
+          <img src="/Xsite-logo-transparent.png" alt="Xsite" className="site-logo theme-logo theme-logo-default" />
+          <img src="/logo-xsite-ink-teal.png" alt="" aria-hidden="true" className="site-logo theme-logo theme-logo-ink" />
+          <img src="/logo-xsite-teal-coral.png" alt="" aria-hidden="true" className="site-logo theme-logo theme-logo-coral" />
+          <img src="/logo-xsite-cocoa-celery.png" alt="" aria-hidden="true" className="site-logo theme-logo theme-logo-cocoa" />
         </a>
         <nav>
           <a className="active" href="#">בית</a>
@@ -167,6 +170,9 @@ export default function Home() {
                     <img className="app-card-image theme-card theme-card-mauve" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />
                     <img className="app-card-image theme-card theme-card-cream" src="/bingo-card.png.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-sage" src="/bingo-card.png.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-ink" src="/bingo-card-ink-teal.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-coral" src="/bingo-card-teal-coral.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-cocoa" src="/bingo-card-cocoa-celery.png" alt="" aria-hidden="true" />
                   </>
                 )}
                 {app.kind === 'cloud' && (
@@ -174,6 +180,9 @@ export default function Home() {
                     <img className="app-card-image theme-card theme-card-mauve" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />
                     <img className="app-card-image theme-card theme-card-cream" src="/wordcloud-card.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-sage" src="/wordcloud-card.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-ink" src="/wordcloud-card-ink-teal.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-coral" src="/wordcloud-card-teal-coral.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-cocoa" src="/wordcloud-card-cocoa-celery.png" alt="" aria-hidden="true" />
                   </>
                 )}
                 {app.kind === 'linkit' && (
@@ -181,6 +190,9 @@ export default function Home() {
                     <img className="app-card-image theme-card theme-card-mauve" src="/xsite-linkit-new-palette.png" alt="LinkIt" />
                     <img className="app-card-image theme-card theme-card-cream" src="/linkit-card.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-sage" src="/linkit-card.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-ink" src="/linkit-card-ink-teal.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-coral" src="/linkit-card-teal-coral.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-cocoa" src="/linkit-card-cocoa-celery.png" alt="" aria-hidden="true" />
                   </>
                 )}
               </div>
