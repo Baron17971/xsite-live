@@ -105,7 +105,7 @@ export default function Home() {
                   <img className="app-card-image" src="/bingo-card.png.png" alt="Bingo" />
                 )}
                 {app.kind === 'cloud' && (
-                  <img className="app-card-image" src="/wordcloud-card.png" alt="ענן מילים" />
+                  <img className="app-card-image" src="/wordcloud-card.png?v=20260928-2" alt="ענן מילים" />
                 )}
                 {app.kind === 'linkit' && (
                   <img className="app-card-image" src="/linkit-card.png" alt="LinkIt" />
