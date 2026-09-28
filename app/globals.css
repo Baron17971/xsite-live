@@ -3244,3 +3244,31 @@ main:has(#theme-botanical:target) .catalog-image.theme-card-botanical{
 main:has(#theme-botanical:target) .catalog-card:first-child .catalog-image.theme-card-botanical{
   object-position:center 8%;
 }
+
+
+/* Login modal header spacing so close button never overlaps copy */
+.login-modal{
+  position:relative;
+}
+.login-close{
+  top:14px;
+  right:20px;
+  left:auto;
+  z-index:2;
+}
+.login-modal .eyebrow,
+.login-modal h2,
+.login-modal .login-subtitle{
+  padding-right:72px;
+}
+@media(max-width:680px){
+  .login-close{
+    top:14px;
+    right:18px;
+  }
+  .login-modal .eyebrow,
+  .login-modal h2,
+  .login-modal .login-subtitle{
+    padding-right:76px;
+  }
+}
