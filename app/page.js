@@ -98,7 +98,7 @@ export default function Home() {
         </a>
         <nav>
           <a className="active" href="#">בית</a>
-          <a href="#apps">אפליקציות</a>
+          <a href="/apps">אפליקציות</a>
           <a href="#teachers">למורים</a>
           <a href="#how">איך זה עובד</a>
           <a href="#about">אודות</a>
@@ -115,8 +115,8 @@ export default function Home() {
           <h1>למידה מרגשת<br/><span>שיוצרת מעורבות</span></h1>
           <p className="lead">מרחב למורים שמחבר בין משחקיות, יצירה, חשיבה וכלים דיגיטליים — בצורה חכמה, יפה ומדויקת לכיתה.</p>
           <div className="hero-buttons">
-            <button className="primary large">לגלות את Xsite <span>←</span></button>
-            <button className="soft large">אני מורה</button>
+            <a className="primary large" href="#apps">לגלות את Xsite <span>←</span></a>
+            <a className="soft large" href="#teachers">אני מורה</a>
           </div>
           <div className="hero-mini">
             <span>לכיתה אמיתית</span><i>·</i><span>לתלמידים בוגרים</span><i>·</i><span>למורים שרוצים יותר</span>
@@ -246,7 +246,7 @@ export default function Home() {
           <p className="eyebrow">נבנה בשביל מורים</p>
           <h2>פחות עומס. יותר הפעלה. יותר למידה.</h2>
           <p>כל כלי ב־Xsite נבנה מתוך סיטואציה אמיתית בכיתה — כדי לעזור למורה להפעיל תלמידים, לייצר מעורבות ולשמור על חוויית למידה פשוטה, חכמה ומדויקת.</p>
-          <button className="primary large">לגלות את הכלים למורים <span>←</span></button>
+          <a className="primary large" href="/apps">לגלות את כל האפליקציות <span>←</span></a>
         </div>
         <div className="benefits">
           {benefits.map((item, i) => (
