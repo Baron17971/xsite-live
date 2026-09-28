@@ -1556,3 +1556,301 @@ main:has(#theme-cocoa:target) .teacher-panel{
 .apps-section{
   border-top-color:color-mix(in srgb,var(--theme-secondary) 38%,transparent);
 }
+
+
+
+/* Final professional theme tuning — balanced contrast, lighter surfaces, coherent accents */
+html{
+  --burgundy:#684158;
+  --wine:#7D5368;
+  --rose:#B7869A;
+  --blush:#EBDCE2;
+  --cream:#FCF9F6;
+  --cream-2:#F6F1F3;
+  --ink:#40383C;
+  --muted:#756A70;
+  --line:#DED3D8;
+  --sage:#AAA9B5;
+  --sage-soft:#F0EDF1;
+  --teal:#A6788E;
+  --teal-deep:#69566A;
+  --teal-soft:#F2EAEE;
+  --theme-primary:#684158;
+  --theme-primary-hover:#795066;
+  --theme-secondary:#A6788E;
+  --theme-secondary-strong:#69566A;
+  --theme-secondary-soft:#F2EAEE;
+  --theme-surface:#FCF9F6;
+  --theme-surface-alt:#F6F1F3;
+  --theme-border:#DDD0D6;
+  --theme-text:#40383C;
+  --theme-text-soft:#756A70;
+  --theme-accent:#AAA9B5;
+}
+
+main:has(#theme-cream:target){
+  --burgundy:#861F48;
+  --wine:#9A345A;
+  --rose:#C88E9F;
+  --blush:#F0DCE2;
+  --cream:#FFF9F1;
+  --cream-2:#FBF1E8;
+  --ink:#49373A;
+  --muted:#78686A;
+  --line:#E7D8D4;
+  --sage:#D7C4B8;
+  --sage-soft:#F7EFE9;
+  --teal:#B97A8E;
+  --teal-deep:#7C314F;
+  --teal-soft:#F6E8ED;
+  --theme-primary:#861F48;
+  --theme-primary-hover:#9B3158;
+  --theme-secondary:#B97A8E;
+  --theme-secondary-strong:#7C314F;
+  --theme-secondary-soft:#F6E8ED;
+  --theme-surface:#FFF9F1;
+  --theme-surface-alt:#FBF1E8;
+  --theme-border:#E4CFD5;
+  --theme-text:#49373A;
+  --theme-text-soft:#78686A;
+  --theme-accent:#D7C4B8;
+}
+main:has(#theme-sage:target){
+  --burgundy:#842348;
+  --wine:#963A59;
+  --rose:#C99BA5;
+  --blush:#EFDFDF;
+  --cream:#FCF9F3;
+  --cream-2:#F6F2EB;
+  --ink:#403B38;
+  --muted:#716C65;
+  --line:#DDE1D8;
+  --sage:#9EAE94;
+  --sage-soft:#EEF2EA;
+  --teal:#93A68B;
+  --teal-deep:#5D6E58;
+  --teal-soft:#EDF2E9;
+  --theme-primary:#842348;
+  --theme-primary-hover:#98385A;
+  --theme-secondary:#93A68B;
+  --theme-secondary-strong:#5D6E58;
+  --theme-secondary-soft:#EEF2EA;
+  --theme-surface:#FCF9F3;
+  --theme-surface-alt:#F6F2EB;
+  --theme-border:#D1DACB;
+  --theme-text:#403B38;
+  --theme-text-soft:#716C65;
+  --theme-accent:#B0BBA7;
+}
+main:has(#theme-mauve:target){
+  --burgundy:#684158;
+  --wine:#7D5368;
+  --rose:#B7869A;
+  --blush:#EBDCE2;
+  --cream:#FCF9F6;
+  --cream-2:#F6F1F3;
+  --ink:#40383C;
+  --muted:#756A70;
+  --line:#DED3D8;
+  --sage:#AAA9B5;
+  --sage-soft:#F0EDF1;
+  --teal:#A6788E;
+  --teal-deep:#69566A;
+  --teal-soft:#F2EAEE;
+  --theme-primary:#684158;
+  --theme-primary-hover:#795066;
+  --theme-secondary:#A6788E;
+  --theme-secondary-strong:#69566A;
+  --theme-secondary-soft:#F2EAEE;
+  --theme-surface:#FCF9F6;
+  --theme-surface-alt:#F6F1F3;
+  --theme-border:#DDD0D6;
+  --theme-text:#40383C;
+  --theme-text-soft:#756A70;
+  --theme-accent:#AAA9B5;
+}
+main:has(#theme-ink:target){
+  --burgundy:#2B4058;
+  --wine:#3B536A;
+  --rose:#8AB6B2;
+  --blush:#DDECEA;
+  --cream:#FAF8F2;
+  --cream-2:#F3F5F1;
+  --ink:#2D3944;
+  --muted:#69757A;
+  --line:#D8E2DF;
+  --sage:#94B8B4;
+  --sage-soft:#EAF2F0;
+  --teal:#7DAEAA;
+  --teal-deep:#4F7D7A;
+  --teal-soft:#E8F1EF;
+  --theme-primary:#2B4058;
+  --theme-primary-hover:#3A526B;
+  --theme-secondary:#7DAEAA;
+  --theme-secondary-strong:#4F7D7A;
+  --theme-secondary-soft:#E8F1EF;
+  --theme-surface:#FAF8F2;
+  --theme-surface-alt:#F3F5F1;
+  --theme-border:#C9DCDA;
+  --theme-text:#2D3944;
+  --theme-text-soft:#69757A;
+  --theme-accent:#94B8B4;
+}
+main:has(#theme-coral:target){
+  --burgundy:#326D70;
+  --wine:#3E7C7E;
+  --rose:#D98D7E;
+  --blush:#F3DDD7;
+  --cream:#FCF7F0;
+  --cream-2:#F8EFE8;
+  --ink:#35494A;
+  --muted:#707A76;
+  --line:#E5DDD7;
+  --sage:#8FB6B2;
+  --sage-soft:#E9F2F0;
+  --teal:#D98D7E;
+  --teal-deep:#326D70;
+  --teal-soft:#F8E5E0;
+  --theme-primary:#326D70;
+  --theme-primary-hover:#3E7C7E;
+  --theme-secondary:#D98D7E;
+  --theme-secondary-strong:#326D70;
+  --theme-secondary-soft:#F8E5E0;
+  --theme-surface:#FCF7F0;
+  --theme-surface-alt:#F8EFE8;
+  --theme-border:#E7CEC6;
+  --theme-text:#35494A;
+  --theme-text-soft:#707A76;
+  --theme-accent:#D98D7E;
+}
+main:has(#theme-cocoa:target){
+  --burgundy:#57443D;
+  --wine:#6A544B;
+  --rose:#D8A98F;
+  --blush:#F1DDD0;
+  --cream:#FFF9F4;
+  --cream-2:#F7F0E9;
+  --ink:#463C37;
+  --muted:#766C65;
+  --line:#E5DED4;
+  --sage:#ABB99E;
+  --sage-soft:#EEF2E9;
+  --teal:#ABB99E;
+  --teal-deep:#68755F;
+  --teal-soft:#EEF2E9;
+  --theme-primary:#57443D;
+  --theme-primary-hover:#6A544B;
+  --theme-secondary:#ABB99E;
+  --theme-secondary-strong:#68755F;
+  --theme-secondary-soft:#EEF2E9;
+  --theme-surface:#FFF9F4;
+  --theme-surface-alt:#F7F0E9;
+  --theme-border:#D4DDC9;
+  --theme-text:#463C37;
+  --theme-text-soft:#766C65;
+  --theme-accent:#EAB89C;
+}
+
+/* One consistent lightness model across all themes */
+.hero,.hero-copy{
+  background:linear-gradient(
+    135deg,
+    color-mix(in srgb,var(--theme-surface) 96%,white) 0%,
+    color-mix(in srgb,var(--theme-secondary-soft) 30%,var(--theme-surface)) 68%,
+    color-mix(in srgb,var(--theme-accent) 10%,var(--theme-surface)) 100%
+  );
+}
+.manifesto{
+  background:linear-gradient(
+    120deg,
+    color-mix(in srgb,var(--theme-surface) 97%,white) 0%,
+    color-mix(in srgb,var(--theme-secondary-soft) 34%,var(--theme-surface)) 52%,
+    color-mix(in srgb,var(--theme-accent) 9%,var(--theme-surface)) 100%
+  );
+  border-color:var(--theme-border);
+}
+.feature-section,.closing{
+  background:linear-gradient(
+    180deg,
+    color-mix(in srgb,var(--theme-secondary-soft) 34%,transparent) 0%,
+    transparent 44%
+  );
+}
+.apps-section{
+  background:linear-gradient(
+    180deg,
+    color-mix(in srgb,var(--theme-secondary-soft) 38%,transparent) 0%,
+    transparent 40%
+  );
+  border-top-color:color-mix(in srgb,var(--theme-secondary) 30%,transparent);
+}
+.topbar{
+  background:linear-gradient(
+    90deg,
+    color-mix(in srgb,var(--theme-surface) 94%,white),
+    color-mix(in srgb,var(--theme-secondary-soft) 44%,var(--theme-surface))
+  );
+  border-bottom-color:color-mix(in srgb,var(--theme-secondary) 28%,transparent);
+}
+
+/* Balanced decorative contrast: visible but never louder than the content */
+.r1{border-color:color-mix(in srgb,var(--theme-primary) 68%,transparent)}
+.r2{border-color:color-mix(in srgb,var(--theme-secondary) 44%,transparent)}
+.visual-badge{
+  background:color-mix(in srgb,var(--theme-secondary) 88%,var(--theme-surface));
+  box-shadow:0 8px 22px color-mix(in srgb,var(--theme-primary) 13%,transparent);
+}
+.manifesto-ribbon{
+  opacity:.82;
+}
+.feature-card,.app-card{
+  border-color:color-mix(in srgb,var(--theme-border) 88%,white);
+}
+
+/* Refined secondary CTA per family */
+.soft{
+  background:linear-gradient(
+    135deg,
+    color-mix(in srgb,var(--theme-secondary-soft) 88%,white),
+    color-mix(in srgb,var(--theme-secondary-soft) 68%,var(--theme-surface))
+  );
+  color:var(--theme-secondary-strong);
+  border-color:var(--theme-border);
+}
+.soft:hover{
+  background:color-mix(in srgb,var(--theme-secondary-soft) 76%,var(--theme-secondary));
+  color:var(--theme-primary);
+  border-color:color-mix(in srgb,var(--theme-secondary) 60%,var(--theme-border));
+}
+
+/* The dark teacher panel is intentionally the strongest block, but stays in-palette */
+main:has(#theme-cream:target) .teacher-panel{
+  background:linear-gradient(135deg,#711A3C 0%,#861F48 54%,#A35F76 132%);
+}
+main:has(#theme-sage:target) .teacher-panel{
+  background:linear-gradient(135deg,#70203F 0%,#842348 50%,#66775F 132%);
+}
+main:has(#theme-mauve:target) .teacher-panel{
+  background:linear-gradient(135deg,#513747 0%,#684158 50%,#746D7C 132%);
+}
+main:has(#theme-ink:target) .teacher-panel{
+  background:linear-gradient(135deg,#25384D 0%,#2B4058 52%,#588884 132%);
+}
+main:has(#theme-coral:target) .teacher-panel{
+  background:linear-gradient(135deg,#285D60 0%,#326D70 54%,#B96F62 136%);
+}
+main:has(#theme-cocoa:target) .teacher-panel{
+  background:linear-gradient(135deg,#493A35 0%,#57443D 52%,#77816C 132%);
+}
+
+/* Theme-specific micro-adjustments for visual hierarchy */
+main:has(#theme-coral:target) .closing-mark,
+main:has(#theme-coral:target) .visual-badge{
+  color:#fff;
+  background:#D98D7E;
+}
+main:has(#theme-cream:target) .visual-badge{background:#B97A8E}
+main:has(#theme-sage:target) .visual-badge{background:#93A68B}
+main:has(#theme-mauve:target) .visual-badge{background:#A6788E}
+main:has(#theme-ink:target) .visual-badge{background:#7DAEAA}
+main:has(#theme-cocoa:target) .visual-badge{background:#ABB99E}
