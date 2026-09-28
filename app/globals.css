@@ -241,7 +241,7 @@ transform:rotate(-17deg);pointer-events:none}
   margin-bottom:30px;
 }
 .apps-heading h2{
-  color:var(--burgundy);
+  color:var(--teal-deep);
   font-size:clamp(34px,4vw,54px);
   line-height:1.12;
   margin-bottom:0;
@@ -373,7 +373,7 @@ transform:rotate(-17deg);pointer-events:none}
 .app-card.cloud .app-content{border-top-color:var(--sage)}
 .app-card.linkit .app-content{border-top-color:var(--burgundy)}
 .app-content h3{
-  color:var(--burgundy);
+  color:var(--teal-deep);
   font-size:30px;
   margin:8px 0 11px;
 }
@@ -413,7 +413,7 @@ transform:rotate(-17deg);pointer-events:none}
   align-items:center;
   gap:10px;
   cursor:pointer;
-  color:var(--burgundy);
+  color:var(--teal-deep);
   font-weight:700;
   padding:12px 0;
   user-select:none;
@@ -453,7 +453,7 @@ transform:rotate(-17deg);pointer-events:none}
   padding:10px 12px;
 }
 .app-detail-row strong{
-  color:var(--burgundy);
+  color:var(--teal-deep);
   font-size:13px;
 }
 .app-detail-row span{
