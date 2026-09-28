@@ -39,7 +39,20 @@ const apps = [
       ['החוויה', 'קצבית ומתגמלת, עם רמזים, תורות, אנימציית הצלחה ומטרה משותפת שמחזיקה את הכיתה בתוך המשחק.']
     ]
   }
-];
+,
+  {
+    name: 'MAPI',
+    eyebrow: 'מסלול למידה אינטראקטיבי',
+    description: 'יוצרים מסלול למידה על גבי תמונה או מפה, עם שאלות, משימות וסרטונים. התלמיד מתקדם בין התחנות ובסיום מתקבל סיכום תשובות מלא למורה.',
+    href: 'https://mapi-interactive.vercel.app/',
+    kind: 'mapi',
+    details: [
+      ['מה עושים?', 'המורה מעלה תמונה או מפה, מסמן עליה תחנות ומוסיף בכל תחנה פעילות כמו שאלה, משימה או צפייה מונחית בסרטון.'],
+      ['איך מתקדמים?', 'התלמיד עובר בין התחנות, מבצע את הפעילויות ומשיב לאורך המסלול.'],
+      ['בסיום', 'מתקבל ריכוז של תשובות התלמיד שאפשר להעביר למורה.'],
+      ['מתאים ל־', 'למידה עצמאית, חקר מונחה, צפייה פעילה, משימות תחנתיות וסיכום תהליך למידה.']
+    ]
+  },];
 
 const benefits = [
   {title:'מוכנים לכיתה', text:'כלים שנפתחים מהר, ברורים להפעלה ולא דורשים התעסקות מיותרת.'},
@@ -164,6 +177,9 @@ export default function Home() {
                     <img className="app-card-image theme-card theme-card-cocoa" src="/linkit-card-cocoa-celery.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-botanical" src="/linkit-botanical.png" alt="" aria-hidden="true" />
                   </>
+                )}
+                {app.kind === 'mapi' && (
+                  <img className="app-card-image" src="/mapi-card.png" alt="MAPI" />
                 )}
               </div>
               <div className="app-content">
