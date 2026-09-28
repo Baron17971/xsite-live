@@ -3580,12 +3580,12 @@ main:has(#theme-botanical:target) .mapi-botanical-image{
 /* Slight botanical zoom for Word Cloud and MAPI */
 main:has(#theme-botanical:target) .app-card.cloud .theme-card-botanical,
 main:has(#theme-botanical:target) .app-card.mapi .mapi-botanical-image{
-  transform:scale(1.045);
+  transform:scale(1.07);
   transform-origin:center;
 }
 
 main.catalog-page:has(#theme-botanical:target) .catalog-card.cloud .theme-card-botanical,
 main.catalog-page:has(#theme-botanical:target) .catalog-card.mapi .mapi-botanical-image{
-  transform:scale(1.045);
+  transform:scale(1.07);
   transform-origin:center;
 }
