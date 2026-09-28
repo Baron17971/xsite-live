@@ -33,7 +33,7 @@ export default function Home() {
     <main>
       <header className="topbar">
         <a className="brandmark" href="#" aria-label="Xsite">
-          <img src="/Xsite-logo-tras.png" alt="Xsite" className="site-logo" />
+          <img src="/Xsite-logo-transparent.png" alt="Xsite" className="site-logo" />
         </a>
         <nav>
           <a className="active" href="#">בית</a>
