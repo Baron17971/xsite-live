@@ -879,7 +879,7 @@ main:has(#theme-ink:target) .hero-copy{
   background:linear-gradient(135deg,#F8F5EE 0%,#EEF2EE 62%,#DDEBE8 100%);
 }
 main:has(#theme-ink:target) .hero-art{
-  background-image:linear-gradient(90deg,rgba(247,243,234,0) 76%,rgba(247,243,234,.90) 100%),url('/hero-xsite.png');
+  background-image:linear-gradient(90deg,rgba(247,243,234,0) 76%,rgba(247,243,234,.90) 100%),url('/hero-xsite-ink-teal.png');
 }
 main:has(#theme-ink:target) .manifesto{
   background:linear-gradient(120deg,#FBF9F3 0%,#EEF3F0 48%,#DCEBE8 100%);
@@ -939,7 +939,7 @@ main:has(#theme-coral:target) .hero-copy{
   background:linear-gradient(135deg,#FFF8F0 0%,#F7EEE6 52%,#E3F0ED 100%);
 }
 main:has(#theme-coral:target) .hero-art{
-  background-image:linear-gradient(90deg,rgba(251,243,233,0) 76%,rgba(251,243,233,.90) 100%),url('/hero-xsite.png');
+  background-image:linear-gradient(90deg,rgba(251,243,233,0) 76%,rgba(251,243,233,.90) 100%),url('/hero-xsite-teal-coral.png');
 }
 main:has(#theme-coral:target) .manifesto{
   background:linear-gradient(120deg,#FFFAF4 0%,#F7E9E4 48%,#DDEDEA 100%);
@@ -999,7 +999,7 @@ main:has(#theme-cocoa:target) .hero-copy{
   background:linear-gradient(135deg,#FFF8F1 0%,#F8E9DD 58%,#E7EDDF 100%);
 }
 main:has(#theme-cocoa:target) .hero-art{
-  background-image:linear-gradient(90deg,rgba(255,245,236,0) 76%,rgba(255,245,236,.90) 100%),url('/hero-xsite.png');
+  background-image:linear-gradient(90deg,rgba(255,245,236,0) 76%,rgba(255,245,236,.90) 100%),url('/hero-xsite-cocoa-celery.png');
 }
 main:has(#theme-cocoa:target) .manifesto{
   background:linear-gradient(120deg,#FFFBF6 0%,#F7E9DE 46%,#E8EEDF 100%);
@@ -1054,3 +1054,20 @@ main:has(#theme-cocoa:target) .theme-card-cream{
   display:block;
   filter:hue-rotate(38deg) saturate(.62) sepia(.12) brightness(1.02);
 }
+
+.theme-logo{display:none}
+.theme-logo-default{display:block}
+main:has(#theme-ink:target) .theme-logo-default,
+main:has(#theme-coral:target) .theme-logo-default,
+main:has(#theme-cocoa:target) .theme-logo-default{display:none}
+main:has(#theme-ink:target) .theme-logo-ink{display:block}
+main:has(#theme-coral:target) .theme-logo-coral{display:block}
+main:has(#theme-cocoa:target) .theme-logo-cocoa{display:block}
+
+main:has(#theme-ink:target) .theme-card-cream,
+main:has(#theme-coral:target) .theme-card-cream,
+main:has(#theme-cocoa:target) .theme-card-cream{display:none !important;filter:none}
+
+main:has(#theme-ink:target) .theme-card-ink{display:block}
+main:has(#theme-coral:target) .theme-card-coral{display:block}
+main:has(#theme-cocoa:target) .theme-card-cocoa{display:block}
