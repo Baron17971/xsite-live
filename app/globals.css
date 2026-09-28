@@ -3256,19 +3256,27 @@ main:has(#theme-botanical:target) .catalog-card:first-child .catalog-image.theme
   left:auto;
   z-index:2;
 }
-.login-modal .eyebrow,
+.login-modal .eyebrow{
+  padding-right:58px;
+}
 .login-modal h2,
 .login-modal .login-subtitle{
-  padding-right:72px;
+  padding-right:0;
+  margin-right:0;
+  text-align:right;
 }
 @media(max-width:680px){
   .login-close{
     top:14px;
     right:18px;
   }
-  .login-modal .eyebrow,
+  .login-modal .eyebrow{
+    padding-right:56px;
+  }
   .login-modal h2,
   .login-modal .login-subtitle{
-    padding-right:76px;
+    padding-right:0;
+    margin-right:0;
+    text-align:right;
   }
 }
