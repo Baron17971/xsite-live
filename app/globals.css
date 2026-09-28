@@ -3118,7 +3118,40 @@ main:has(#theme-botanical:target) .apps-section{
 }
 
 main:has(#theme-botanical:target) .teacher-panel{
-  background:linear-gradient(135deg,#536149 0%,#66735B 48%,#B45C6B 138%);
+  background:
+    radial-gradient(circle at 88% 18%, rgba(217,138,154,.42), transparent 34%),
+    linear-gradient(135deg,#667761 0%,#667761 58%,#D98A9A 138%);
+  color:#F7F3EA;
+}
+main:has(#theme-botanical:target) .teacher-panel:before{
+  border-color:rgba(247,243,234,.18);
+}
+main:has(#theme-botanical:target) .teacher-copy .eyebrow{
+  color:#F7F3EA;
+  opacity:.88;
+}
+main:has(#theme-botanical:target) .teacher-copy h2{
+  color:#F7F3EA;
+}
+main:has(#theme-botanical:target) .teacher-copy>p:not(.eyebrow){
+  color:rgba(247,243,234,.92);
+}
+main:has(#theme-botanical:target) .teacher-copy .primary{
+  background:rgba(247,243,234,.94);
+  color:#667761;
+  border-color:rgba(247,243,234,.72);
+}
+main:has(#theme-botanical:target) .benefit-card{
+  background:rgba(247,243,234,.11);
+  border-color:rgba(247,243,234,.20);
+}
+main:has(#theme-botanical:target) .benefit-card h3,
+main:has(#theme-botanical:target) .benefit-card p,
+main:has(#theme-botanical:target) .benefit-number{
+  color:#F7F3EA;
+}
+main:has(#theme-botanical:target) .benefit-number{
+  border-color:rgba(247,243,234,.34);
 }
 
 main:has(#theme-botanical:target) .feature-visual{
