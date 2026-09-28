@@ -75,6 +75,9 @@ export default function Home() {
       <div id="theme-cream" className="theme-anchor"></div>
       <div id="theme-sage" className="theme-anchor"></div>
       <div id="theme-mauve" className="theme-anchor"></div>
+      <div id="theme-ink" className="theme-anchor"></div>
+      <div id="theme-coral" className="theme-anchor"></div>
+      <div id="theme-cocoa" className="theme-anchor"></div>
       <div className="theme-switcher">
         <a className="theme-trigger" href="#theme-menu" aria-label="בחירת ערכת עיצוב זמנית">
           <span className="theme-trigger-dots" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -97,6 +100,18 @@ export default function Home() {
             <a className="theme-option theme-option-mauve" href="#theme-mauve">
               <span className="theme-swatches mauve-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
               <span>סגלגל + מאוב</span>
+            </a>
+            <a className="theme-option theme-option-ink" href="#theme-ink">
+              <span className="theme-swatches ink-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>כחול דיו + טורקיז</span>
+            </a>
+            <a className="theme-option theme-option-coral" href="#theme-coral">
+              <span className="theme-swatches coral-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>טורקיז + קורל</span>
+            </a>
+            <a className="theme-option theme-option-cocoa" href="#theme-cocoa">
+              <span className="theme-swatches cocoa-swatches" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>קקאו + סלרי + אפרסק</span>
             </a>
           </div>
         </div>
