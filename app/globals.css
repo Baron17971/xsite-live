@@ -1433,3 +1433,126 @@ main:has(#theme-cocoa:target) .apps-section{
 main:has(#theme-cocoa:target) .feature-visual{
   background:linear-gradient(145deg,#FAEEE6 0%,#FCF7F2 56%,#F1F5EC 100%);
 }
+
+
+/* Full palette coherence pass: decorative shapes, ribbons and secondary surfaces */
+.r1{
+  border-color:color-mix(in srgb,var(--theme-primary) 82%,transparent);
+}
+.r2{
+  border-color:color-mix(in srgb,var(--theme-secondary) 58%,transparent);
+}
+.visual-badge{
+  background:var(--theme-secondary);
+  box-shadow:0 8px 24px color-mix(in srgb,var(--theme-secondary) 24%,transparent);
+}
+.manifesto-ribbon{
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 46%,
+      color-mix(in srgb,var(--theme-secondary) 18%,transparent) 47%,
+      color-mix(in srgb,var(--theme-accent) 28%,transparent) 54%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 58%,
+      color-mix(in srgb,var(--theme-primary) 12%,transparent) 59%,
+      color-mix(in srgb,var(--theme-secondary) 28%,var(--theme-surface)) 66%,
+      transparent 67%
+    );
+}
+.app-preview:after{
+  border-color:color-mix(in srgb,var(--theme-primary) 14%,transparent);
+}
+.app-monogram{color:var(--theme-primary)}
+.bingo-mini span{
+  background:color-mix(in srgb,var(--theme-surface) 88%,white);
+  border-color:color-mix(in srgb,var(--theme-primary) 16%,transparent);
+  box-shadow:0 5px 14px color-mix(in srgb,var(--theme-primary) 8%,transparent);
+}
+.bingo-mini span:nth-child(5){
+  background:var(--theme-primary);
+  box-shadow:0 8px 18px color-mix(in srgb,var(--theme-primary) 24%,transparent);
+}
+.cloud-mini span{color:var(--theme-primary)}
+.link-mini span{
+  border-color:var(--theme-primary);
+}
+.link-mini span:nth-child(2){
+  border-color:var(--theme-secondary);
+}
+
+/* Feature illustrations are now generated only from the active theme */
+.feature-visual{
+  background:linear-gradient(
+    145deg,
+    color-mix(in srgb,var(--theme-secondary-soft) 54%,var(--theme-surface)) 0%,
+    color-mix(in srgb,var(--theme-surface) 92%,white) 58%,
+    color-mix(in srgb,var(--theme-accent) 22%,var(--theme-surface)) 100%
+  );
+}
+.feature-card.future .feature-visual{
+  background:linear-gradient(
+    145deg,
+    color-mix(in srgb,var(--theme-accent) 24%,var(--theme-surface)) 0%,
+    color-mix(in srgb,var(--theme-surface) 94%,white) 58%,
+    color-mix(in srgb,var(--theme-secondary) 17%,var(--theme-surface)) 100%
+  );
+}
+.feature-card.community .feature-visual{
+  background:linear-gradient(
+    145deg,
+    color-mix(in srgb,var(--theme-secondary-soft) 42%,var(--theme-surface)) 0%,
+    color-mix(in srgb,var(--theme-surface) 94%,white) 52%,
+    color-mix(in srgb,var(--theme-accent) 18%,var(--theme-surface)) 100%
+  );
+}
+
+/* Keep the dark teacher area within the same palette family */
+.teacher-panel:before{
+  border-color:color-mix(in srgb,var(--theme-secondary) 24%,transparent);
+}
+.benefit-card{
+  background:color-mix(in srgb,white 11%,transparent);
+  border-color:color-mix(in srgb,var(--theme-secondary) 30%,transparent);
+}
+.benefit-number{
+  border-color:color-mix(in srgb,var(--theme-secondary-soft) 52%,transparent);
+}
+.teacher-copy .eyebrow{
+  color:color-mix(in srgb,var(--theme-secondary-soft) 72%,white);
+}
+.teacher-copy>p:not(.eyebrow),
+.benefit-card p{
+  color:color-mix(in srgb,var(--theme-surface) 84%,white);
+}
+
+/* Per-theme teacher panels: deep colors only, no foreign hues */
+main:has(#theme-cream:target) .teacher-panel{
+  background:linear-gradient(135deg,#74143A 0%,#8F1D4F 52%,#A85A72 130%);
+}
+main:has(#theme-sage:target) .teacher-panel{
+  background:linear-gradient(135deg,#72163A 0%,#8F1D4F 48%,#667C70 132%);
+}
+main:has(#theme-mauve:target) .teacher-panel{
+  background:linear-gradient(135deg,#593047 0%,#6F3D58 48%,#756C7D 132%);
+}
+main:has(#theme-ink:target) .teacher-panel{
+  background:linear-gradient(135deg,#1F3348 0%,#243B53 50%,#477B78 132%);
+}
+main:has(#theme-coral:target) .teacher-panel{
+  background:linear-gradient(135deg,#245B5E 0%,#2E6F72 52%,#B9655B 135%);
+}
+main:has(#theme-cocoa:target) .teacher-panel{
+  background:linear-gradient(135deg,#493731 0%,#54403A 50%,#718064 132%);
+}
+
+/* Thin borders and separators also use the active family */
+.topbar{
+  border-bottom-color:color-mix(in srgb,var(--theme-secondary) 36%,transparent);
+}
+.apps-section{
+  border-top-color:color-mix(in srgb,var(--theme-secondary) 38%,transparent);
+}
