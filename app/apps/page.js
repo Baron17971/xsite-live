@@ -45,7 +45,7 @@ const apps = [
     eyebrow: 'מסלול למידה אינטראקטיבי',
     description: 'יוצרים מסלול למידה על גבי תמונה או מפה, עם שאלות, משימות וסרטונים. התלמיד מתקדם בין התחנות ובסיום מתקבל סיכום תשובות מלא למורה.',
     href: 'https://mapi-interactive.vercel.app/',
-    image: '/mapi-card.png',
+    image: '/mapi-card.jpg',
     kind: 'mapi',
     tags: ['מסלול למידה','שאלות ומשימות','וידאו','סיכום למורה'],
     details: [
