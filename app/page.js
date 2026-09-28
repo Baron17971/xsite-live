@@ -1,3 +1,27 @@
+const apps = [
+  {
+    name: 'Bingo',
+    eyebrow: 'משחק כיתתי חי',
+    description: 'בינגו לימודי שמאפשר למורה להפעיל כיתה שלמה סביב מושגים, שאלות ואתגר.',
+    href: 'https://classroom-bingo-live.vercel.app',
+    kind: 'bingo'
+  },
+  {
+    name: 'ענן מילים',
+    eyebrow: 'חשיבה בזמן אמת',
+    description: 'אוספים תשובות מהתלמידים ובונים יחד ענן מילים חי, ברור ומרשים על המסך.',
+    href: 'https://hebrew-wordcloud-live.vercel.app',
+    kind: 'cloud'
+  },
+  {
+    name: 'LinkIt',
+    eyebrow: 'מחברים ידע',
+    description: 'משחק שרשרת אינטראקטיבי שמחבר בין שאלות, תשובות, רמזים וחשיבה קבוצתית.',
+    href: 'https://linkup-classroom-live.vercel.app',
+    kind: 'linkit'
+  }
+];
+
 const featureCards = [
   {
     eyebrow: 'למורים',
@@ -37,9 +61,9 @@ export default function Home() {
         </a>
         <nav>
           <a className="active" href="#">בית</a>
-          <a href="#activities">משחקים ופעילויות</a>
-          <a href="#subjects">תחומים</a>
+          <a href="#apps">אפליקציות</a>
           <a href="#teachers">למורים</a>
+          <a href="#how">איך זה עובד</a>
           <a href="#about">אודות</a>
         </nav>
         <div className="actions">
@@ -64,6 +88,49 @@ export default function Home() {
         <div className="hero-art" role="img" aria-label="תלמידים לומדים יחד"></div>
       </section>
 
+      <section id="apps" className="apps-section">
+        <div className="apps-heading">
+          <div>
+            <p className="eyebrow">האפליקציות של Xsite</p>
+            <h2>כלים אינטראקטיביים שמפעילים את הכיתה</h2>
+          </div>
+          <p>כל אפליקציה נבנתה להפעלה אמיתית בכיתה — פשוטה למורה, ברורה לתלמידים, ומעוצבת כחוויה בוגרת ונקייה.</p>
+        </div>
+
+        <div className="apps-grid">
+          {apps.map((app) => (
+            <article className={`app-card ${app.kind}`} key={app.name}>
+              <div className="app-preview">
+                {app.kind === 'bingo' && (
+                  <div className="bingo-mini" aria-hidden="true">
+                    {Array.from({length: 9}).map((_, i) => <span key={i}></span>)}
+                  </div>
+                )}
+                {app.kind === 'cloud' && (
+                  <div className="cloud-mini" aria-hidden="true">
+                    <span>למידה</span><span>סקרנות</span><span>שיתוף</span><span>חשיבה</span><span>יצירה</span>
+                  </div>
+                )}
+                {app.kind === 'linkit' && (
+                  <div className="link-mini" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                  </div>
+                )}
+                <div className="app-monogram">{app.name}</div>
+              </div>
+              <div className="app-content">
+                <span className="feature-eyebrow">{app.eyebrow}</span>
+                <h3>{app.name}</h3>
+                <p>{app.description}</p>
+                <a className="app-launch" href={app.href} target="_blank" rel="noreferrer">
+                  לפתיחת האפליקציה <span>←</span>
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="manifesto">
         <div className="manifesto-ribbon"></div>
         <div className="manifesto-copy">
@@ -78,7 +145,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="activities" className="feature-section">
+      <section id="how" className="feature-section">
         <div className="section-head">
           <div>
             <p className="eyebrow">נבנה סביב אנשים אמיתיים</p>
