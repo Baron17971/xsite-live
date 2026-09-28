@@ -373,7 +373,7 @@ transform:rotate(-17deg);pointer-events:none}
   border-top:4px solid var(--teal);
 }
 .app-card.cloud .app-content{border-top-color:var(--sage)}
-.app-card.linkit .app-content{border-top-color:var(--burgundy)}
+.app-card.linkit .app-content{border-top-color:var(--teal)}
 .app-content h3{
   color:var(--teal-deep);
   font-size:30px;
