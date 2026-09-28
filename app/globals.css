@@ -3351,3 +3351,41 @@ main:has(#theme-botanical:target) .catalog-card:first-child .catalog-image.theme
     text-align:right;
   }
 }
+
+
+/* Login/signup mode switch */
+.auth-switch{
+  margin-top:18px;
+  padding-top:16px;
+  border-top:1px solid var(--theme-border);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  direction:rtl;
+  color:var(--theme-text-soft);
+  font-size:13px;
+}
+.auth-switch button{
+  padding:0;
+  background:none;
+  color:var(--theme-primary);
+  font-weight:800;
+  text-decoration:underline;
+  text-underline-offset:3px;
+}
+.signup-form{
+  max-height:48vh;
+  overflow:auto;
+  padding-inline-end:2px;
+}
+@media(max-width:680px){
+  .signup-form{
+    max-height:44vh;
+  }
+  .auth-switch{
+    margin-top:14px;
+    padding-top:14px;
+    flex-wrap:wrap;
+  }
+}
