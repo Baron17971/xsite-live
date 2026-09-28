@@ -1,3 +1,5 @@
+import SiteHeader from '../components/SiteHeader';
+
 const apps = [
   {
     name: 'Bingo',
@@ -40,21 +42,15 @@ const apps = [
 export default function AppsPage(){
   return (
     <main className="catalog-page">
-      <header className="topbar catalog-topbar">
-        <a className="brandmark" href="/" aria-label="Xsite">
-          <span className="site-logo-monochrome" aria-hidden="true"></span>
-        </a>
-        <nav>
-          <a href="/">בית</a>
-          <a className="active" href="/apps">אפליקציות</a>
-          <a href="/#teachers">למורים</a>
-          <a href="/#how">איך זה עובד</a>
-          <a href="/#about">אודות</a>
-        </nav>
-        <div className="actions">
-          <a className="ghost" href="/">חזרה לבית</a>
-        </div>
-      </header>
+      <div id="theme-cream" className="theme-anchor"></div>
+      <div id="theme-sage" className="theme-anchor"></div>
+      <div id="theme-mauve" className="theme-anchor"></div>
+      <div id="theme-ink" className="theme-anchor"></div>
+      <div id="theme-coral" className="theme-anchor"></div>
+      <div id="theme-cocoa" className="theme-anchor"></div>
+      <SiteHeader active="apps" />
+
+
 
       <section className="catalog-hero">
         <p className="eyebrow">כל האפליקציות של Xsite</p>
