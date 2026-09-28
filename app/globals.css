@@ -430,6 +430,9 @@ transform:rotate(-17deg);pointer-events:none}
   object-position:center;
   z-index:2;
 }
+.app-card.bingo .app-card-image{
+  object-position:center top;
+}
 .app-card.cloud .app-preview,
 .app-card.linkit .app-preview{
   background:#FFF8F1;
