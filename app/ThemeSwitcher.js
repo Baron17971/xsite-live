@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
-
 const themes = [
   {
     id: "cream",
@@ -21,75 +17,44 @@ const themes = [
 ];
 
 export default function ThemeSwitcher() {
-  const [open, setOpen] = useState(false);
-  const [theme, setTheme] = useState("mauve");
-  const panelRef = useRef(null);
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem("xsite-theme");
-    const initial = themes.some((item) => item.id === saved) ? saved : "mauve";
-    setTheme(initial);
-    document.documentElement.dataset.theme = initial;
-  }, []);
-
-  useEffect(() => {
-    const onPointerDown = (event) => {
-      if (panelRef.current && !panelRef.current.contains(event.target)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, []);
-
-  const applyTheme = (id) => {
-    setTheme(id);
-    document.documentElement.dataset.theme = id;
-    window.localStorage.setItem("xsite-theme", id);
-  };
-
   return (
-    <div className="theme-switcher" ref={panelRef}>
-      <button
-        type="button"
-        className="theme-trigger"
-        onClick={() => setOpen((value) => !value)}
-        aria-expanded={open}
-        aria-label="בחירת ערכת עיצוב זמנית"
-      >
+    <details className="theme-switcher">
+      <summary className="theme-trigger" aria-label="בחירת ערכת עיצוב זמנית">
         <span className="theme-trigger-dots" aria-hidden="true">
           <i></i><i></i><i></i>
         </span>
         Themes
-      </button>
+      </summary>
 
-      {open && (
-        <div className="theme-panel" role="dialog" aria-label="בחירת ערכת עיצוב">
-          <div className="theme-panel-head">
-            <strong>ערכת עיצוב</strong>
-            <span>כלי בנייה זמני</span>
-          </div>
-          <div className="theme-options">
-            {themes.map((item) => (
-              <button
-                key={item.id}
-                type="button"
-                className={`theme-option ${theme === item.id ? "active" : ""}`}
-                onClick={() => applyTheme(item.id)}
-                aria-pressed={theme === item.id}
-              >
+      <div className="theme-panel">
+        <div className="theme-panel-head">
+          <strong>ערכת עיצוב</strong>
+          <span>כלי בנייה זמני</span>
+        </div>
+
+        <div className="theme-options">
+          {themes.map((item) => (
+            <div className="theme-choice" key={item.id}>
+              <input
+                className="theme-radio"
+                type="radio"
+                id={`theme-${item.id}`}
+                name="xsite-theme"
+                defaultChecked={item.id === "mauve"}
+              />
+              <label className={`theme-option theme-option-${item.id}`} htmlFor={`theme-${item.id}`}>
                 <span className="theme-swatches" aria-hidden="true">
                   {item.swatches.map((color) => (
                     <i key={color} style={{ background: color }}></i>
                   ))}
                 </span>
                 <span>{item.label}</span>
-                <b aria-hidden="true">{theme === item.id ? "✓" : ""}</b>
-              </button>
-            ))}
-          </div>
+                <b className="theme-check" aria-hidden="true">✓</b>
+              </label>
+            </div>
+          ))}
         </div>
-      )}
-    </div>
+      </div>
+    </details>
   );
 }
