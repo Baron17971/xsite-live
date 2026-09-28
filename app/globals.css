@@ -820,3 +820,20 @@ main:has(#theme-mauve:target) .theme-option-mauve{
 .mauve-swatches i:nth-child(1){background:#6F3D58}
 .mauve-swatches i:nth-child(2){background:#C991A3}
 .mauve-swatches i:nth-child(3){background:#A7A4B3}
+
+
+/* Theme-aware application card artwork */
+.theme-card{display:none}
+.theme-card-mauve{display:block}
+
+main:has(#theme-cream:target) .theme-card-mauve,
+main:has(#theme-sage:target) .theme-card-mauve{display:none}
+
+main:has(#theme-cream:target) .theme-card-cream{display:block}
+main:has(#theme-sage:target) .theme-card-sage{
+  display:block;
+  filter:hue-rotate(38deg) saturate(.72) brightness(1.02);
+}
+
+main:has(#theme-mauve:target) .theme-card-cream,
+main:has(#theme-mauve:target) .theme-card-sage{display:none}
