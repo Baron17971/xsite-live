@@ -3035,3 +3035,125 @@ main:has(#theme-cocoa:target) .teacher-panel{
     flex-basis:32px;
   }
 }
+
+
+/* Botanical theme */
+main:has(#theme-botanical:target){
+  --burgundy:#5F6F56;
+  --wine:#6F7F64;
+  --rose:#E56F82;
+  --blush:#F3D8D8;
+  --cream:#F8F3E8;
+  --cream-2:#F1E9DB;
+  --ink:#463E38;
+  --muted:#766B61;
+  --line:#DDD4C5;
+  --sage:#879276;
+  --sage-soft:#E8EBDD;
+  --teal:#879276;
+  --teal-deep:#59654F;
+  --teal-soft:#E7EBDD;
+  --theme-primary:#5F6F56;
+  --theme-primary-hover:#718065;
+  --theme-secondary:#E56F82;
+  --theme-secondary-strong:#B95567;
+  --theme-secondary-soft:#F8E3E4;
+  --theme-surface:#F8F3E8;
+  --theme-surface-alt:#F1E9DB;
+  --theme-border:#D8CFBE;
+  --theme-text:#463E38;
+  --theme-text-soft:#766B61;
+  --theme-accent:#D6A24F;
+}
+
+main:has(#theme-botanical:target) .topbar{
+  border-bottom-color:rgba(135,146,118,.42);
+  background:linear-gradient(90deg,rgba(248,243,232,.98),rgba(238,241,226,.96));
+}
+
+main:has(#theme-botanical:target) .primary{
+  background:linear-gradient(180deg,#718065,#5F6F56);
+  box-shadow:0 10px 24px rgba(95,111,86,.18);
+}
+main:has(#theme-botanical:target) .primary:hover{
+  background:linear-gradient(180deg,#7D8B70,#55634D);
+}
+
+main:has(#theme-botanical:target) .hero,
+main:has(#theme-botanical:target) .hero-copy{
+  background:linear-gradient(135deg,#FBF7EF 0%,#F8F3E8 60%,#EEF0E4 100%);
+}
+
+main:has(#theme-botanical:target) .hero-art{
+  background-image:
+    linear-gradient(90deg,rgba(248,243,232,0) 74%,rgba(248,243,232,.90) 100%),
+    url('/hero-botanical.png');
+  background-position:24% center;
+}
+
+main:has(#theme-botanical:target) .hero-art:before{
+  background:linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(248,243,232,.05) 62%,
+    rgba(248,243,232,.22) 80%,
+    rgba(248,243,232,.62) 94%,
+    rgba(248,243,232,.90) 100%
+  );
+}
+
+main:has(#theme-botanical:target) .manifesto{
+  background:linear-gradient(120deg,#FFFDF8 0%,#F4EDDF 48%,#E9EDDF 100%);
+  border-color:#D7CEBD;
+}
+
+main:has(#theme-botanical:target) .feature-section,
+main:has(#theme-botanical:target) .closing{
+  background:linear-gradient(180deg,rgba(232,235,220,.82),rgba(248,243,232,0) 44%);
+}
+
+main:has(#theme-botanical:target) .apps-section{
+  background:linear-gradient(180deg,rgba(244,220,216,.64) 0%,rgba(248,243,232,0) 40%);
+  border-top-color:rgba(135,146,118,.48);
+}
+
+main:has(#theme-botanical:target) .teacher-panel{
+  background:linear-gradient(135deg,#536149 0%,#66735B 48%,#B45C6B 138%);
+}
+
+main:has(#theme-botanical:target) .feature-visual{
+  background:linear-gradient(145deg,#F5E4DF 0%,#FAF3E9 54%,#E5E9DA 100%);
+}
+
+main:has(#theme-botanical:target) .theme-option-botanical{
+  border-color:var(--theme-secondary);
+  background:var(--theme-secondary-soft);
+  color:var(--theme-primary);
+}
+
+.botanical-swatches i:nth-child(1){background:#5F6F56}
+.botanical-swatches i:nth-child(2){background:#E56F82}
+.botanical-swatches i:nth-child(3){background:#D6A24F}
+
+main:has(#theme-botanical:target) .theme-card-mauve,
+main:has(#theme-botanical:target) .theme-card-cream,
+main:has(#theme-botanical:target) .theme-card-sage,
+main:has(#theme-botanical:target) .theme-card-ink,
+main:has(#theme-botanical:target) .theme-card-coral,
+main:has(#theme-botanical:target) .theme-card-cocoa{
+  display:none !important;
+}
+
+main:has(#theme-botanical:target) .theme-card-botanical{
+  display:block;
+}
+
+main:has(#theme-botanical:target) .app-content{
+  border-top-color:#879276;
+}
+main:has(#theme-botanical:target) .app-card.cloud .app-content{
+  border-top-color:#E56F82;
+}
+main:has(#theme-botanical:target) .app-card.linkit .app-content{
+  border-top-color:#D6A24F;
+}
