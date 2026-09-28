@@ -4,21 +4,36 @@ const apps = [
     eyebrow: 'משחק כיתתי חי',
     description: 'בינגו לימודי שמאפשר למורה להפעיל כיתה שלמה סביב מושגים, שאלות ואתגר.',
     href: 'https://classroom-bingo-live.vercel.app',
-    kind: 'bingo'
+    kind: 'bingo',
+    details: [
+      ['מה עושים?', 'המורה יוצר משחק סביב נושא לימודי ומפעיל את הכיתה בזמן אמת.'],
+      ['מתאים ל־', 'חזרה, תרגול, פתיחת נושא וסיכום שיעור.'],
+      ['החוויה', 'משחקית, פשוטה להפעלה ומעודדת השתתפות של כל הכיתה.']
+    ]
   },
   {
     name: 'ענן מילים',
     eyebrow: 'חשיבה בזמן אמת',
     description: 'אוספים תשובות מהתלמידים ובונים יחד ענן מילים חי, ברור ומרשים על המסך.',
     href: 'https://hebrew-wordcloud-live.vercel.app',
-    kind: 'cloud'
+    kind: 'cloud',
+    details: [
+      ['מה עושים?', 'התלמידים שולחים מילים או תשובות קצרות והן נבנות לענן משותף בזמן אמת.'],
+      ['מתאים ל־', 'סקר פתיחה, איסוף עמדות, אסוציאציות, רפלקציה וסיכום.'],
+      ['החוויה', 'חזותית, מהירה ומאפשרת לראות מיד את הקול הכיתתי.']
+    ]
   },
   {
     name: 'LinkIt',
     eyebrow: 'מחברים ידע',
     description: 'משחק שרשרת אינטראקטיבי שמחבר בין שאלות, תשובות, רמזים וחשיבה קבוצתית.',
     href: 'https://linkup-classroom-live.vercel.app',
-    kind: 'linkit'
+    kind: 'linkit',
+    details: [
+      ['מה עושים?', 'פותרים שאלות ובונים בהדרגה שרשרת של ידע וחיבורים.'],
+      ['מתאים ל־', 'תרגול מושגים, חזרה, עבודה קבוצתית ומשימות חשיבה.'],
+      ['החוויה', 'קצבית, שיתופית ומתגמלת כל חיבור נכון.']
+    ]
   }
 ];
 
@@ -115,6 +130,22 @@ export default function Home() {
                 <span className="feature-eyebrow">{app.eyebrow}</span>
                 <h3>{app.name}</h3>
                 <p>{app.description}</p>
+
+                <details className="app-more">
+                  <summary>
+                    <span className="app-more-plus" aria-hidden="true">+</span>
+                    <span>מידע נוסף</span>
+                  </summary>
+                  <div className="app-more-panel">
+                    {app.details.map(([label, text]) => (
+                      <div className="app-detail-row" key={label}>
+                        <strong>{label}</strong>
+                        <span>{text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </details>
+
                 <a className="app-launch" href={app.href} target="_blank" rel="noreferrer">
                   לפתיחת האפליקציה <span>←</span>
                 </a>
