@@ -1322,3 +1322,114 @@ main:has(#theme-mauve:target) .soft{
   color:#6F5267;
   border-color:#D8C7D0;
 }
+
+
+
+/* Lighter background washes — keep each theme airy on mobile and desktop */
+main:has(#theme-cream:target) .hero,
+main:has(#theme-cream:target) .hero-copy{
+  background:linear-gradient(135deg,#FFFBF7 0%,#FFF7EF 72%,#F9F1EE 100%);
+}
+main:has(#theme-cream:target) .manifesto{
+  background:linear-gradient(120deg,#FFFDF9 0%,#FBF6F0 52%,#F8F0F2 100%);
+}
+main:has(#theme-cream:target) .feature-section,
+main:has(#theme-cream:target) .closing{
+  background:linear-gradient(180deg,rgba(247,231,236,.38),rgba(255,250,246,0) 44%);
+}
+main:has(#theme-cream:target) .apps-section{
+  background:linear-gradient(180deg,rgba(247,231,236,.40) 0%,rgba(255,250,246,0) 38%);
+}
+
+main:has(#theme-sage:target) .hero,
+main:has(#theme-sage:target) .hero-copy{
+  background:linear-gradient(135deg,#FCFAF6 0%,#F7F8F4 72%,#F1F5EF 100%);
+}
+main:has(#theme-sage:target) .manifesto{
+  background:linear-gradient(120deg,#FFFDF9 0%,#F8F7F1 48%,#F2F6EF 100%);
+}
+main:has(#theme-sage:target) .feature-section,
+main:has(#theme-sage:target) .closing{
+  background:linear-gradient(180deg,rgba(232,238,228,.40),rgba(251,247,240,0) 44%);
+}
+main:has(#theme-sage:target) .apps-section{
+  background:linear-gradient(180deg,rgba(226,235,226,.42) 0%,rgba(251,247,240,0) 38%);
+}
+main:has(#theme-sage:target) .feature-visual{
+  background:linear-gradient(145deg,#F4F0EC 0%,#F8F6F1 58%,#EEF3EB 100%);
+}
+main:has(#theme-sage:target) .feature-card.future .feature-visual{
+  background:linear-gradient(145deg,#F1F5EF 0%,#F7F6F1 58%,#EDF2EA 100%);
+}
+main:has(#theme-sage:target) .feature-card.community .feature-visual{
+  background:linear-gradient(145deg,#FBF5F1 0%,#F7F2EC 52%,#F0F5EF 100%);
+}
+
+main:has(#theme-mauve:target) .hero,
+main:has(#theme-mauve:target) .hero-copy{
+  background:linear-gradient(135deg,#FFFBF8 0%,#F8F4F6 74%,#F1EEF2 100%);
+}
+main:has(#theme-mauve:target) .manifesto{
+  background:linear-gradient(120deg,#FFFDFB 0%,#F8F5F3 48%,#F3EEF2 100%);
+}
+main:has(#theme-mauve:target) .feature-section,
+main:has(#theme-mauve:target) .closing{
+  background:linear-gradient(180deg,rgba(232,211,218,.34),rgba(251,247,243,0) 44%);
+}
+main:has(#theme-mauve:target) .apps-section{
+  background:linear-gradient(180deg,rgba(232,211,218,.36) 0%,rgba(251,247,243,0) 38%);
+}
+
+main:has(#theme-ink:target) .hero,
+main:has(#theme-ink:target) .hero-copy{
+  background:linear-gradient(135deg,#FAF8F2 0%,#F5F8F6 62%,#EEF5F3 100%);
+}
+main:has(#theme-ink:target) .manifesto{
+  background:linear-gradient(120deg,#FCFAF5 0%,#F5F8F6 50%,#EEF5F3 100%);
+}
+main:has(#theme-ink:target) .feature-section,
+main:has(#theme-ink:target) .closing{
+  background:linear-gradient(180deg,rgba(225,238,235,.36),rgba(247,243,234,0) 44%);
+}
+main:has(#theme-ink:target) .apps-section{
+  background:linear-gradient(180deg,rgba(218,235,232,.40) 0%,rgba(247,243,234,0) 38%);
+}
+main:has(#theme-ink:target) .feature-visual{
+  background:linear-gradient(145deg,#F2F4F1 0%,#F8F6EF 56%,#EDF4F2 100%);
+}
+
+main:has(#theme-coral:target) .hero,
+main:has(#theme-coral:target) .hero-copy{
+  background:linear-gradient(135deg,#FFF9F4 0%,#FBF6F0 56%,#F1F7F5 100%);
+}
+main:has(#theme-coral:target) .manifesto{
+  background:linear-gradient(120deg,#FFFBF7 0%,#FAF3F0 50%,#EEF6F4 100%);
+}
+main:has(#theme-coral:target) .feature-section,
+main:has(#theme-coral:target) .closing{
+  background:linear-gradient(180deg,rgba(226,240,237,.35),rgba(251,243,233,0) 44%);
+}
+main:has(#theme-coral:target) .apps-section{
+  background:linear-gradient(180deg,rgba(240,220,213,.38) 0%,rgba(251,243,233,0) 40%);
+}
+main:has(#theme-coral:target) .feature-visual{
+  background:linear-gradient(145deg,#F9EDE8 0%,#FCF6F1 56%,#EEF6F4 100%);
+}
+
+main:has(#theme-cocoa:target) .hero,
+main:has(#theme-cocoa:target) .hero-copy{
+  background:linear-gradient(135deg,#FFFBF7 0%,#FBF4EE 60%,#F3F6EF 100%);
+}
+main:has(#theme-cocoa:target) .manifesto{
+  background:linear-gradient(120deg,#FFFDF9 0%,#FAF3ED 48%,#F2F6EE 100%);
+}
+main:has(#theme-cocoa:target) .feature-section,
+main:has(#theme-cocoa:target) .closing{
+  background:linear-gradient(180deg,rgba(234,240,227,.38),rgba(255,245,236,0) 44%);
+}
+main:has(#theme-cocoa:target) .apps-section{
+  background:linear-gradient(180deg,rgba(244,200,173,.20) 0%,rgba(255,245,236,0) 40%);
+}
+main:has(#theme-cocoa:target) .feature-visual{
+  background:linear-gradient(145deg,#FAEEE6 0%,#FCF7F2 56%,#F1F5EC 100%);
+}
