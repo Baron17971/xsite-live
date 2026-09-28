@@ -102,9 +102,7 @@ export default function Home() {
             <article className={`app-card ${app.kind}`} key={app.name}>
               <div className="app-preview">
                 {app.kind === 'bingo' && (
-                  <div className="bingo-mini" aria-hidden="true">
-                    {Array.from({length: 9}).map((_, i) => <span key={i}></span>)}
-                  </div>
+                  <img className="app-card-image" src="/bingo-card.png.png" alt="Bingo" />
                 )}
                 {app.kind === 'cloud' && (
                   <img className="app-card-image" src="/wordcloud-card.png" alt="ענן מילים" />
@@ -112,7 +110,6 @@ export default function Home() {
                 {app.kind === 'linkit' && (
                   <img className="app-card-image" src="/linkit-card.png" alt="LinkIt" />
                 )}
-                {app.kind === 'bingo' && <div className="app-monogram">{app.name}</div>}
               </div>
               <div className="app-content">
                 <span className="feature-eyebrow">{app.eyebrow}</span>
