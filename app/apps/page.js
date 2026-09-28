@@ -39,7 +39,21 @@ const apps = [
       ['מה עושים?', 'המורה בונה מאגר שאלות ומשפט מסתורין, והתלמידים משתתפים בתורם דרך חדר כיתתי.'],
       ['מתאים ל־', 'חזרה לקראת מבחן, תרגול מושגים, סיכום יחידה ושיעור פתיחה.']
     ]
+  },
+  {
+    name: 'MAPI',
+    eyebrow: 'מסלול למידה אינטראקטיבי',
+    description: 'יוצרים מסלול למידה על גבי תמונה או מפה, עם שאלות, משימות וסרטונים. התלמיד מתקדם בין התחנות ובסיום מתקבל סיכום תשובות מלא למורה.',
+    href: 'https://mapi-interactive.vercel.app/',
+    image: '/mapi-card.png',
+    kind: 'mapi',
+    tags: ['מסלול למידה','שאלות ומשימות','וידאו','סיכום למורה'],
+    details: [
+      ['מה עושים?', 'המורה מעלה תמונה או מפה, מסמן עליה תחנות ומוסיף בכל תחנה פעילות כמו שאלה, משימה או צפייה מונחית בסרטון.'],
+      ['מתאים ל־', 'למידה עצמאית, חקר מונחה, צפייה פעילה, משימות תחנתיות וסיכום תהליך למידה.']
+    ]
   }
+
 ];
 
 export default function AppsPage(){
@@ -108,6 +122,9 @@ export default function AppsPage(){
                     <img className="catalog-image theme-card theme-card-cocoa" src="/linkit-card-cocoa-celery.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-botanical" src="/linkit-botanical.png" alt="" aria-hidden="true" />
                   </>
+                )}
+                {app.kind === 'mapi' && (
+                  <img className="catalog-image" src="/mapi-card.png" alt="MAPI" />
                 )}
               </div>
               <div className="catalog-card-body">
