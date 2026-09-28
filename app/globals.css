@@ -2249,3 +2249,122 @@ main:has(#theme-cocoa:target) .teacher-panel{
   .catalog-grid{grid-template-columns:1fr}
   .catalog-card-coming{min-height:300px}
 }
+
+
+/* Shared top navigation: account on the right, logo on the left */
+.topbar{
+  grid-template-columns:auto minmax(0,1fr) auto;
+}
+.auth-actions{
+  min-width:210px;
+  align-items:center;
+  justify-content:flex-start;
+}
+.auth-button{
+  min-width:96px;
+  text-align:center;
+}
+.auth-button:disabled{
+  opacity:.65;
+  cursor:wait;
+}
+.user-avatar{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid color-mix(in srgb,var(--theme-secondary) 52%,white);
+  box-shadow:0 6px 16px color-mix(in srgb,var(--theme-primary) 12%,transparent);
+  background:var(--theme-secondary-soft);
+}
+.user-avatar-empty{
+  display:grid;
+  place-items:center;
+  font-size:18px;
+  color:var(--theme-secondary-strong);
+}
+
+/* Theme chooser now lives inside the main navigation */
+.theme-nav-wrap{
+  position:relative;
+  display:flex;
+  align-items:center;
+}
+.nav-themes{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+.header-theme-panel{
+  position:absolute;
+  top:58px;
+  right:50%;
+  transform:translateX(50%);
+  z-index:120;
+  margin-top:0;
+}
+.header-theme-panel:target{display:block}
+.header-theme-panel .theme-panel-head small{
+  font-size:10px;
+  color:#8D7D84;
+  font-weight:400;
+}
+.header-theme-panel .theme-option{
+  padding:9px 10px;
+  border-bottom:0;
+}
+.header-theme-panel .theme-option:hover{
+  border-bottom:0;
+}
+
+/* The old floating theme control is retired */
+.theme-switcher{display:none!important}
+
+@media(max-width:1000px){
+  .topbar{
+    grid-template-columns:auto 1fr auto;
+    gap:16px;
+  }
+  nav{gap:16px}
+  .auth-actions{min-width:0}
+}
+@media(max-width:680px){
+  .topbar{
+    display:flex;
+    min-height:82px;
+    height:auto;
+    padding:8px 16px;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:space-between;
+  }
+  .auth-actions{order:1}
+  .brandmark{order:2}
+  .topbar nav{
+    order:3;
+    width:100%;
+    justify-content:flex-start;
+    overflow-x:auto;
+    gap:18px;
+    padding:0 2px;
+    scrollbar-width:none;
+  }
+  .topbar nav::-webkit-scrollbar{display:none}
+  .topbar nav a{white-space:nowrap;padding:12px 0 10px}
+  .auth-button{
+    min-width:auto;
+    padding:10px 14px;
+  }
+  .user-avatar{
+    width:36px;
+    height:36px;
+    flex-basis:36px;
+  }
+  .header-theme-panel{
+    position:fixed;
+    top:128px;
+    right:18px;
+    transform:none;
+  }
+}
