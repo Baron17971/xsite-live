@@ -2368,3 +2368,49 @@ main:has(#theme-cocoa:target) .teacher-panel{
     transform:none;
   }
 }
+
+
+/* Header placement refinement */
+.topbar{
+  direction:rtl;
+}
+.auth-actions{
+  justify-self:start;
+}
+.brandmark{
+  justify-self:end;
+  margin-left:0;
+  margin-right:auto;
+}
+.auth-button-with-avatar{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 14px 8px 18px;
+}
+.auth-button-with-avatar .user-avatar{
+  width:34px;
+  height:34px;
+  flex-basis:34px;
+  border-width:1.5px;
+  background:color-mix(in srgb,var(--theme-surface) 92%,white);
+  box-shadow:none;
+}
+.auth-button-with-avatar .user-avatar-empty{
+  font-size:16px;
+}
+@media(max-width:680px){
+  .auth-button-with-avatar{
+    padding:7px 12px 7px 15px;
+    gap:8px;
+  }
+  .auth-button-with-avatar .user-avatar{
+    width:32px;
+    height:32px;
+    flex-basis:32px;
+  }
+  .brandmark{
+    margin-right:auto;
+    margin-left:0;
+  }
+}
