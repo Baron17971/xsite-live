@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 :root{
   --burgundy:#8B0F2D;
   --wine:#A61E3B;
@@ -9,12 +10,12 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,"Noto Sans Hebrew",sans-serif}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"Varela Round",Arial,sans-serif}
 button,a{font:inherit}
 a{color:inherit;text-decoration:none}
 main{min-height:100vh}
 .topbar{height:82px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:34px;padding:0 5vw;border-bottom:1px solid rgba(139,15,45,.08);background:rgba(255,248,241,.95);position:sticky;top:0;z-index:20;backdrop-filter:blur(14px)}
-.brand{font-family:Georgia,serif;font-size:42px;font-style:italic;font-weight:700;color:var(--burgundy);letter-spacing:-2px}
+.brand{font-family:"Varela Round",Arial,sans-serif;font-size:42px;font-style:italic;font-weight:700;color:var(--burgundy);letter-spacing:-2px}
 nav{display:flex;justify-content:center;gap:28px;font-size:15px}
 nav a{padding:28px 0 24px;border-bottom:2px solid transparent}
 nav a.active{color:var(--burgundy);border-color:var(--burgundy);font-weight:700}
@@ -25,16 +26,16 @@ button{border:0;cursor:pointer}
 .hero{min-height:600px;display:grid;grid-template-columns:43% 57%;overflow:hidden;background:#fffaf5}
 .hero-copy{padding:70px 5vw 54px 6vw;display:flex;flex-direction:column;justify-content:center}
 .eyebrow{font-size:14px;letter-spacing:.16em;color:#6e5853;margin:0 0 18px}
-h1{font-family:Georgia,"Noto Serif Hebrew",serif;color:var(--burgundy);font-size:clamp(46px,5vw,78px);line-height:1.03;margin:0 0 24px;letter-spacing:-2px}
+h1{font-family:"Varela Round",Arial,sans-serif;color:var(--burgundy);font-size:clamp(46px,5vw,78px);line-height:1.03;margin:0 0 24px;letter-spacing:-2px}
 h1 em{font-weight:500}
 .lead{font-size:20px;line-height:1.65;max-width:640px;color:#594945;margin:0 0 28px}
 .hero-buttons{display:flex;gap:14px;margin-bottom:34px}.large{font-size:18px;padding:15px 28px}.primary span{margin-right:12px}
-.stats{display:flex;gap:34px;border-top:1px solid var(--line);padding-top:22px}.stats div{display:flex;flex-direction:column;gap:3px}.stats b{font-family:Georgia,serif;color:var(--burgundy);font-size:24px}.stats span{font-size:13px;color:#7a6964}
+.stats{display:flex;gap:34px;border-top:1px solid var(--line);padding-top:22px}.stats div{display:flex;flex-direction:column;gap:3px}.stats b{font-family:"Varela Round",Arial,sans-serif;color:var(--burgundy);font-size:24px}.stats span{font-size:13px;color:#7a6964}
 .hero-art{background-image:linear-gradient(90deg,rgba(255,250,245,0) 72%,#fffaf5 100%),url('/hero-xsite.png.png');background-size:cover;background-position:left center;min-height:600px}
-.activities{padding:58px 5vw 64px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}.section-head h2{font-family:Georgia,"Noto Serif Hebrew",serif;color:var(--burgundy);font-size:38px;margin:4px 0 0}.section-head a{color:var(--wine);font-weight:700}
+.activities{padding:58px 5vw 64px}.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:24px}.section-head h2{font-family:"Varela Round",Arial,sans-serif;color:var(--burgundy);font-size:38px;margin:4px 0 0}.section-head a{color:var(--wine);font-weight:700}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}.card{background:#fff;border:1px solid #f1ddd7;border-radius:20px;overflow:hidden;box-shadow:0 10px 32px rgba(90,40,30,.05)}
 .thumb{height:130px;background-size:cover;background-position:center}.thumb-1{background:linear-gradient(135deg,#9b1238,#f1bbc0)}.thumb-2{background:linear-gradient(135deg,#e6a4a9,#7a0f2c)}.thumb-3{background:linear-gradient(135deg,#f4d6d6,#c83b5b)}.thumb-4{background:linear-gradient(135deg,#8b0f2d,#f1d1c8)}
-.card-body{padding:18px;position:relative;min-height:190px}.tag{display:inline-block;background:#fdebea;color:var(--wine);padding:6px 10px;border-radius:999px;font-size:12px}.card h3{font-family:Georgia,"Noto Serif Hebrew",serif;font-size:24px;color:var(--burgundy);margin:14px 0 8px}.card p{line-height:1.5;color:#6f5d57;padding-left:42px}.round{position:absolute;left:16px;bottom:16px;width:38px;height:38px;border-radius:50%;background:#fde7e5;color:var(--burgundy);font-size:20px}
+.card-body{padding:18px;position:relative;min-height:190px}.tag{display:inline-block;background:#fdebea;color:var(--wine);padding:6px 10px;border-radius:999px;font-size:12px}.card h3{font-family:"Varela Round",Arial,sans-serif;font-size:24px;color:var(--burgundy);margin:14px 0 8px}.card p{line-height:1.5;color:#6f5d57;padding-left:42px}.round{position:absolute;left:16px;bottom:16px;width:38px;height:38px;border-radius:50%;background:#fde7e5;color:var(--burgundy);font-size:20px}
 .teacher-strip{margin:0 5vw 60px;border:1px solid #f0d8d2;background:linear-gradient(90deg,#fff7f3,#fdebea);border-radius:22px;padding:28px;display:grid;grid-template-columns:auto 1.4fr repeat(3,1fr);gap:22px;align-items:center}.teacher-icon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:white;color:var(--burgundy);font-size:28px}.teacher-strip h3{margin:0;color:var(--burgundy);font-size:24px}.teacher-strip p{margin:6px 0 0;color:#705d58}.benefit{display:flex;flex-direction:column;gap:4px;border-right:1px solid #edcec7;padding-right:20px}.benefit b{color:var(--burgundy)}.benefit span{font-size:13px;color:#705d58;line-height:1.5}
 @media(max-width:900px){.topbar{grid-template-columns:1fr auto;height:72px}.topbar nav{display:none}.brand{font-size:36px}.hero{grid-template-columns:1fr}.hero-copy{order:2;padding:38px 24px 42px}.hero-art{min-height:390px;order:1;background-position:25% center}.stats{gap:18px;flex-wrap:wrap}.grid{grid-template-columns:1fr 1fr}.teacher-strip{grid-template-columns:auto 1fr}.benefit{grid-column:1/-1;border-right:0;border-top:1px solid #edcec7;padding:15px 0 0}.actions .ghost{display:none}}
 @media(max-width:560px){.topbar{padding:0 18px}.hero-art{min-height:300px}.hero-copy{padding:30px 20px 36px}h1{font-size:44px}.lead{font-size:17px}.hero-buttons{flex-direction:column}.grid{grid-template-columns:1fr}.activities{padding:42px 20px}.section-head{align-items:start;gap:18px}.section-head h2{font-size:32px}.teacher-strip{margin:0 20px 40px}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stats b{font-size:20px}.stats span{font-size:11px}}
