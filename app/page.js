@@ -119,13 +119,13 @@ export default function Home() {
             <article className={`app-card ${app.kind}`} key={app.name}>
               <div className="app-preview">
                 {app.kind === 'bingo' && (
-                  <img className="app-card-image" src="/bingo-card.png.png" alt="Bingo" />
+                  <img className="app-card-image" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />
                 )}
                 {app.kind === 'cloud' && (
-                  <img className="app-card-image" src="/wordcloud-card.png?v=20260928-2" alt="ענן מילים" />
+                  <img className="app-card-image" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />
                 )}
                 {app.kind === 'linkit' && (
-                  <img className="app-card-image" src="/linkit-card.png" alt="LinkIt" />
+                  <img className="app-card-image" src="/xsite-linkit-new-palette.png" alt="LinkIt" />
                 )}
               </div>
               <div className="app-content">
