@@ -116,29 +116,30 @@ export default function SiteHeader({ active='home' }){
         )}
       </div>
 
+      <div className="header-theme-center">
+        <a className="nav-themes" href="#theme-menu">
+          <span className="theme-trigger-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+          Themes
+        </a>
+        <span id="theme-menu" className="theme-panel header-theme-panel">
+          <span className="theme-panel-head">
+            <strong>ערכת עיצוב</strong>
+            <small>כלי בנייה זמני</small>
+          </span>
+          <span className="theme-options">
+            {themes.map(([key,label])=>(
+              <a className={`theme-option theme-option-${key}`} href={`#theme-${key}`} key={key}>
+                <span className={`theme-swatches ${key}-swatches`} aria-hidden="true"><i></i><i></i><i></i></span>
+                <span>{label}</span>
+              </a>
+            ))}
+          </span>
+        </span>
+      </div>
+
       <nav>
         <a className={active==='home' ? 'active' : ''} href="/">בית</a>
         <a className={active==='apps' ? 'active' : ''} href="/apps">אפליקציות</a>
-        <span className="theme-nav-wrap">
-          <a className="nav-themes" href="#theme-menu">
-            <span className="theme-trigger-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-            Themes
-          </a>
-          <span id="theme-menu" className="theme-panel header-theme-panel">
-            <span className="theme-panel-head">
-              <strong>ערכת עיצוב</strong>
-              <small>כלי בנייה זמני</small>
-            </span>
-            <span className="theme-options">
-              {themes.map(([key,label])=>(
-                <a className={`theme-option theme-option-${key}`} href={`#theme-${key}`} key={key}>
-                  <span className={`theme-swatches ${key}-swatches`} aria-hidden="true"><i></i><i></i><i></i></span>
-                  <span>{label}</span>
-                </a>
-              ))}
-            </span>
-          </span>
-        </span>
         <a href="/#teachers">למורים</a>
         <a href="/#how">איך זה עובד</a>
         <a href="/#about">אודות</a>
