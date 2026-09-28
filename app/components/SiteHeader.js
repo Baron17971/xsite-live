@@ -36,6 +36,7 @@ export default function SiteHeader({ active='home' }){
   const [user,setUser]=useState(null);
   const [busy,setBusy]=useState(false);
   const [loginOpen,setLoginOpen]=useState(false);
+  const [authMode,setAuthMode]=useState('login');
   const [basicError,setBasicError]=useState('');
   const tokenRef=useRef(null);
   const clientId=process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
@@ -149,7 +150,7 @@ export default function SiteHeader({ active='home' }){
             <button className="primary auth-button auth-button-login" onClick={logout}>התנתק</button>
           </div>
         ) : (
-          <button className="primary auth-button auth-button-login" onClick={()=>setLoginOpen(true)}>
+          <button className="primary auth-button auth-button-login" onClick={()=>{setAuthMode('login');setBasicError('');setLoginOpen(true)}}>
             התחבר
           </button>
         )}
@@ -159,31 +160,71 @@ export default function SiteHeader({ active='home' }){
         <div className="login-modal-backdrop" role="presentation" onMouseDown={(e)=>{if(e.target===e.currentTarget)setLoginOpen(false)}}>
           <section className="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
             <button className="login-close" type="button" aria-label="סגירה" onClick={()=>setLoginOpen(false)}>×</button>
-            <p className="eyebrow">כניסה ל־Xsite</p>
-            <h2 id="login-title">מתחברים וממשיכים</h2>
-            <p className="login-subtitle">אפשר להתחבר עם Google או באמצעות שם משתמש וסיסמה.</p>
+
+            <p className="eyebrow">{authMode==='login' ? 'כניסה ל־Xsite' : 'יצירת חשבון ב־Xsite'}</p>
+            <h2 id="login-title">{authMode==='login' ? 'מתחברים וממשיכים' : 'יוצרים חשבון ומתחילים'}</h2>
+            <p className="login-subtitle">
+              {authMode==='login'
+                ? 'אפשר להתחבר עם Google או באמצעות שם משתמש וסיסמה.'
+                : 'אפשר ליצור חשבון עם Google או באמצעות שם משתמש וסיסמה.'}
+            </p>
 
             <button className="google-login-button" type="button" onClick={googleLogin} disabled={busy}>
               <span className="google-g" aria-hidden="true">G</span>
-              <span>{busy ? 'מתחבר…' : 'המשך עם Google'}</span>
+              <span>{busy ? 'מתחבר…' : (authMode==='login' ? 'המשך עם Google' : 'הרשמה עם Google')}</span>
             </button>
 
             <div className="login-divider"><span>או</span></div>
 
-            <form className="basic-login-form" onSubmit={basicLogin}>
-              <label>
-                <span>שם משתמש</span>
-                <input name="username" autoComplete="username" required />
-              </label>
-              <label>
-                <span>סיסמה</span>
-                <input name="password" type="password" autoComplete="current-password" required />
-              </label>
-              {basicError && <p className="login-error" role="alert">{basicError}</p>}
-              <button className="primary basic-login-submit" type="submit" disabled={busy}>
-                {busy ? 'מתחבר…' : 'התחבר'}
+            {authMode==='login' ? (
+              <form className="basic-login-form" onSubmit={basicLogin}>
+                <label>
+                  <span>שם משתמש</span>
+                  <input name="username" autoComplete="username" required />
+                </label>
+                <label>
+                  <span>סיסמה</span>
+                  <input name="password" type="password" autoComplete="current-password" required />
+                </label>
+                {basicError && <p className="login-error" role="alert">{basicError}</p>}
+                <button className="primary basic-login-submit" type="submit" disabled={busy}>
+                  {busy ? 'מתחבר…' : 'התחבר'}
+                </button>
+              </form>
+            ) : (
+              <form className="basic-login-form signup-form" onSubmit={(e)=>{e.preventDefault();setBasicError('יצירת חשבון בשם משתמש וסיסמה תופעל לאחר חיבור מסד המשתמשים. אפשר כבר עכשיו להירשם באמצעות Google.')}}>
+                <label>
+                  <span>שם מלא</span>
+                  <input name="name" autoComplete="name" required />
+                </label>
+                <label>
+                  <span>שם משתמש</span>
+                  <input name="username" autoComplete="username" required />
+                </label>
+                <label>
+                  <span>סיסמה</span>
+                  <input name="password" type="password" autoComplete="new-password" required minLength="6" />
+                </label>
+                <label>
+                  <span>אימות סיסמה</span>
+                  <input name="confirmPassword" type="password" autoComplete="new-password" required minLength="6" />
+                </label>
+                {basicError && <p className="login-error" role="alert">{basicError}</p>}
+                <button className="primary basic-login-submit" type="submit">
+                  צור חשבון
+                </button>
+              </form>
+            )}
+
+            <div className="auth-switch">
+              <span>{authMode==='login' ? 'עדיין אין לך חשבון?' : 'כבר יש לך חשבון?'}</span>
+              <button
+                type="button"
+                onClick={()=>{setAuthMode(authMode==='login' ? 'signup' : 'login');setBasicError('')}}
+              >
+                {authMode==='login' ? 'יצירת חשבון' : 'חזרה להתחברות'}
               </button>
-            </form>
+            </div>
           </section>
         </div>
       )}
