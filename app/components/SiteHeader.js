@@ -109,8 +109,7 @@ export default function SiteHeader({ active='home' }){
             <span>התנתק</span>
           </button>
         ) : (
-          <button className="primary auth-button auth-button-with-avatar" onClick={login} disabled={busy}>
-            <span className="user-avatar user-avatar-empty" aria-hidden="true">👤</span>
+          <button className="primary auth-button auth-button-login" onClick={login} disabled={busy}>
             <span>{busy ? 'מתחבר…' : 'התחבר'}</span>
           </button>
         )}
