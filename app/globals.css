@@ -1973,3 +1973,56 @@ main:has(#theme-cocoa:target) .visual-badge{background:#ABB99E}
     bottom:-8px;
   }
 }
+
+
+
+/* Final teacher-panel theme sync — includes default theme with no hash target */
+.teacher-panel{
+  background:linear-gradient(135deg,#513747 0%,#684158 50%,#746D7C 132%);
+}
+.teacher-panel:before{
+  border-color:color-mix(in srgb,var(--theme-secondary) 24%,transparent);
+}
+.teacher-copy .eyebrow{
+  color:color-mix(in srgb,var(--theme-secondary-soft) 72%,white);
+}
+.teacher-copy>p:not(.eyebrow),
+.benefit-card p{
+  color:color-mix(in srgb,var(--theme-surface) 86%,white);
+}
+.benefit-card{
+  background:color-mix(in srgb,white 11%,transparent);
+  border-color:color-mix(in srgb,var(--theme-secondary) 30%,transparent);
+}
+.benefit-number{
+  border-color:color-mix(in srgb,var(--theme-secondary-soft) 56%,transparent);
+}
+.teacher-copy .primary{
+  background:linear-gradient(
+    135deg,
+    color-mix(in srgb,var(--theme-secondary-soft) 92%,white),
+    color-mix(in srgb,var(--theme-secondary-soft) 70%,var(--theme-secondary))
+  );
+  color:var(--theme-primary);
+  border-color:color-mix(in srgb,var(--theme-secondary) 52%,var(--theme-border));
+}
+
+/* Every selectable theme gets its own matching teacher block */
+main:has(#theme-cream:target) .teacher-panel{
+  background:linear-gradient(135deg,#711A3C 0%,#861F48 54%,#A35F76 132%);
+}
+main:has(#theme-sage:target) .teacher-panel{
+  background:linear-gradient(135deg,#70203F 0%,#842348 50%,#66775F 132%);
+}
+main:has(#theme-mauve:target) .teacher-panel{
+  background:linear-gradient(135deg,#513747 0%,#684158 50%,#746D7C 132%);
+}
+main:has(#theme-ink:target) .teacher-panel{
+  background:linear-gradient(135deg,#25384D 0%,#2B4058 52%,#588884 132%);
+}
+main:has(#theme-coral:target) .teacher-panel{
+  background:linear-gradient(135deg,#285D60 0%,#326D70 54%,#B96F62 136%);
+}
+main:has(#theme-cocoa:target) .teacher-panel{
+  background:linear-gradient(135deg,#493A35 0%,#57443D 52%,#77816C 132%);
+}
