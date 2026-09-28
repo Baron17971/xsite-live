@@ -136,8 +136,8 @@ export default function Home() {
       <section className="hero">
         <div className="hero-copy">
           <p className="eyebrow">משחקים, פעילויות וכלים חכמים ללמידה</p>
-          <h1>למידה שמדליקה<br/><span>סקרנות</span></h1>
-          <p className="lead">מרחב למורים ולתלמידים בוגרים שמחבר בין משחקיות, יצירה, חשיבה וכלים דיגיטליים — בצורה חכמה, יפה ומדויקת לכיתה.</p>
+          <h1>למידה מרגשת<br/><span>שיוצרת מעורבות</span></h1>
+          <p className="lead">מרחב למורים שמחבר בין משחקיות, יצירה, חשיבה וכלים דיגיטליים — בצורה חכמה, יפה ומדויקת לכיתה.</p>
           <div className="hero-buttons">
             <button className="primary large">לגלות את Xsite <span>←</span></button>
             <button className="soft large">אני מורה</button>
