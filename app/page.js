@@ -107,16 +107,12 @@ export default function Home() {
                   </div>
                 )}
                 {app.kind === 'cloud' && (
-                  <div className="cloud-mini" aria-hidden="true">
-                    <span>למידה</span><span>סקרנות</span><span>שיתוף</span><span>חשיבה</span><span>יצירה</span>
-                  </div>
+                  <img className="app-card-image" src="/wordcloud-card.png" alt="ענן מילים" />
                 )}
                 {app.kind === 'linkit' && (
-                  <div className="link-mini" aria-hidden="true">
-                    <span></span><span></span><span></span>
-                  </div>
+                  <img className="app-card-image" src="/linkit-card.png" alt="LinkIt" />
                 )}
-                <div className="app-monogram">{app.name}</div>
+                {app.kind === 'bingo' && <div className="app-monogram">{app.name}</div>}
               </div>
               <div className="app-content">
                 <span className="feature-eyebrow">{app.eyebrow}</span>
