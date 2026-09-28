@@ -2521,3 +2521,102 @@ main:has(#theme-cocoa:target) .teacher-panel{
     line-height:1;
   }
 }
+
+
+/* Header: login right, Themes center, logo left */
+.topbar{
+  grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr) auto;
+  grid-template-areas:"auth spacer1 themes spacer2 logo";
+  direction:rtl;
+}
+.auth-actions{grid-area:auth;justify-self:start}
+.header-theme-center{
+  grid-area:themes;
+  position:relative;
+  justify-self:center;
+  display:flex;
+  align-items:center;
+}
+.topbar nav{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:4px;
+}
+.brandmark{
+  grid-area:logo;
+  justify-self:end;
+  margin:0!important;
+}
+.header-theme-center .nav-themes{
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid color-mix(in srgb,var(--theme-border) 85%,white);
+  background:color-mix(in srgb,var(--theme-surface) 90%,white);
+  box-shadow:0 8px 20px color-mix(in srgb,var(--theme-primary) 8%,transparent);
+}
+.header-theme-center .header-theme-panel{
+  top:52px;
+  right:50%;
+  transform:translateX(50%);
+}
+
+@media(max-width:680px){
+  .topbar{
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    grid-template-areas:
+      "auth themes logo"
+      "nav nav nav";
+    direction:rtl;
+    align-items:center;
+    column-gap:10px;
+    row-gap:0;
+    padding:8px 10px 0;
+  }
+  .auth-actions{
+    grid-area:auth;
+    justify-self:start;
+  }
+  .header-theme-center{
+    grid-area:themes;
+    justify-self:center;
+    min-width:0;
+  }
+  .brandmark{
+    grid-area:logo;
+    justify-self:end;
+    width:154px;
+    min-width:154px;
+    margin:0!important;
+    overflow:hidden;
+  }
+  .site-logo-monochrome{
+    width:154px;
+    height:58px;
+    -webkit-mask-size:154px auto;
+    mask-size:154px auto;
+    -webkit-mask-position:left center;
+    mask-position:left center;
+  }
+  .topbar nav{
+    grid-area:nav;
+    position:static;
+    left:auto;
+    bottom:auto;
+    transform:none;
+    width:100%;
+    justify-content:flex-start;
+    overflow-x:auto;
+  }
+  .header-theme-center .nav-themes{
+    padding:8px 10px;
+    font-size:12px;
+  }
+  .header-theme-center .header-theme-panel{
+    position:fixed;
+    top:118px;
+    right:50%;
+    transform:translateX(50%);
+  }
+}
