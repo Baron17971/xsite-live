@@ -2620,3 +2620,95 @@ main:has(#theme-cocoa:target) .teacher-panel{
     transform:translateX(50%);
   }
 }
+
+
+/* Final mobile header layout: logo left, Themes center, login right */
+@media(max-width:680px){
+  .topbar{
+    display:grid;
+    grid-template-columns:auto minmax(0,1fr) auto;
+    grid-template-areas:
+      "logo themes auth"
+      "nav nav nav";
+    direction:ltr;
+    align-items:center;
+    column-gap:8px;
+    row-gap:0;
+    padding:8px 8px 0;
+  }
+
+  .brandmark{
+    grid-area:logo;
+    justify-self:start;
+    width:142px;
+    min-width:142px;
+    height:60px;
+    margin:0!important;
+    overflow:hidden;
+  }
+
+  .site-logo-monochrome{
+    width:178px;
+    height:60px;
+    transform:translateX(-38px);
+    -webkit-mask-size:178px auto;
+    mask-size:178px auto;
+    -webkit-mask-position:left center;
+    mask-position:left center;
+  }
+
+  .header-theme-center{
+    grid-area:themes;
+    justify-self:center;
+    min-width:0;
+  }
+
+  .auth-actions{
+    grid-area:auth;
+    justify-self:end;
+    direction:rtl;
+    min-width:0;
+  }
+
+  .auth-button-login{
+    padding:10px 16px;
+    min-width:auto;
+    line-height:1;
+  }
+
+  .auth-button-with-avatar{
+    padding:7px 12px 7px 14px;
+    gap:7px;
+    direction:rtl;
+  }
+
+  .auth-button-with-avatar .user-avatar{
+    width:30px;
+    height:30px;
+    flex-basis:30px;
+  }
+
+  .topbar nav{
+    grid-area:nav;
+    position:static;
+    left:auto;
+    bottom:auto;
+    transform:none;
+    width:100%;
+    justify-content:flex-start;
+    overflow-x:auto;
+  }
+
+  .header-theme-center .nav-themes{
+    padding:8px 10px;
+    font-size:12px;
+    white-space:nowrap;
+  }
+
+  .header-theme-center .header-theme-panel{
+    position:fixed;
+    top:116px;
+    right:50%;
+    transform:translateX(50%);
+  }
+}
