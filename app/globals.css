@@ -511,17 +511,17 @@ transform:rotate(-17deg);pointer-events:none}
 
 .app-card-image{
   position:absolute;
-  inset:8px;
-  width:calc(100% - 16px);
-  height:calc(100% - 16px);
-  object-fit:contain;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
   object-position:center;
   z-index:2;
 }
 .app-card.bingo .app-card-image{
-  object-position:center;
-  transform:none;
-  height:calc(100% - 16px);
+  object-position:center top;
+  transform:translateY(-6px);
+  height:calc(100% + 6px);
 }
 .app-card.cloud .app-preview,
 .app-card.linkit .app-preview{
@@ -3159,17 +3159,6 @@ main:has(#theme-botanical:target) .app-card.linkit .app-content{
 }
 
 
-/* Preserve full card artwork proportions */
-.catalog-image{
-  position:absolute;
-  inset:8px;
-  width:calc(100% - 16px);
-  height:calc(100% - 16px);
-  object-fit:contain;
-  object-position:center;
-}
-
-
 /* Login modal RTL alignment */
 .login-modal{
   direction:rtl;
@@ -3213,4 +3202,39 @@ main:has(#theme-botanical:target) .app-card.linkit .app-content{
 }
 .login-modal .basic-login-submit{
   text-align:center;
+}
+
+
+/* Botanical artwork proportions:
+   keep the original square artwork full-bleed instead of shrinking it inside a wide crop */
+main:has(#theme-botanical:target) .app-preview{
+  height:auto;
+  aspect-ratio:1 / 1;
+}
+
+main:has(#theme-botanical:target) .app-card-image.theme-card-botanical{
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  transform:none;
+}
+
+main:has(#theme-botanical:target) .app-card.bingo .app-card-image.theme-card-botanical{
+  height:100%;
+  transform:none;
+  object-position:center;
+}
+
+main:has(#theme-botanical:target) .catalog-image-wrap{
+  aspect-ratio:1 / 1;
+}
+
+main:has(#theme-botanical:target) .catalog-image.theme-card-botanical{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center;
+  display:block;
 }
