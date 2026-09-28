@@ -179,10 +179,13 @@ export default function Home() {
                   </>
                 )}
                 {app.kind === 'mapi' && (
-                  <div className="app-card-image mapi-card-art" role="img" aria-label="MAPI">
-                    <span className="mapi-card-title">MAPI</span>
-                    <span className="mapi-card-tagline">תמונה אחת, אלף מילים</span>
-                  </div>
+                  <>
+                    <div className="app-card-image mapi-card-art mapi-card-fallback" role="img" aria-label="MAPI">
+                      <span className="mapi-card-title">MAPI</span>
+                      <span className="mapi-card-tagline">תמונה אחת, אלף מילים</span>
+                    </div>
+                    <img className="app-card-image theme-card theme-card-botanical mapi-botanical-image" src="/mapi-card.jpg" alt="MAPI" />
+                  </>
                 )}
               </div>
               <div className="app-content">
