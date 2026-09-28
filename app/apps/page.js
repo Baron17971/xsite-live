@@ -124,7 +124,10 @@ export default function AppsPage(){
                   </>
                 )}
                 {app.kind === 'mapi' && (
-                  <img className="catalog-image" src="/mapi-card.png" alt="MAPI" />
+                  <div className="catalog-image mapi-card-art" role="img" aria-label="MAPI">
+                    <span className="mapi-card-title">MAPI</span>
+                    <span className="mapi-card-tagline">תמונה אחת, אלף מילים</span>
+                  </div>
                 )}
               </div>
               <div className="catalog-card-body">
