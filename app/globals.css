@@ -3545,7 +3545,7 @@ main.catalog-page:has(#theme-botanical:target) .catalog-card-coming p{
   text-align:center;
   background:
     linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.06)),
-    url('/mapi-card.jpg') center/cover no-repeat,
+    url('/mapi-card.png') center/cover no-repeat,
     radial-gradient(circle at 68% 30%,rgba(255,255,255,.18),transparent 24%),
     linear-gradient(145deg,#2D365A 0%,#5C5278 48%,#CDA58F 100%);
   color:#fff;
