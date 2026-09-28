@@ -2043,3 +2043,20 @@ main:has(#theme-cocoa:target) .teacher-panel{
 @media(max-width:680px){
   .teacher-panel{margin-top:44px}
 }
+
+
+/* Teacher CTA contrast across every theme */
+.teacher-panel .primary,
+.teacher-panel .primary span{
+  color:var(--theme-surface) !important;
+}
+.teacher-panel .primary{
+  border-color:color-mix(in srgb,var(--theme-surface) 72%,transparent);
+  background:color-mix(in srgb,white 8%,transparent);
+  box-shadow:none;
+}
+.teacher-panel .primary:hover{
+  color:var(--theme-surface) !important;
+  border-color:var(--theme-surface);
+  background:color-mix(in srgb,white 14%,transparent);
+}
