@@ -88,7 +88,7 @@ export default function AppsPage(){
       <section className="catalog-grid-section">
         <div className="catalog-grid">
           {apps.map((app) => (
-            <article className="catalog-card" key={app.name}>
+            <article className={`catalog-card ${app.kind}`} key={app.name}>
               <div className="catalog-image-wrap">
                 {app.kind === 'bingo' && (
                   <>
