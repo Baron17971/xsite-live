@@ -104,17 +104,15 @@ export default function SiteHeader({ active='home' }){
     <header className="topbar">
       <div className="actions auth-actions">
         {user ? (
-          <>
+          <button className="primary auth-button auth-button-with-avatar" onClick={logout}>
             <img className="user-avatar" src={user.picture} alt={user.name} title={user.email || user.name} />
-            <button className="primary auth-button" onClick={logout}>התנתק</button>
-          </>
+            <span>התנתק</span>
+          </button>
         ) : (
-          <>
+          <button className="primary auth-button auth-button-with-avatar" onClick={login} disabled={busy}>
             <span className="user-avatar user-avatar-empty" aria-hidden="true">👤</span>
-            <button className="primary auth-button" onClick={login} disabled={busy}>
-              {busy ? 'מתחבר…' : 'להתחבר'}
-            </button>
-          </>
+            <span>{busy ? 'מתחבר…' : 'להתחבר'}</span>
+          </button>
         )}
       </div>
 
