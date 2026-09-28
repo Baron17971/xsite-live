@@ -23,8 +23,17 @@ button{border:0;cursor:pointer}
 a{color:inherit;text-decoration:none}
 main{min-height:100vh;overflow:hidden}
 .topbar{height:104px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:34px;padding:0 5vw;border-bottom:3px solid rgba(165,111,132,.30);background:linear-gradient(90deg,rgba(255,248,241,.96),rgba(241,247,243,.96));position:sticky;top:0;z-index:20;backdrop-filter:blur(16px)}
-.brandmark{display:flex;align-items:center;color:var(--burgundy);min-width:220px;height:92px;overflow:hidden}
-.site-logo{display:block;width:auto;height:92px;object-fit:contain;transform:scale(1.34);transform-origin:center}
+.brandmark{display:flex;align-items:center;color:var(--theme-primary);min-width:220px;height:92px;overflow:hidden}
+.site-logo-monochrome{
+  display:block;
+  width:220px;
+  height:78px;
+  background:var(--theme-primary);
+  -webkit-mask:url('/Xsite-logo-transparent.png') left center / contain no-repeat;
+  mask:url('/Xsite-logo-transparent.png') left center / contain no-repeat;
+  flex:0 0 auto;
+  transition:background .28s ease;
+}
 nav{display:flex;justify-content:center;gap:28px;font-size:15px}
 nav a{padding:28px 0 24px;border-bottom:2px solid transparent;transition:color .2s ease,border-color .2s ease}nav a:hover{color:var(--teal-deep);border-color:rgba(165,111,132,.34)}
 nav a.active{color:var(--burgundy);border-color:var(--teal);font-weight:700}
@@ -97,7 +106,7 @@ transform:rotate(-17deg);pointer-events:none}
   .topbar{grid-template-columns:1fr auto;height:72px}.topbar nav{display:none}.brand{font-size:34px}.hero{grid-template-columns:1fr;min-height:auto}.hero-copy{order:2;padding:42px 24px 48px;max-width:none}.hero-art{min-height:430px;order:1;background-position:24% center}.manifesto{grid-template-columns:1fr;gap:26px;padding:34px}.manifesto-words{justify-self:start;flex-direction:row;flex-wrap:wrap}.feature-grid{grid-template-columns:1fr 1fr}.teacher-panel{grid-template-columns:1fr;gap:30px}
 }
 @media(max-width:680px){
-  .site-logo{height:64px;transform:scale(1.28)}
+  .site-logo-monochrome{width:160px;height:58px}
   .brandmark{min-width:160px;height:64px}
   .topbar{padding:0 18px}.actions .ghost{display:none}.hero-art{min-height:330px;background-position:26% center}.hero-copy{padding:34px 20px 40px}h1{font-size:46px;line-height:1.04}.lead{font-size:17px;line-height:1.65}.hero-buttons{flex-direction:column}.hero-mini{flex-wrap:wrap}.manifesto{margin:28px 20px 0;padding:28px 22px;min-height:280px}.manifesto-words{font-size:20px}.feature-section{padding:52px 20px}.section-head{grid-template-columns:1fr;gap:10px}.feature-grid{grid-template-columns:1fr}.feature-card{min-height:auto}.teacher-panel{margin:0 20px 50px;padding:30px 22px;border-radius:24px}.teacher-copy h2{font-size:36px}.closing h2{font-size:42px}
 }
@@ -1055,14 +1064,6 @@ main:has(#theme-cocoa:target) .theme-card-cream{
   filter:hue-rotate(38deg) saturate(.62) sepia(.12) brightness(1.02);
 }
 
-.theme-logo{display:none}
-.theme-logo-default{display:block}
-main:has(#theme-ink:target) .theme-logo-default,
-main:has(#theme-coral:target) .theme-logo-default,
-main:has(#theme-cocoa:target) .theme-logo-default{display:none}
-main:has(#theme-ink:target) .theme-logo-ink{display:block}
-main:has(#theme-coral:target) .theme-logo-coral{display:block}
-main:has(#theme-cocoa:target) .theme-logo-cocoa{display:block}
 
 main:has(#theme-ink:target) .theme-card-cream,
 main:has(#theme-coral:target) .theme-card-cream,
