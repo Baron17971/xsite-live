@@ -118,10 +118,7 @@ export default function Home() {
       </div>
       <header className="topbar">
         <a className="brandmark" href="#" aria-label="Xsite">
-          <img src="/Xsite-logo-transparent.png" alt="Xsite" className="site-logo theme-logo theme-logo-default" />
-          <img src="/logo-xsite-ink-teal.png" alt="" aria-hidden="true" className="site-logo theme-logo theme-logo-ink" />
-          <img src="/logo-xsite-teal-coral.png" alt="" aria-hidden="true" className="site-logo theme-logo theme-logo-coral" />
-          <img src="/logo-xsite-cocoa-celery.png" alt="" aria-hidden="true" className="site-logo theme-logo theme-logo-cocoa" />
+          <span className="site-logo-monochrome" aria-hidden="true"></span>
         </a>
         <nav>
           <a className="active" href="#">בית</a>
