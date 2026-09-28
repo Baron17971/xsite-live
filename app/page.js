@@ -148,19 +148,25 @@ export default function Home() {
             <article className={`app-card ${app.kind}`} key={app.name}>
               <div className="app-preview">
                 {app.kind === 'bingo' && (
-                  <img className="app-card-image theme-card theme-card-mauve" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />
-                  <img className="app-card-image theme-card theme-card-cream" src="/bingo-card.png.png" alt="" aria-hidden="true" />
-                  <img className="app-card-image theme-card theme-card-sage" src="/bingo-card.png.png" alt="" aria-hidden="true" />
+                  <>
+                    <img className="app-card-image theme-card theme-card-mauve" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />
+                    <img className="app-card-image theme-card theme-card-cream" src="/bingo-card.png.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-sage" src="/bingo-card.png.png" alt="" aria-hidden="true" />
+                  </>
                 )}
                 {app.kind === 'cloud' && (
-                  <img className="app-card-image theme-card theme-card-mauve" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />
-                  <img className="app-card-image theme-card theme-card-cream" src="/wordcloud-card.png" alt="" aria-hidden="true" />
-                  <img className="app-card-image theme-card theme-card-sage" src="/wordcloud-card.png" alt="" aria-hidden="true" />
+                  <>
+                    <img className="app-card-image theme-card theme-card-mauve" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />
+                    <img className="app-card-image theme-card theme-card-cream" src="/wordcloud-card.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-sage" src="/wordcloud-card.png" alt="" aria-hidden="true" />
+                  </>
                 )}
                 {app.kind === 'linkit' && (
-                  <img className="app-card-image theme-card theme-card-mauve" src="/xsite-linkit-new-palette.png" alt="LinkIt" />
-                  <img className="app-card-image theme-card theme-card-cream" src="/linkit-card.png" alt="" aria-hidden="true" />
-                  <img className="app-card-image theme-card theme-card-sage" src="/linkit-card.png" alt="" aria-hidden="true" />
+                  <>
+                    <img className="app-card-image theme-card theme-card-mauve" src="/xsite-linkit-new-palette.png" alt="LinkIt" />
+                    <img className="app-card-image theme-card theme-card-cream" src="/linkit-card.png" alt="" aria-hidden="true" />
+                    <img className="app-card-image theme-card theme-card-sage" src="/linkit-card.png" alt="" aria-hidden="true" />
+                  </>
                 )}
               </div>
               <div className="app-content">
