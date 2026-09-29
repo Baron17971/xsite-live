@@ -11,6 +11,19 @@ const appLinks = {
   domiknow: 'https://domiknow.vercel.app'
 };
 
+const projectEditLinks = {
+  mapi: (projectId)=>`https://mapi-interactive.vercel.app/?edit=${encodeURIComponent(projectId)}`
+};
+
+function formatUpdatedDate(value){
+  if(!value) return '';
+  return new Intl.DateTimeFormat('he-IL',{
+    day:'numeric',
+    month:'short',
+    year:'numeric'
+  }).format(new Date(value));
+}
+
 export default function AccountPage(){
   const [loading,setLoading]=useState(true);
   const [user,setUser]=useState(null);
@@ -56,7 +69,7 @@ export default function AccountPage(){
           .eq('status','active'),
         supabase
           .from('teacher_projects')
-          .select('id,app_id,title,thumbnail_url,is_favorite,version,created_at,updated_at')
+          .select('id,app_id,title,thumbnail_url,image,is_favorite,version,created_at,updated_at')
           .eq('teacher_id',currentUser.id)
           .order('updated_at',{ascending:false})
       ]);
@@ -188,15 +201,17 @@ export default function AccountPage(){
             return (
               <article className="my-app-card" key={app.id}>
                 <div className="my-app-card-top">
-                  <span className="my-app-badge">
-                    {app.access_mode==='open' ? 'פתוח בתקופת הפיתוח' : entitled?.source_type==='trial' ? 'ניסיון' : 'ברישיון'}
-                  </span>
-                  <h3>{app.name}</h3>
+                  <div className="my-app-card-heading">
+                    <h3>{app.name}</h3>
+                    <span className="my-app-badge">
+                      {app.access_mode==='open' ? 'פתוח בתקופת הפיתוח' : entitled?.source_type==='trial' ? 'ניסיון' : 'ברישיון'}
+                    </span>
+                  </div>
                   <p>{app.description}</p>
                 </div>
                 {href ? (
                   <a className="app-launch" href={href} target="_blank" rel="noreferrer">
-                    לפתיחת האפליקציה <span>←</span>
+                    <span>פתיחה</span><span aria-hidden="true">←</span>
                   </a>
                 ) : (
                   <span className="my-app-coming">תתחבר לאחר שנבנה מחדש</span>
@@ -225,17 +240,38 @@ export default function AccountPage(){
           <div className="library-grid">
             {projects.map(project=>{
               const app=apps.find(item=>item.id===project.app_id);
+              const editHref=projectEditLinks[project.app_id]?.(project.id);
+              const preview=project.thumbnail_url || project.image || '';
               return (
-                <article className="library-card" key={project.id}>
-                  <div className="library-card-meta">
-                    <span>{app?.name || project.app_id}</span>
-                    {project.is_favorite && <span title="מועדף">★</span>}
+                <article className="library-card library-card-rich" key={project.id}>
+                  <div className="library-card-preview">
+                    {preview ? (
+                      <img src={preview} alt="" loading="lazy" />
+                    ) : (
+                      <div className="library-card-preview-fallback">
+                        <span>{app?.name || project.app_id}</span>
+                      </div>
+                    )}
+                    <div className="library-card-preview-label">{app?.name || project.app_id}</div>
                   </div>
-                  <h3>{project.title}</h3>
-                  <p>עודכן {new Date(project.updated_at).toLocaleDateString('he-IL')}</p>
-                  <div className="library-card-actions">
-                    <button type="button" disabled>פתח</button>
-                    <button type="button" disabled>שכפל</button>
+
+                  <div className="library-card-body">
+                    <div className="library-card-meta">
+                      <span>{app?.name || project.app_id}</span>
+                      {project.is_favorite && <span title="מועדף">★</span>}
+                    </div>
+                    <h3>{project.title}</h3>
+                    <p className="library-updated">עודכן {formatUpdatedDate(project.updated_at)}</p>
+
+                    <div className="library-card-actions">
+                      {editHref ? (
+                        <a className="library-open-edit" href={editHref} target="_blank" rel="noreferrer">
+                          <span>פתח לעריכה</span><span aria-hidden="true">←</span>
+                        </a>
+                      ) : (
+                        <span className="library-action-coming">פתיחה ישירה תחובר בהמשך</span>
+                      )}
+                    </div>
                   </div>
                 </article>
               );
