@@ -14,6 +14,20 @@ const gradeLabels={
   7:'ז׳',8:'ח׳',9:'ט׳',10:'י׳',11:'י״א',12:'י״ב'
 };
 
+function ThemeAnchors(){
+  return (
+    <>
+      <div id="theme-cream" className="theme-anchor"></div>
+      <div id="theme-sage" className="theme-anchor"></div>
+      <div id="theme-mauve" className="theme-anchor"></div>
+      <div id="theme-ink" className="theme-anchor"></div>
+      <div id="theme-coral" className="theme-anchor"></div>
+      <div id="theme-cocoa" className="theme-anchor"></div>
+      <div id="theme-botanical" className="theme-anchor"></div>
+    </>
+  );
+}
+
 function formatDate(value){
   if(!value) return '';
   return new Intl.DateTimeFormat('he-IL',{
@@ -150,12 +164,13 @@ export default function LibraryPage(){
   }
 
   if(loading){
-    return <main className="account-page library-page"><SiteHeader active="library"/><section className="account-loading">טוען את הפעילויות שלך…</section></main>;
+    return <main className="account-page library-page"><ThemeAnchors/><SiteHeader active="library"/><section className="account-loading">טוען את הפעילויות שלך…</section></main>;
   }
 
   if(!user){
     return (
       <main className="account-page library-page">
+        <ThemeAnchors />
         <SiteHeader active="library"/>
         <section className="account-login-state">
           <p className="eyebrow">הפעילויות שלי</p>
@@ -170,6 +185,7 @@ export default function LibraryPage(){
 
   return (
     <main className="account-page library-page">
+      <ThemeAnchors />
       <SiteHeader active="library"/>
 
       <section className="library-hero">
