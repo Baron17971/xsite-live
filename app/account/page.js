@@ -245,7 +245,7 @@ export default function AccountPage(){
               const preview=project.thumbnail_url || project.image || '';
               return (
                 <article className="library-card library-card-rich" key={project.id}>
-                  <div className="library-card-preview">
+                  <div className={`library-card-preview ${project.app_id==="bingo"?"library-card-preview-bingo":""}`}>
                     {preview ? (
                       <img src={preview} alt="" loading="lazy" />
                     ) : (

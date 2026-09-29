@@ -3784,3 +3784,32 @@ main:has(#theme-botanical:target) .domiknow-botanical-image{
   .library-card-body{padding:16px 17px 18px}
   .library-card-rich h3{font-size:22px}
 }
+
+
+/* Bingo library preview: show the whole saved card instead of cropping it */
+.library-card-preview-bingo{
+  aspect-ratio:4/3;
+  background:#fffdf9;
+  padding:10px;
+}
+.library-card-preview-bingo img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  object-position:center top;
+  border-radius:16px;
+  background:#fff;
+}
+.library-card-preview-bingo:after{
+  display:none;
+}
+.library-card-preview-bingo .library-card-preview-label{
+  right:18px;
+  bottom:16px;
+}
+@media(max-width:680px){
+  .library-card-preview-bingo{
+    aspect-ratio:1/1;
+    padding:8px;
+  }
+}
