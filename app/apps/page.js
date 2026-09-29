@@ -28,7 +28,7 @@ const apps = [
     ]
   },
   {
-    name: 'LinkIt',
+    name: 'LinkUp',
     eyebrow: 'מחברים ידע',
     description: 'משחק כיתתי שבו כל תשובה נכונה פותחת חוליה בשרשרת וחושפת עוד אות במשפט מסתורין.',
     href: 'https://linkup-classroom-live.vercel.app',
@@ -128,7 +128,7 @@ export default function AppsPage(){
                 )}
                 {app.kind === 'linkit' && (
                   <>
-                    <img className="catalog-image theme-card theme-card-mauve" src="/xsite-linkit-new-palette.png" alt="LinkIt" />
+                    <img className="catalog-image theme-card theme-card-mauve" src="/xsite-linkit-new-palette.png" alt="LinkUp" />
                     <img className="catalog-image theme-card theme-card-cream" src="/linkit-card.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-sage" src="/linkit-card.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-ink" src="/linkit-card-ink-teal.png" alt="" aria-hidden="true" />
