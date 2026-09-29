@@ -16,6 +16,20 @@ const projectEditLinks = {
   bingo: (projectId)=>`https://classroom-bingo-live.vercel.app/?edit=${encodeURIComponent(projectId)}`
 };
 
+function ThemeAnchors(){
+  return (
+    <>
+      <div id="theme-cream" className="theme-anchor"></div>
+      <div id="theme-sage" className="theme-anchor"></div>
+      <div id="theme-mauve" className="theme-anchor"></div>
+      <div id="theme-ink" className="theme-anchor"></div>
+      <div id="theme-coral" className="theme-anchor"></div>
+      <div id="theme-cocoa" className="theme-anchor"></div>
+      <div id="theme-botanical" className="theme-anchor"></div>
+    </>
+  );
+}
+
 function formatUpdatedDate(value){
   if(!value) return '';
   return new Intl.DateTimeFormat('he-IL',{
@@ -136,6 +150,7 @@ export default function AccountPage(){
   if(loading){
     return (
       <main className="account-page">
+        <ThemeAnchors />
         <SiteHeader active="account" />
         <section className="account-loading">טוען את האזור האישי…</section>
       </main>
@@ -145,6 +160,7 @@ export default function AccountPage(){
   if(!user){
     return (
       <main className="account-page">
+        <ThemeAnchors />
         <SiteHeader active="account" />
         <section className="account-login-state">
           <p className="eyebrow">האזור האישי</p>
@@ -162,6 +178,7 @@ export default function AccountPage(){
 
   return (
     <main className="account-page">
+      <ThemeAnchors />
       <SiteHeader active="account" />
 
       <section className="account-hero">
