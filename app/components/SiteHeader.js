@@ -253,6 +253,7 @@ export default function SiteHeader({ active='home' }){
         <a className={active==='home' ? 'active' : ''} href="/">בית</a>
         <a className={active==='apps' ? 'active' : ''} href="/apps">אפליקציות</a>
         <a className={active==='account' ? 'active' : ''} href="/account">האזור שלי</a>
+        <a className={active==='library' ? 'active' : ''} href="/library">הפעילויות שלי</a>
         <a href="/#teachers">למורים</a>
         <a href="/#how">איך זה עובד</a>
         <a href="/#about">אודות</a>
