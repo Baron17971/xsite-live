@@ -70,7 +70,7 @@ export default function AccountPage(){
           .eq('status','active'),
         supabase
           .from('teacher_projects')
-          .select('id,app_id,title,thumbnail_url,image,is_favorite,version,created_at,updated_at')
+          .select('id,app_id,title,subject,grade,thumbnail_url,image,is_favorite,version,created_at,updated_at')
           .eq('teacher_id',currentUser.id)
           .order('updated_at',{ascending:false})
       ]);
@@ -227,8 +227,9 @@ export default function AccountPage(){
         <div className="account-section-head">
           <div>
             <p className="eyebrow">הספרייה שלי</p>
-            <h2>הפעילויות ששמרת</h2>
+            <h2>הפעילויות האחרונות</h2>
           </div>
+          {projects.length>0 && <a className="soft" href="/library">לכל הפעילויות שלי</a>}
         </div>
 
         {projects.length===0 ? (
@@ -239,7 +240,7 @@ export default function AccountPage(){
           </div>
         ) : (
           <div className="library-grid">
-            {projects.map(project=>{
+            {projects.slice(0,4).map(project=>{
               const app=apps.find(item=>item.id===project.app_id);
               const editHref=projectEditLinks[project.app_id]?.(project.id);
               const preview=project.thumbnail_url || project.image || '';
