@@ -41,6 +41,20 @@ const apps = [
     ]
   },
   {
+    name: 'DomiKnow',
+    eyebrow: 'דומינו לימודי כיתתי',
+    description: 'מחברים מושגים, בונים שרשרת ולומדים יחד. משחק דומינו כיתתי עם מצב קלאסי ומרוץ קבוצות בזמן אמת.',
+    href: 'https://domiknow.vercel.app',
+    image: '/domiknow-card.png',
+    kind: 'domiknow',
+    tags: ['משחקיות','מושגים והתאמות','עבודה בקבוצות','חזרה ותרגול'],
+    details: [
+      ['מה עושים?', 'המורה מזין מאגר של מושגים והתאמות. כל תלמיד מקבל קוביית דומינו אישית והכיתה בונה את השרשרת לפי ההתאמות הנכונות.'],
+      ['מצבי משחק', 'Classic — שרשרת משותפת לכל הכיתה; Run — מרוץ קבוצות בזמן אמת.'],
+      ['מתאים ל־', 'חזרה, תרגול מושגים, סיכום יחידה והפעלה כיתתית שיתופית או תחרותית.']
+    ]
+  },
+  {
     name: 'MAPI',
     eyebrow: 'מסלול למידה אינטראקטיבי',
     description: 'יוצרים מסלול למידה על גבי תמונה או מפה, עם שאלות, משימות וסרטונים. התלמיד מתקדם בין התחנות ובסיום מתקבל סיכום תשובות מלא למורה.',
@@ -122,6 +136,12 @@ export default function AppsPage(){
                     <img className="catalog-image theme-card theme-card-cocoa" src="/linkit-card-cocoa-celery.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-botanical" src="/linkit-botanical.png" alt="" aria-hidden="true" />
                   </>
+                )}
+                {app.kind === 'domiknow' && (
+                  <div className="catalog-image domiknow-card-fallback" role="img" aria-label="DomiKnow">
+                    <span className="domiknow-card-title">DomiKnow</span>
+                    <span className="domiknow-card-tagline">כל הכיתה. שרשרת אחת של ידע.</span>
+                  </div>
                 )}
                 {app.kind === 'mapi' && (
                   <>
