@@ -12,7 +12,8 @@ const appLinks = {
 };
 
 const projectEditLinks = {
-  mapi: (projectId)=>`https://mapi-interactive.vercel.app/?edit=${encodeURIComponent(projectId)}`
+  mapi: (projectId)=>`https://mapi-interactive.vercel.app/?edit=${encodeURIComponent(projectId)}`,
+  bingo: (projectId)=>`https://classroom-bingo-live.vercel.app/?edit=${encodeURIComponent(projectId)}`
 };
 
 function formatUpdatedDate(value){
