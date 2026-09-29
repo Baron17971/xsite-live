@@ -3589,3 +3589,37 @@ main.catalog-page:has(#theme-botanical:target) .catalog-card.mapi .mapi-botanica
   transform:scale(1.07);
   transform-origin:center;
 }
+
+
+/* DomiKnow card placeholder — replaced by uploaded artwork when available */
+.app-card.domiknow .app-preview,
+.catalog-card.domiknow .catalog-image-wrap{
+  background:
+    radial-gradient(circle at 78% 24%,rgba(255,255,255,.82),transparent 24%),
+    linear-gradient(135deg,#EFE8DF 0%,#DDE8E4 52%,#F8F3EB 100%);
+}
+.domiknow-card-fallback{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  text-align:center;
+  color:var(--teal-deep);
+  background:
+    radial-gradient(circle at 72% 24%,rgba(255,255,255,.8),transparent 26%),
+    linear-gradient(135deg,#F4EBDD,#E1EAE4 54%,#F8F3EB);
+}
+.domiknow-card-title{
+  font-size:clamp(30px,4vw,46px);
+  font-weight:800;
+  letter-spacing:-1px;
+}
+.domiknow-card-tagline{
+  font-size:14px;
+  font-weight:700;
+  color:var(--muted);
+}
+.app-card.domiknow .app-content{
+  border-top-color:#7FA49B;
+}
