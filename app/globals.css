@@ -4166,3 +4166,90 @@ main:has(#theme-botanical:target) .soft{
   color:#5F6F56;
   border-color:#D8CFBE;
 }
+
+
+/* Botanical refinement — cream dominant, sage as accent */
+main.account-page:has(#theme-botanical:target){
+  background:
+    radial-gradient(circle at 14% 10%,rgba(229,111,130,.055),transparent 22%),
+    radial-gradient(circle at 88% 18%,rgba(135,146,118,.05),transparent 24%),
+    #F8F3E8;
+}
+main:has(#theme-botanical:target) .account-hero{
+  border-color:#DDD4C5;
+  background:
+    radial-gradient(circle at 88% 16%,rgba(229,111,130,.055),transparent 22%),
+    linear-gradient(135deg,#FFFDF8 0%,#FBF7EF 66%,#F3ECDD 100%);
+  box-shadow:0 18px 46px rgba(95,81,70,.065);
+}
+main:has(#theme-botanical:target) .account-summary>div,
+main:has(#theme-botanical:target) .my-app-card,
+main:has(#theme-botanical:target) .library-card,
+main:has(#theme-botanical:target) .account-loading,
+main:has(#theme-botanical:target) .account-login-state{
+  background:#FFFDF8;
+  border-color:#E1D8C9;
+  box-shadow:0 12px 30px rgba(88,72,61,.045);
+}
+main:has(#theme-botanical:target) .my-app-badge{
+  background:#F2EFE4;
+  color:#65705D;
+  border-color:#DDD8C9;
+}
+main:has(#theme-botanical:target) .app-launch,
+main:has(#theme-botanical:target) .soft{
+  background:linear-gradient(135deg,#F7F1E7,#F4E7E6);
+  color:#5F6F56;
+  border-color:#E0D6C6;
+}
+main:has(#theme-botanical:target) .app-launch:hover,
+main:has(#theme-botanical:target) .soft:hover{
+  background:#F1E9DD;
+  border-color:#D6CBB9;
+}
+main:has(#theme-botanical:target) .library-hero{
+  border-color:#DDD4C5;
+  background:
+    radial-gradient(circle at 86% 14%,rgba(229,111,130,.05),transparent 20%),
+    linear-gradient(135deg,#FFFDF8 0%,#FBF7EF 64%,#F3ECDD 100%);
+  box-shadow:0 12px 34px rgba(88,72,61,.055);
+}
+main:has(#theme-botanical:target) .library-toolbar{
+  border-color:#E0D7C8;
+  background:rgba(255,253,248,.94);
+  box-shadow:0 8px 26px rgba(88,72,61,.04);
+}
+main:has(#theme-botanical:target) .library-count-box{
+  background:#FFFDF8;
+  box-shadow:inset 0 0 0 1px #E4DACB;
+}
+main:has(#theme-botanical:target) .library-search-wrap,
+main:has(#theme-botanical:target) .library-filter-grid select{
+  background:#FFFDF8;
+  border-color:#E1D8C9;
+}
+main:has(#theme-botanical:target) .library-page-card .library-card-meta span{
+  background:#F2EFE4;
+  color:#65705D;
+}
+main:has(#theme-botanical:target) .library-card-preview{
+  background:linear-gradient(145deg,#F1EDE3,#FBF7EF);
+}
+main:has(#theme-botanical:target) .library-card-preview-fallback{
+  background:
+    radial-gradient(circle at 72% 28%,rgba(255,255,255,.88),transparent 26%),
+    linear-gradient(145deg,#F2EEE5,#FBF7EF 58%,#F7E8E6);
+}
+main:has(#theme-botanical:target) .library-empty{
+  background:rgba(255,253,248,.78);
+  border-color:#D9D0C1;
+}
+main:has(#theme-botanical:target) .library-favorite-filter{
+  background:#FFF9EA;
+  color:#6D6257;
+  border-color:#E5D8B6;
+}
+main:has(#theme-botanical:target) .library-favorite-filter.active{
+  background:#F7E7B8;
+  border-color:#D6A24F;
+}
