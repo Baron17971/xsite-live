@@ -138,10 +138,13 @@ export default function AppsPage(){
                   </>
                 )}
                 {app.kind === 'domiknow' && (
-                  <div className="catalog-image domiknow-card-fallback" role="img" aria-label="DomiKnow">
-                    <span className="domiknow-card-title">DomiKnow</span>
-                    <span className="domiknow-card-tagline">כל הכיתה. שרשרת אחת של ידע.</span>
-                  </div>
+                  <>
+                    <div className="catalog-image domiknow-card-fallback" role="img" aria-label="DomiKnow">
+                      <span className="domiknow-card-title">DomiKnow</span>
+                      <span className="domiknow-card-tagline">כל הכיתה. שרשרת אחת של ידע.</span>
+                    </div>
+                    <img className="catalog-image theme-card theme-card-botanical domiknow-botanical-image" src="/DomiKnow-card.png" alt="DomiKnow" />
+                  </>
                 )}
                 {app.kind === 'mapi' && (
                   <>
