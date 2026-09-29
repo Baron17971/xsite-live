@@ -138,11 +138,14 @@ export default function SiteHeader({ active='home' }){
       <div className="actions auth-actions">
         {user ? (
           <div className="logged-user">
-            {user.picture ? (
-              <img className="user-avatar" src={user.picture} alt={user.name} title={user.email || user.name} />
-            ) : (
-              <span className="user-avatar user-initial" title={user.name}>{(user.name || 'מ').slice(0,1)}</span>
-            )}
+            <a className="account-avatar-link" href="/account" aria-label="האזור האישי שלי" title="האזור האישי שלי">
+              {user.picture ? (
+                <img className="user-avatar" src={user.picture} alt={user.name} />
+              ) : (
+                <span className="user-avatar user-initial">{(user.name || 'מ').slice(0,1)}</span>
+              )}
+            </a>
+            <a className="soft account-header-link" href="/account">האזור שלי</a>
             <button className="primary auth-button auth-button-login" onClick={logout}>התנתק</button>
           </div>
         ) : (
@@ -249,6 +252,7 @@ export default function SiteHeader({ active='home' }){
       <nav>
         <a className={active==='home' ? 'active' : ''} href="/">בית</a>
         <a className={active==='apps' ? 'active' : ''} href="/apps">אפליקציות</a>
+        <a className={active==='account' ? 'active' : ''} href="/account">האזור שלי</a>
         <a href="/#teachers">למורים</a>
         <a href="/#how">איך זה עובד</a>
         <a href="/#about">אודות</a>
