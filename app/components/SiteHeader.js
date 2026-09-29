@@ -1,6 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabaseClient';
 
 const themes = [
   ['cream','בורדו + שמנת'],
@@ -12,82 +13,83 @@ const themes = [
   ['botanical','בוטני חם']
 ];
 
-function loadGoogleScript(){
-  return new Promise((resolve,reject)=>{
-    if(window.google?.accounts?.oauth2) return resolve();
-    const existing=document.querySelector('script[data-xsite-google]');
-    if(existing){
-      existing.addEventListener('load',()=>resolve(),{once:true});
-      existing.addEventListener('error',reject,{once:true});
-      return;
-    }
-    const s=document.createElement('script');
-    s.src='https://accounts.google.com/gsi/client';
-    s.async=true;
-    s.defer=true;
-    s.dataset.xsiteGoogle='true';
-    s.onload=()=>resolve();
-    s.onerror=reject;
-    document.head.appendChild(s);
-  });
-}
-
 export default function SiteHeader({ active='home' }){
   const [user,setUser]=useState(null);
   const [busy,setBusy]=useState(false);
   const [loginOpen,setLoginOpen]=useState(false);
   const [authMode,setAuthMode]=useState('login');
   const [basicError,setBasicError]=useState('');
-  const tokenRef=useRef(null);
-  const clientId=process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+  const [authSource,setAuthSource]=useState(null);
 
   useEffect(()=>{
-    try{
-      const saved=sessionStorage.getItem('xsite-google-user');
-      if(saved) setUser(JSON.parse(saved));
-      tokenRef.current=sessionStorage.getItem('xsite-google-token');
-    }catch{}
+    let mounted=true;
+
+    async function loadSession(){
+      const { data } = await supabase.auth.getSession();
+      if(!mounted) return;
+
+      if(data.session?.user){
+        const u=data.session.user;
+        setUser({
+          name:u.user_metadata?.full_name || u.user_metadata?.name || u.email || 'משתמש',
+          email:u.email || '',
+          picture:u.user_metadata?.avatar_url || u.user_metadata?.picture || ''
+        });
+        setAuthSource('supabase');
+        return;
+      }
+
+      try{
+        const saved=sessionStorage.getItem('xsite-basic-user');
+        if(saved){
+          setUser(JSON.parse(saved));
+          setAuthSource('basic');
+        }
+      }catch{}
+    }
+
+    loadSession();
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event,session)=>{
+      if(!mounted) return;
+      if(session?.user){
+        const u=session.user;
+        setUser({
+          name:u.user_metadata?.full_name || u.user_metadata?.name || u.email || 'משתמש',
+          email:u.email || '',
+          picture:u.user_metadata?.avatar_url || u.user_metadata?.picture || ''
+        });
+        setAuthSource('supabase');
+      }else if(authSource==='supabase'){
+        setUser(null);
+        setAuthSource(null);
+      }
+    });
+
+    return ()=>{
+      mounted=false;
+      listener.subscription.unsubscribe();
+    };
   },[]);
 
   async function googleLogin(){
-    if(!clientId){
-      window.alert('חיבור Google טרם הוגדר. יש להוסיף NEXT_PUBLIC_GOOGLE_CLIENT_ID ב־Vercel.');
-      return;
-    }
     setBusy(true);
+    setBasicError('');
     try{
-      await loadGoogleScript();
-      const client=window.google.accounts.oauth2.initTokenClient({
-        client_id:clientId,
-        scope:'openid email profile',
-        callback:async(response)=>{
-          try{
-            if(response.error) throw new Error(response.error);
-            const profile=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{
-              headers:{Authorization:`Bearer ${response.access_token}`}
-            }).then(r=>{
-              if(!r.ok) throw new Error('userinfo');
-              return r.json();
-            });
-            const nextUser={
-              name:profile.name || profile.email || 'משתמש',
-              email:profile.email || '',
-              picture:profile.picture || ''
-            };
-            tokenRef.current=response.access_token;
-            sessionStorage.setItem('xsite-google-token',response.access_token);
-            sessionStorage.setItem('xsite-google-user',JSON.stringify(nextUser));
-            setUser(nextUser);
-            setLoginOpen(false);
-          }finally{
-            setBusy(false);
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider:'google',
+        options:{
+          redirectTo:`${window.location.origin}/`,
+          queryParams:{
+            access_type:'offline',
+            prompt:'select_account'
           }
         }
       });
-      client.requestAccessToken({prompt:'select_account'});
+      if(error) throw error;
     }catch{
       setBusy(false);
-      window.alert('לא הצלחנו לפתוח את ההתחברות ל־Google. נסו שוב.');
+      setBasicError('לא הצלחנו לפתוח את ההתחברות ל־Google. נסו שוב.');
     }
   }
 
@@ -111,10 +113,9 @@ export default function SiteHeader({ active='home' }){
         email:'',
         picture:''
       };
-      sessionStorage.setItem('xsite-google-user',JSON.stringify(nextUser));
-      sessionStorage.removeItem('xsite-google-token');
-      tokenRef.current=null;
+      sessionStorage.setItem('xsite-basic-user',JSON.stringify(nextUser));
       setUser(nextUser);
+      setAuthSource('basic');
       setLoginOpen(false);
     }catch(error){
       setBasicError(error.message || 'לא הצלחנו להתחבר');
@@ -124,17 +125,12 @@ export default function SiteHeader({ active='home' }){
   }
 
   async function logout(){
-    const token=tokenRef.current;
-    try{
-      if(token){
-        await loadGoogleScript();
-        window.google.accounts.oauth2.revoke(token,()=>{});
-      }
-    }catch{}
-    tokenRef.current=null;
-    sessionStorage.removeItem('xsite-google-token');
-    sessionStorage.removeItem('xsite-google-user');
+    if(authSource==='supabase'){
+      await supabase.auth.signOut();
+    }
+    sessionStorage.removeItem('xsite-basic-user');
     setUser(null);
+    setAuthSource(null);
   }
 
   return (
