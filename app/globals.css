@@ -4450,3 +4450,29 @@ main:has(#theme-botanical:target) .library-filter-grid select{
 }
 .xsquared-card-title{font-size:24px;font-weight:900}
 .xsquared-card-tagline{font-size:13px;font-weight:700;opacity:.72}
+
+
+/* Four on Four app card */
+.fouronfour-card-fallback{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  background:linear-gradient(145deg,#f8f1e6,#edf3ef);
+  color:#274f61;
+}
+.fouronfour-card-symbol{
+  display:grid;
+  place-items:center;
+  width:74px;
+  height:74px;
+  border-radius:22px;
+  background:linear-gradient(145deg,#3f6f79,#2d515c);
+  color:#fff8eb;
+  font-size:28px;
+  font-weight:900;
+  box-shadow:0 12px 25px rgba(42,64,74,.2);
+}
+.fouronfour-card-title{font-size:24px;font-weight:900}
+.fouronfour-card-tagline{font-size:13px;font-weight:700;opacity:.72;text-align:center}
