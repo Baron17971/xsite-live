@@ -992,7 +992,9 @@ function decodeGameConfig(){
 }
 const SB_URL="https://zydhfhfhspflvhlpmokj.supabase.co";
 const SB_KEY="sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x";
-const SESSION_ID=new URLSearchParams(location.search).get("session");
+const PAGE_QS=new URLSearchParams(location.search);
+const SESSION_ID=PAGE_QS.get("session");
+const PREVIEW_MODE=PAGE_QS.get("preview")==="1";
 
 async function sbRequest(path,options={}){
   const headers={
@@ -1850,7 +1852,7 @@ document.getElementById("joinGameBtn").addEventListener("click",async()=>{
 });
 
 async function resumeSavedPlayer(){
-  if(!SESSION_ID||PROJECTOR_MODE)return false;
+  if(!SESSION_ID||PREVIEW_MODE)return false;
   let saved=null;
   try{saved=JSON.parse(localStorage.getItem("fourOnFourPlayer:"+SESSION_ID)||"null")}catch(e){}
   if(!saved?.id||!saved?.token)return false;
@@ -1883,6 +1885,18 @@ async function resumeSavedPlayer(){
   }
 }
 
+
+function enterTeacherPreview(){
+  PLAYER_NAME="תצוגת מורה";
+  document.getElementById("playerName").textContent=PLAYER_NAME;
+  document.getElementById("waitingPlayerName").textContent=PLAYER_NAME;
+  document.getElementById("joinModal").classList.remove("show");
+  document.getElementById("waitingModal").classList.remove("show");
+  document.getElementById("instructionsModal").classList.add("show");
+  const status=document.getElementById("playerStatus");
+  if(status)status.textContent="תצוגה בלבד";
+}
+
 document.getElementById("playerNameInput").addEventListener("keydown",ev=>{
   if(ev.key==="Enter")document.getElementById("joinGameBtn").click();
 });
@@ -1903,7 +1917,8 @@ window.addEventListener("orientationchange",()=>{
 
 renderPodium();
 shuffle();
-if(!PROJECTOR_MODE)resumeSavedPlayer();
+if(PREVIEW_MODE)enterTeacherPreview();
+else resumeSavedPlayer();
 </script>
 </body>
 </html>
