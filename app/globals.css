@@ -4476,3 +4476,30 @@ main:has(#theme-botanical:target) .library-filter-grid select{
 }
 .fouronfour-card-title{font-size:24px;font-weight:900}
 .fouronfour-card-tagline{font-size:13px;font-weight:700;opacity:.72;text-align:center}
+
+
+/* Xsite catalog fallbacks for the two puzzle games */
+.catalog-game-fallback{
+  display:flex!important;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  background:linear-gradient(145deg,#f8f1e6,#edf3ef);
+  color:#274f61;
+}
+.catalog-game-symbol{
+  display:grid;
+  place-items:center;
+  width:86px;
+  height:86px;
+  border-radius:24px;
+  background:linear-gradient(145deg,#365a68,#263f4a);
+  color:#fff8eb;
+  font-size:34px;
+  font-weight:900;
+  box-shadow:0 14px 28px rgba(42,64,74,.20);
+}
+.catalog-game-title{font-size:26px;font-weight:900}
+.catalog-game-tagline{font-size:14px;font-weight:700;opacity:.72;text-align:center}
+.fouronfour-catalog-fallback .catalog-game-symbol{background:linear-gradient(145deg,#3f6f79,#2d515c)}
