@@ -379,6 +379,22 @@ button{cursor:pointer}
 .proj-edge.top{top:3%;left:27%;width:46%;height:25%}.proj-edge.bottom{bottom:3%;left:27%;width:46%;height:25%}
 .proj-edge.left{left:3%;top:37%;width:28%;height:26%}.proj-edge.right{right:3%;top:37%;width:28%;height:26%}
 .proj-x{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;color:#253b46;font-weight:950;font-size:18px}
+
+/* Xsite teacher workflow shell */
+.teacher-entry{display:grid;gap:12px}
+.teacher-entry-actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.teacher-entry-panel{margin-top:12px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#fffdfa}
+.teacher-entry-panel[hidden]{display:none}
+.teacher-entry-panel .row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+.teacher-status{display:inline-flex;align-items:center;gap:6px;border:1px solid #d9e4df;background:#f7faf8;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:900;color:#557178}
+.editor-shell{margin-top:10px}
+.editor-shell[hidden]{display:none}
+.editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.management-note{font-size:12px;color:var(--muted);margin-top:7px}
+@media(max-width:720px){
+  .teacher-entry-actions{grid-template-columns:1fr}
+  .teacher-entry-panel .row{grid-template-columns:1fr}
+}
 </style>
 </head>
 <body>
@@ -388,22 +404,70 @@ button{cursor:pointer}
       <div class="logo">X²</div>
       <div>
         <h1>X בריבוע — מורה</h1>
-        <small>יוצרים פעילות, טוענים זוגות ופותחים כיתה</small>
+        <small>יוצרים פעילות, טוענים זוגות ומנהלים כיתה חיה</small>
       </div>
     </div>
-    <button class="projector-btn" id="openProjector" disabled style="display:none">מצב מקרן</button>
+    <div style="display:flex;gap:8px;align-items:center"><span class="teacher-status" id="activityStatus">טיוטה</span><button class="projector-btn" id="openProjector" disabled style="display:none">פתח מקרן</button></div>
   </header>
+
+  <section class="card teacher-entry" id="teacherEntry">
+    <div>
+      <h2 style="margin-bottom:4px">כניסת מורה</h2>
+      <div class="sub" style="margin:0">התחל פעילות חדשה, טען פעילות ששמרת או חזור לכיתה קיימת באמצעות קוד.</div>
+    </div>
+    <div class="teacher-entry-actions">
+      <button class="btn primary" id="newActivityBtn">צור פעילות חדשה</button>
+      <button class="btn soft" id="loadActivityBtn">טען פעילות קיימת</button>
+      <button class="btn soft" id="openByCodeBtn">פתח באמצעות קוד</button>
+    </div>
+    <div class="teacher-entry-panel" id="loadActivityPanel" hidden>
+      <div class="row">
+        <div class="field">
+          <label>פעילות שמורה</label>
+          <select id="savedActivitySelect"><option value="">טוען פעילויות…</option></select>
+        </div>
+        <button class="btn primary" id="loadSelectedActivity">פתח פעילות</button>
+      </div>
+      <div class="management-note" id="savedActivityMessage"></div>
+    </div>
+    <div class="teacher-entry-panel" id="openCodePanel" hidden>
+      <div class="row">
+        <div class="field">
+          <label>קוד פעילות / כיתה</label>
+          <input id="existingCodeInput" inputmode="numeric" maxlength="6" placeholder="לדוגמה: 482731">
+        </div>
+        <button class="btn primary" id="openExistingCode">פתח פעילות</button>
+      </div>
+      <div class="management-note" id="existingCodeMessage">אפשר לחזור לכיתה שנפתחה בדפדפן זה גם לאחר סגירה ופתיחה מחדש.</div>
+    </div>
+  </section>
 
   <section class="card">
     <h2>1. פרטי הפעילות</h2>
+    <input id="activityName" type="hidden" value="">
     <div class="grid-3">
-      <div class="field"><label>שם הפעילות</label><input id="activityName" value="התאמות בביולוגיה"></div>
-      <div class="field"><label>מקצוע</label><input id="subject" value="ביולוגיה"></div>
-      <div class="field"><label>כיתה</label><input id="className" value="י׳"></div>
-    </div>
-    <div class="field" style="margin-top:10px">
-      <label>נושא / מיקוד</label>
-      <input id="topic" value="אברוני התא ותהליכים תאיים">
+      <div class="field">
+        <label>מקצוע</label>
+        <select id="subject">
+          <option value="">בחר מקצוע</option>
+          <option>אני ישראלי</option><option>ביולוגיה</option><option>ביוטכנולוגיה</option>
+          <option>מדעים</option><option>מתמטיקה</option><option>עברית</option>
+          <option>אנגלית</option><option>היסטוריה</option><option>תנ״ך</option>
+          <option>ספרות</option><option>אזרחות</option><option>גאוגרפיה</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>נושא</label>
+        <input id="topic" value="" placeholder="לדוגמה: אברוני התא ותהליכים תאיים">
+      </div>
+      <div class="field">
+        <label>כיתה</label>
+        <select id="className">
+          <option value="">בחר כיתה</option>
+          <option>א׳</option><option>ב׳</option><option>ג׳</option><option>ד׳</option><option>ה׳</option><option>ו׳</option>
+          <option>ז׳</option><option>ח׳</option><option>ט׳</option><option>י׳</option><option>י״א</option><option>י״ב</option>
+        </select>
+      </div>
     </div>
   </section>
 
@@ -433,7 +497,7 @@ button{cursor:pointer}
     <h2>4. טעינת מאגר</h2>
     <div class="sub">הדבק כאן את הפלט שקיבלת. המערכת מקבלת גם מספור, נקודות, Markdown וסוגים שונים של קו מפריד. כל זוג צריכה להכיל 2 מושגים.</div>
     <div class="field">
-      <textarea id="rawInput" placeholder="מיטוכונדריה | הפקת אנרגיה&#10;גלוקוז | חמצן | מיטוכונדריה | ATP"></textarea><div id="pasteHint" style="font-size:12px;color:var(--muted);margin-top:6px">ממתין להדבקה…</div>
+      <textarea id="rawInput" placeholder="מיטוכונדריה | הפקת אנרגיה&#10;גרעין | מכיל DNA"></textarea><div id="pasteHint" style="font-size:12px;color:var(--muted);margin-top:6px">ממתין להדבקה…</div>
     </div>
     <div class="btn-row" style="margin-top:10px">
       <button class="btn primary" id="parseBtn">טען למאגר</button>
@@ -449,9 +513,15 @@ button{cursor:pointer}
         <h2 style="margin:0">5. בדיקה ועריכה</h2>
         <div class="groups-count" id="groupsCount">0 זוגות נטענו</div>
       </div>
-      <button class="btn gold" id="addGroup">+ הוסף זוג</button>
+      <button class="btn gold" id="toggleEditor">ערוך מושגים</button>
     </div>
-    <div class="groups" id="groups"></div>
+    <div class="editor-shell" id="editorShell" hidden>
+      <div class="editor-actions">
+        <button class="btn soft" id="addGroup">+ הוסף זוג</button>
+        <button class="btn primary" id="saveGroupChanges">שמור שינויים</button>
+      </div>
+      <div class="groups" id="groups"></div>
+    </div>
   </section>
 
   
@@ -460,14 +530,14 @@ button{cursor:pointer}
   <h2>6. סיום יצירת המשחק</h2>
   <div class="sub">אחרי שבדקת את הזוגות, צור את המשחק. לאחר מכן אפשר לשמור אותו בארכיון האישי, לפתוח כיתה חיה — או לעשות את שניהם.</div>
 
-  <button class="create-game-btn" id="createGame">צור משחק</button>
+  <button class="create-game-btn" id="createGame">צור פעילות</button>
 
   <div id="saveStage" hidden>
     <div class="save-title">המשחק מוכן ✓</div>
     <div class="save-sub">בחר מה לעשות עכשיו:</div>
 
     <div class="flow-actions">
-      <button class="archive-btn" id="saveArchive">שמור בארכיון האישי</button>
+      <button class="archive-btn" id="saveArchive">העבר לארכיון</button>
       <button class="open-class-btn" id="openClass">פתח כיתה</button>
     </div>
 
@@ -491,13 +561,13 @@ button{cursor:pointer}
       </div>
 
       <div class="student-link-row">
-        <button class="btn soft" id="copyStudentLink">העתק קישור כתלמיד</button>
-        <button class="btn soft" id="openAsStudent">פתח כתלמיד</button>
+        <button class="btn soft" id="copyStudentLink">העתק קישור תלמיד</button>
+        <button class="btn soft" id="openAsStudent">צפה כתלמיד</button>
       </div>
 
       <div class="launch">
         <button class="btn primary" id="newCode">צור קוד חדש</button>
-        <button class="btn primary" id="openProjectorInline">פתח מצב מקרן</button>
+        <button class="btn primary" id="openProjectorInline">פתח מקרן</button>
       </div>
     </div>
 
@@ -574,6 +644,71 @@ const els={
   metricVisible:document.getElementById("metricVisible")
 };
 
+const DRAFT_KEY="xSquaredTeacherDraftV1";
+function derivedActivityName(){
+  const topic=els.topic.value.trim();
+  return topic?("X בריבוע — "+topic):"X בריבוע";
+}
+function syncDerivedActivityName(){els.activityName.value=derivedActivityName();}
+function setStatus(text){
+  const el=document.getElementById("activityStatus");
+  if(el)el.textContent=text;
+}
+function setSelectValue(select,value){
+  const v=String(value||"");
+  if(!v){select.value="";return;}
+  if(![...select.options].some(o=>o.value===v)){
+    const opt=document.createElement("option");opt.value=v;opt.textContent=v;select.appendChild(opt);
+  }
+  select.value=v;
+}
+function draftPayload(){
+  syncDerivedActivityName();
+  return {
+    subject:els.subject.value,topic:els.topic.value,className:els.className.value,
+    n:state.n,pairs:state.groups.map(g=>Array.isArray(g)?g.slice():g),
+    rawInput:els.rawInput.value,created:state.created,updatedAt:Date.now()
+  };
+}
+function saveDraft(){
+  try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draftPayload()));setStatus(state.created?"מוכנה":"טיוטה");}catch(e){}
+}
+function restoreDraft(){
+  try{
+    const raw=localStorage.getItem(DRAFT_KEY);if(!raw)return false;
+    const d=JSON.parse(raw);if(!d)return false;
+    setSelectValue(els.subject,d.subject||"");
+    setSelectValue(els.className,d.className||"");
+    els.topic.value=d.topic||"";
+    els.rawInput.value=d.rawInput||"";
+    state.n=[3,4,5].includes(Number(d.n))?Number(d.n):3;
+    state.groups=Array.isArray(d.pairs)?d.pairs.map(g=>Array.isArray(g)?g.slice():g):[];
+    state.created=!!d.created;
+    syncDerivedActivityName();
+    document.querySelectorAll(".size-option").forEach(btn=>btn.classList.toggle("active",Number(btn.dataset.n)===state.n));
+    document.getElementById("saveStage").hidden=!state.created;
+    document.getElementById("createGame").textContent=state.created?"צור מחדש":"צור פעילות";
+    setStatus(state.created?"מוכנה":"טיוטה");
+    return true;
+  }catch(e){return false;}
+}
+function resetTeacherDraft(){
+  localStorage.removeItem(DRAFT_KEY);
+  setSelectValue(els.subject,"");
+  setSelectValue(els.className,"");
+  els.topic.value="";
+  els.rawInput.value="";
+  state.n=3;state.groups=[];state.created=false;state.archived=false;state.classOpen=false;state.code="";
+  document.querySelectorAll(".size-option").forEach(btn=>btn.classList.toggle("active",Number(btn.dataset.n)===3));
+  document.getElementById("saveStage").hidden=true;
+  document.getElementById("shareSection").hidden=true;
+  document.getElementById("editorShell").hidden=true;
+  document.getElementById("toggleEditor").textContent="ערוך מושגים";
+  setStatus("טיוטה");
+  syncDerivedActivityName();buildPrompt();renderGroups();renderProjectorBoard();
+}
+
+
 function requiredGroups(){return 2*state.n*state.n}
 function visibleMeetings(){return 2*state.n*(state.n-1)}
 
@@ -606,7 +741,7 @@ function buildPrompt(){
   const k=requiredGroups();
   const subject=els.subject.value.trim()||"המקצוע";
   const cls=els.className.value.trim()||"הכיתה";
-  const topic=els.topic.value.trim()||els.activityName.value.trim()||"הנושא";
+  const topic=els.topic.value.trim()||"הנושא";
 
   els.promptBox.textContent=
 `אני בונה משחק לימודי בשם "X בריבוע" עבור ${cls} במקצוע ${subject}.
@@ -655,15 +790,18 @@ function setSize(n){
   document.querySelectorAll(".size-option").forEach(b=>b.classList.toggle("active",Number(b.dataset.n)===n));
   buildPrompt();
   renderMetrics();
+  saveDraft();
 }
 
 document.querySelectorAll(".size-option").forEach(btn=>{
   btn.addEventListener("click",()=>setSize(Number(btn.dataset.n)));
 });
 
-[els.activityName,els.subject,els.className,els.topic].forEach(el=>el.addEventListener("input",()=>{
+[els.subject,els.className,els.topic].forEach(el=>el.addEventListener("input",()=>{
+  syncDerivedActivityName();
   buildPrompt();
   renderProjectorBoard();
+  saveDraft();
 }));
 
 document.getElementById("copyPrompt").addEventListener("click",async()=>{
@@ -745,6 +883,9 @@ function parseInput(){
   document.getElementById("openProjector").disabled=true;
 
   renderGroups();
+  document.getElementById("editorShell").hidden=true;
+  document.getElementById("toggleEditor").textContent="ערוך מושגים";
+  saveDraft();
 
   const wanted=requiredGroups();
   let msg=`נטענו בהצלחה ${state.groups.length} מתוך ${wanted} זוגות.`;
@@ -771,6 +912,7 @@ els.rawInput.addEventListener("input",()=>{
   const nonEmpty=(els.rawInput.value||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).length;
   document.getElementById("pasteHint").textContent=
     nonEmpty ? `זוהו ${nonEmpty} שורות להטעינה. לחץ "טען למאגר".` : "ממתין להדבקה…";
+  saveDraft();
 });
 
 document.getElementById("loadExample").addEventListener("click",()=>{
@@ -804,6 +946,7 @@ document.getElementById("addGroup").addEventListener("click",()=>{
   if(state.groups.length>=requiredGroups())return;
   state.groups.push(["",""]);
   renderGroups();
+  saveDraft();
 });
 
 
@@ -836,7 +979,7 @@ function renderProjectorBoard(){
   });
   document.getElementById("projSize").textContent=`${state.n}×${state.n}`;
   document.getElementById("projGroups").textContent=`${state.groups.length}/${requiredGroups()}`;
-  const topicText=(els.topic.value||els.activityName.value||"").trim(),classText=(els.className.value||"").trim();
+  const topicText=(els.topic.value||"").trim(),classText=(els.className.value||"").trim();
   const topicEl=document.getElementById("projectorActivityTopic"),classEl=document.getElementById("projectorClassName");
   if(topicEl)topicEl.textContent=topicText?`נושא הפעילות: ${topicText}`:"";
   if(classEl)classEl.textContent=classText?`כיתה: ${classText}`:"";
@@ -853,7 +996,7 @@ function renderGroups(){
       const inp=document.createElement("input");
       inp.value=word;
       inp.placeholder=wi===0?"מושג":"התאמה";
-      inp.addEventListener("input",()=>state.groups[gi][wi]=inp.value);
+      inp.addEventListener("input",()=>{state.groups[gi][wi]=inp.value;saveDraft();});
       words.appendChild(inp);
     });
     els.groups.appendChild(box);
@@ -861,6 +1004,7 @@ function renderGroups(){
   els.groupsCount.textContent=`${state.groups.length} זוגות נטענו · נדרשות ${requiredGroups()}`;
   renderMetrics();
   renderProjectorBoard();
+  saveDraft();
 }
 
 function encodeGameConfig(){
@@ -961,7 +1105,7 @@ async function saveToXsiteArchive(project){
     body:JSON.stringify({
       teacher_id:session.user.id,
       app_id:"x-squared",
-      title:(project.activityName||"ללא כותרת").trim()||"ללא כותרת",
+      title:(project.topic?("X בריבוע — "+project.topic):"X בריבוע"),
       subject:(project.subject||"").trim()||null,
       payload:project
     })
@@ -996,7 +1140,8 @@ document.getElementById("saveArchive").addEventListener("click",async()=>{
     const result=await saveToXsiteArchive(payload);
     if(result.ok){
       state.archived=true;
-      status.textContent="המשחק נשמר בארכיון האישי של Xsite ✓";
+      setStatus("בארכיון");
+      status.textContent="הפעילות הועברה לארכיון Xsite ✓";
     }else if(result.reason==="auth"){
       status.textContent="כדי לשמור בארכיון האישי יש להתחבר ל־Xsite.";
     }else{
@@ -1020,7 +1165,7 @@ document.getElementById("openClass").addEventListener("click",async()=>{
       const res=await fetch(SB_URL+"/rest/v1/rpc/x_squared_create_session",{
         method:"POST",headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json"},
         body:JSON.stringify({
-          p_code:code,p_activity_name:els.activityName.value.trim(),p_subject:els.subject.value.trim(),
+          p_code:code,p_activity_name:derivedActivityName(),p_subject:els.subject.value.trim(),
           p_class_name:els.className.value.trim(),p_topic:els.topic.value.trim(),p_board_size:state.n,
           p_pairs:state.groups.slice(0,requiredGroups()),p_host_token:hostToken
         })
@@ -1031,6 +1176,8 @@ document.getElementById("openClass").addEventListener("click",async()=>{
   if(!created){btn.disabled=false;btn.textContent="פתח כיתה";alert("לא הצלחנו לפתוח כיתה כרגע. נסה שוב.");return;}
   sessionStorage.setItem("xSquaredHostToken",hostToken);
   sessionStorage.setItem("xSquaredSessionId",created.id);
+  try{localStorage.setItem("xSquaredLive:"+created.code,JSON.stringify({sessionId:created.id,hostToken,code:created.code,updatedAt:Date.now()}));}catch(e){}
+  saveDraft();
   window.location.href="class.html?session="+encodeURIComponent(created.id)+"&host="+encodeURIComponent(hostToken);
 });
 
@@ -1040,7 +1187,7 @@ document.getElementById("copyStudentLink").addEventListener("click",async()=>{
   const btn=document.getElementById("copyStudentLink");
   const ok=await copyTextRobust(joinUrl());
   btn.textContent=ok?"הקישור הועתק ✓":"לא ניתן להעתיק";
-  setTimeout(()=>btn.textContent="העתק קישור כתלמיד",1400);
+  setTimeout(()=>btn.textContent="העתק קישור תלמיד",1400);
 });
 
 document.getElementById("openAsStudent").addEventListener("click",()=>{
@@ -1060,6 +1207,11 @@ document.getElementById("createGame").addEventListener("click",()=>{
     return;
   }
 
+  if(!els.subject.value.trim()||!els.topic.value.trim()||!els.className.value.trim()){
+    alert("יש להשלים מקצוע, נושא וכיתה לפני יצירת הפעילות.");
+    return;
+  }
+  syncDerivedActivityName();
   state.created=true;
   state.archived=false;
   state.classOpen=false;
@@ -1068,6 +1220,8 @@ document.getElementById("createGame").addEventListener("click",()=>{
   document.getElementById("shareSection").hidden=true;
   document.getElementById("openProjector").disabled=true;
   document.getElementById("createGame").textContent="צור מחדש";
+  setStatus("מוכנה");
+  saveDraft();
   document.getElementById("archiveStatus").textContent="";
   document.getElementById("flowNote").textContent=
     "המשחק מוכן. אפשר לשמור אותו בארכיון האישי ו/או לפתוח כיתה חיה.";
@@ -1077,7 +1231,7 @@ document.getElementById("createGame").addEventListener("click",()=>{
 
 document.getElementById("openProjector").addEventListener("click",()=>{
   if(!state.classOpen)return;
-  document.getElementById("projTitle").textContent=els.activityName.value||"X בריבוע";
+  document.getElementById("projTitle").textContent=derivedActivityName();
   document.getElementById("projSubtitle").textContent=`${els.subject.value||""} · ${els.className.value||""}`;
   drawQr();
   renderProjectorBoard();
@@ -1116,10 +1270,10 @@ async function loadXsiteProjectFromUrl(){
     }
 
     const p=project.payload;
-    els.activityName.value=p.activityName||project.title||"";
-    els.subject.value=p.subject||"";
-    els.className.value=p.className||"";
+    setSelectValue(els.subject,p.subject||"");
+    setSelectValue(els.className,p.className||"");
     els.topic.value=p.topic||"";
+    syncDerivedActivityName();
     state.n=Number(p.n)||3;
     state.groups=Array.isArray(p.pairs)?p.pairs.map(g=>Array.isArray(g)?g.slice():g):[];
 
@@ -1130,17 +1284,84 @@ async function loadXsiteProjectFromUrl(){
     buildPrompt();
     renderGroups();
     renderProjectorBoard();
+    state.created=true;
+    document.getElementById("saveStage").hidden=false;
+    document.getElementById("createGame").textContent="צור מחדש";
+    setStatus("מוכנה");
+    saveDraft();
     document.getElementById("flowNote").textContent="הפעילות נטענה מהספרייה האישית של Xsite. אפשר לערוך וליצור מחדש.";
   }catch(e){
     alert("לא הצלחנו לפתוח את הפעילות מהספרייה.");
   }
 }
 
+
+async function loadSavedActivities(){
+  const panel=document.getElementById("loadActivityPanel");
+  const select=document.getElementById("savedActivitySelect");
+  const msg=document.getElementById("savedActivityMessage");
+  const session=getXsiteAuthSession();
+  panel.hidden=false;
+  document.getElementById("openCodePanel").hidden=true;
+  if(!session){
+    select.innerHTML='<option value="">נדרשת התחברות ל־Xsite</option>';
+    msg.textContent="התחבר ל־Xsite כדי לטעון פעילויות מהספרייה האישית.";
+    return;
+  }
+  select.innerHTML='<option value="">טוען פעילויות…</option>';
+  msg.textContent="";
+  try{
+    const res=await fetch("https://zydhfhfhspflvhlpmokj.supabase.co/rest/v1/teacher_projects?app_id=eq.x-squared&teacher_id=eq."+encodeURIComponent(session.user.id)+"&select=id,title,updated_at&order=updated_at.desc&limit=50",{
+      headers:{apikey:"sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x",Authorization:"Bearer "+session.access_token}
+    });
+    const rows=await res.json();
+    if(!res.ok)throw new Error("load");
+    if(!rows.length){select.innerHTML='<option value="">אין עדיין פעילויות שמורות</option>';return;}
+    select.innerHTML='<option value="">בחר פעילות</option>'+rows.map(r=>'<option value="'+r.id+'">'+escapeHtml(r.title||"X בריבוע")+'</option>').join("");
+  }catch(e){
+    select.innerHTML='<option value="">לא הצלחנו לטעון</option>';
+    msg.textContent="נסה שוב בעוד רגע.";
+  }
+}
+document.getElementById("newActivityBtn").addEventListener("click",()=>{
+  if((els.topic.value||state.groups.length)&&!confirm("לפתוח פעילות חדשה? הטיוטה הנוכחית תוחלף."))return;
+  resetTeacherDraft();
+  document.getElementById("loadActivityPanel").hidden=true;
+  document.getElementById("openCodePanel").hidden=true;
+});
+document.getElementById("loadActivityBtn").addEventListener("click",loadSavedActivities);
+document.getElementById("openByCodeBtn").addEventListener("click",()=>{
+  document.getElementById("openCodePanel").hidden=false;
+  document.getElementById("loadActivityPanel").hidden=true;
+  document.getElementById("existingCodeInput").focus();
+});
+document.getElementById("loadSelectedActivity").addEventListener("click",()=>{
+  const id=document.getElementById("savedActivitySelect").value;
+  if(!id)return;
+  location.href="teacher.html?edit="+encodeURIComponent(id);
+});
+document.getElementById("openExistingCode").addEventListener("click",async()=>{
+  const code=(document.getElementById("existingCodeInput").value||"").replace(/\D/g,"").slice(0,6);
+  const msg=document.getElementById("existingCodeMessage");
+  if(code.length!==6){msg.textContent="יש להזין קוד בן 6 ספרות.";return;}
+  try{
+    const saved=JSON.parse(localStorage.getItem("xSquaredLive:"+code)||"null");
+    if(saved?.sessionId&&saved?.hostToken){
+      location.href="class.html?session="+encodeURIComponent(saved.sessionId)+"&host="+encodeURIComponent(saved.hostToken);
+      return;
+    }
+  }catch(e){}
+  msg.textContent="לא נמצאה הרשאת מורה לכיתה הזו בדפדפן זה. אפשר לטעון את הפעילות השמורה מהספרייה.";
+});
+
 window.addEventListener("qr-ready",()=>drawQr());
 
+const hasEditProject=new URLSearchParams(location.search).has("edit");
+if(!hasEditProject)restoreDraft();
+syncDerivedActivityName();
 buildPrompt();
 renderGroups();
-setSize(3);
+renderMetrics();
 drawQr();
 renderProjectorBoard();
 loadXsiteProjectFromUrl();
