@@ -6,7 +6,7 @@ const apps = [
     eyebrow: 'משחק כיתתי חי',
     description: 'בינגו לימודי שמאפשר למורה להפעיל כיתה שלמה סביב מושגים, שאלות ואתגר.',
     href: 'https://classroom-bingo-live.vercel.app',
-    image: '/xsite-bingo-baclass-new-palette.png',
+    image: '/bingo-purple.png',
     kind: 'bingo',
     tags: ['משחקיות','חזרה ותרגול','כיתה שלמה'],
     details: [
@@ -19,7 +19,7 @@ const apps = [
     eyebrow: 'חשיבה בזמן אמת',
     description: 'יוצרים ענן מילים כיתתי חי מתשובות התלמידים — בזמן אמת או בחשיפה משותפת בסיום.',
     href: 'https://hebrew-wordcloud-live.vercel.app',
-    image: '/xsite-milim-leanan-new-palette.png',
+    image: '/wordcloud-purple.png',
     kind: 'cloud',
     tags: ['שיתוף','פתיחת שיעור','רפלקציה'],
     details: [
@@ -32,7 +32,7 @@ const apps = [
     eyebrow: 'מחברים ידע',
     description: 'משחק כיתתי שבו כל תשובה נכונה פותחת חוליה בשרשרת וחושפת עוד אות במשפט מסתורין.',
     href: 'https://linkup-classroom-live.vercel.app',
-    image: '/xsite-linkit-new-palette.png',
+    image: '/linkup-purple.png',
     kind: 'linkit',
     tags: ['משחקיות','שליפה','שיתוף'],
     details: [
@@ -106,7 +106,7 @@ export default function AppsPage(){
               <div className="catalog-image-wrap">
                 {app.kind === 'bingo' && (
                   <>
-                    <img className="catalog-image theme-card theme-card-mauve" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />
+                    <img className="catalog-image theme-card theme-card-mauve" src="/bingo-purple.png" alt="Bingo" />
                     <img className="catalog-image theme-card theme-card-cream" src="/bingo-card.png.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-sage" src="/bingo-card.png.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-ink" src="/bingo-card-ink-teal.png" alt="" aria-hidden="true" />
@@ -117,7 +117,7 @@ export default function AppsPage(){
                 )}
                 {app.kind === 'cloud' && (
                   <>
-                    <img className="catalog-image theme-card theme-card-mauve" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />
+                    <img className="catalog-image theme-card theme-card-mauve" src="/wordcloud-purple.png" alt="ענן מילים" />
                     <img className="catalog-image theme-card theme-card-cream" src="/wordcloud-card.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-sage" src="/wordcloud-card.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-ink" src="/wordcloud-card-ink-teal.png" alt="" aria-hidden="true" />
@@ -128,7 +128,7 @@ export default function AppsPage(){
                 )}
                 {app.kind === 'linkit' && (
                   <>
-                    <img className="catalog-image theme-card theme-card-mauve" src="/xsite-linkit-new-palette.png" alt="LinkUp" />
+                    <img className="catalog-image theme-card theme-card-mauve" src="/linkup-purple.png" alt="LinkUp" />
                     <img className="catalog-image theme-card theme-card-cream" src="/linkit-card.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-sage" src="/linkit-card.png" alt="" aria-hidden="true" />
                     <img className="catalog-image theme-card theme-card-ink" src="/linkit-card-ink-teal.png" alt="" aria-hidden="true" />
@@ -143,6 +143,7 @@ export default function AppsPage(){
                       <span className="domiknow-card-title">DomiKnow</span>
                       <span className="domiknow-card-tagline">כל הכיתה. שרשרת אחת של ידע.</span>
                     </div>
+                    <img className="catalog-image theme-card theme-card-mauve" src="/domiknow-purple.png" alt="DomiKnow" />
                     <img className="catalog-image theme-card theme-card-botanical domiknow-botanical-image" src="/DomiKnow-card.png" alt="DomiKnow" />
                   </>
                 )}
@@ -152,6 +153,7 @@ export default function AppsPage(){
                       <span className="mapi-card-title">MAPI</span>
                       <span className="mapi-card-tagline">תמונה אחת, אלף מילים</span>
                     </div>
+                    <img className="catalog-image theme-card theme-card-mauve" src="/mapi-purple.png" alt="MAPI" />
                     <img className="catalog-image theme-card theme-card-botanical mapi-botanical-image" src="/mapi-card.png" alt="MAPI" />
                   </>
                 )}
