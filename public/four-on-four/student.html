@@ -438,7 +438,7 @@ button{
   pointer-events:auto!important;
   user-select:none!important;
   -webkit-user-select:none!important;
-  touch-action:manipulation!important;
+  touch-action:none!important;
   transition:transform .14s ease, box-shadow .14s ease!important;
 }
 .plus-core:active{
@@ -1397,15 +1397,9 @@ function render(){
     `;
 
     d.addEventListener("pointerdown",ev=>{
-      const plus=ev.target.closest(".plus-core");
-      if(plus){
-        ev.preventDefault();
-        ev.stopPropagation();
-        rotateTileFromCenter(idx);
-        return;
-      }
       dragIndex=idx;
       pointerDragging=false;
+      d.dataset.startedOnCenter=ev.target.closest(".plus-core")?"1":"0";
       d.setPointerCapture?.(ev.pointerId);
       d.dataset.startX=ev.clientX;
       d.dataset.startY=ev.clientY;
@@ -1440,11 +1434,17 @@ function render(){
       clearTargets();
 
       removeDragGhost();
+      const startedOnCenter=d.dataset.startedOnCenter==="1";
+
       if(pointerDragging&&targetIndex!==null&&targetIndex!==idx){
         swapTiles(idx,targetIndex);
+      }else if(!pointerDragging&&startedOnCenter){
+        rotateTileFromCenter(idx);
       }else{
         d.classList.remove("dragging");
       }
+
+      delete d.dataset.startedOnCenter;
       dragIndex=null;
       pointerDragging=false;
     });
@@ -1453,6 +1453,7 @@ function render(){
       d.classList.remove("dragging");
       clearTargets();
       removeDragGhost();
+      delete d.dataset.startedOnCenter;
       dragIndex=null;
       pointerDragging=false;
     });
