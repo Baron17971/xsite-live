@@ -160,7 +160,7 @@ export default function Home() {
               <div className="app-preview">
                 {app.kind === 'bingo' && (
                   <>
-                    <img className="app-card-image theme-card theme-card-mauve" src="/xsite-bingo-baclass-new-palette.png" alt="Bingo" />
+                    <img className="app-card-image theme-card theme-card-mauve" src="/bingo-purple.png" alt="Bingo" />
                     <img className="app-card-image theme-card theme-card-cream" src="/bingo-card.png.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-sage" src="/bingo-card.png.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-ink" src="/bingo-card-ink-teal.png" alt="" aria-hidden="true" />
@@ -171,7 +171,7 @@ export default function Home() {
                 )}
                 {app.kind === 'cloud' && (
                   <>
-                    <img className="app-card-image theme-card theme-card-mauve" src="/xsite-milim-leanan-new-palette.png" alt="ענן מילים" />
+                    <img className="app-card-image theme-card theme-card-mauve" src="/wordcloud-purple.png" alt="ענן מילים" />
                     <img className="app-card-image theme-card theme-card-cream" src="/wordcloud-card.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-sage" src="/wordcloud-card.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-ink" src="/wordcloud-card-ink-teal.png" alt="" aria-hidden="true" />
@@ -182,7 +182,7 @@ export default function Home() {
                 )}
                 {app.kind === 'linkit' && (
                   <>
-                    <img className="app-card-image theme-card theme-card-mauve" src="/xsite-linkit-new-palette.png" alt="LinkUp" />
+                    <img className="app-card-image theme-card theme-card-mauve" src="/linkup-purple.png" alt="LinkUp" />
                     <img className="app-card-image theme-card theme-card-cream" src="/linkit-card.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-sage" src="/linkit-card.png" alt="" aria-hidden="true" />
                     <img className="app-card-image theme-card theme-card-ink" src="/linkit-card-ink-teal.png" alt="" aria-hidden="true" />
@@ -197,6 +197,7 @@ export default function Home() {
                       <span className="domiknow-card-title">DomiKnow</span>
                       <span className="domiknow-card-tagline">כל הכיתה. שרשרת אחת של ידע.</span>
                     </div>
+                    <img className="app-card-image theme-card theme-card-mauve" src="/domiknow-purple.png" alt="DomiKnow" />
                     <img className="app-card-image theme-card theme-card-botanical domiknow-botanical-image" src="/DomiKnow-card.png" alt="DomiKnow" />
                   </>
                 )}
@@ -206,6 +207,7 @@ export default function Home() {
                       <span className="mapi-card-title">MAPI</span>
                       <span className="mapi-card-tagline">תמונה אחת, אלף מילים</span>
                     </div>
+                    <img className="app-card-image theme-card theme-card-mauve" src="/mapi-purple.png" alt="MAPI" />
                     <img className="app-card-image theme-card theme-card-botanical mapi-botanical-image" src="/mapi-card.png" alt="MAPI" />
                   </>
                 )}
