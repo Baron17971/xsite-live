@@ -1165,6 +1165,7 @@ let liveSolvedKeys=new Set();
 
 let PLAYER_NAME="";
 let PLAYER_ID=null;
+let PLAYER_TOKEN=null;
 let resultSubmitted=false;
 let playerState="playing"; // playing | finished | forfeited
 let winners=[];
@@ -1580,9 +1581,9 @@ async function forfeitAndReveal(){
   playerState="forfeited";
   if(SESSION_ID && PLAYER_ID){
     try{
-      await sbRequest("/rest/v1/four_on_four_players?id=eq."+encodeURIComponent(PLAYER_ID),{
-        method:"PATCH",
-        body:JSON.stringify({forfeited:true,attempts:attempts})
+      await sbRequest("/rest/v1/rpc/four_on_four_update_player",{
+        method:"POST",
+        body:JSON.stringify({p_player_id:PLAYER_ID,p_player_token:PLAYER_TOKEN,p_attempts:attempts,p_forfeited:true,p_finish:false})
       });
     }catch(e){}
   }
@@ -1610,27 +1611,29 @@ async function registerWinner(){
     resultSubmitted=true;
     try{
       const patch=await sbRequest(
-        "/rest/v1/four_on_four_players?id=eq."+encodeURIComponent(PLAYER_ID),
+        "/rest/v1/rpc/four_on_four_update_player",
         {
-          method:"PATCH",
-          headers:{Prefer:"return=representation"},
+          method:"POST",
           body:JSON.stringify({
-            elapsed_ms:elapsedMs,
-            finished_at:new Date().toISOString(),
-            attempts:attempts,
-            forfeited:false
+            p_player_id:PLAYER_ID,
+            p_player_token:PLAYER_TOKEN,
+            p_elapsed_ms:elapsedMs,
+            p_attempts:attempts,
+            p_forfeited:false,
+            p_finish:true
           })
         }
       );
-      if(!patch.ok) throw new Error("finish");
+      const patchOk=await patch.json();
+      if(!patch.ok||patchOk!==true) throw new Error("finish");
 
       const topRes=await sbRequest(
         "/rest/v1/four_on_four_players?session_id=eq."+encodeURIComponent(SESSION_ID)+
-        "&forfeited=eq.false&elapsed_ms=not.is.null&select=id,name,elapsed_ms&order=elapsed_ms.asc,finished_at.asc&limit=3"
+        "&forfeited=eq.false&elapsed_ms=not.is.null&select=id,display_name,elapsed_ms&order=elapsed_ms.asc,finished_at.asc&limit=3"
       );
       const top=await topRes.json();
       if(topRes.ok && Array.isArray(top)){
-        winners=top.map((w,i)=>({name:w.name,place:i+1,elapsed_ms:w.elapsed_ms,id:w.id}));
+        winners=top.map((w,i)=>({name:w.display_name,place:i+1,elapsed_ms:w.elapsed_ms,id:w.id}));
         renderPodium();
         const mine=winners.find(w=>w.id===PLAYER_ID);
         return mine?mine.place:null;
@@ -1806,31 +1809,36 @@ document.getElementById("joinGameBtn").addEventListener("click",async()=>{
   btn.disabled=true;
   btn.textContent="מצטרף…";
 
+  let displayName=name;
   if(SESSION_ID){
     try{
-      const res=await sbRequest("/rest/v1/four_on_four_players?on_conflict=session_id,name",{
+      const res=await sbRequest("/rest/v1/rpc/four_on_four_join_player",{
         method:"POST",
-        headers:{Prefer:"resolution=merge-duplicates,return=representation"},
-        body:JSON.stringify({session_id:SESSION_ID,name})
+        body:JSON.stringify({p_session_id:SESSION_ID,p_name:name})
       });
-      const joinedRows=await res.json();
-      if(res.ok && Array.isArray(joinedRows) && joinedRows[0]) PLAYER_ID=joinedRows[0].id;
-      if(!res.ok){
-        const status=await getSessionStatus();
-        if(status==="finished")throw new Error("finished");
-        throw new Error("join");
-      }
+      const rows=await res.json();
+      const joined=Array.isArray(rows)?rows[0]:null;
+      if(!res.ok||!joined)throw new Error("join");
+      PLAYER_ID=joined.id;
+      PLAYER_TOKEN=joined.player_token;
+      displayName=joined.display_name||name;
+      try{
+        localStorage.setItem("fourOnFourPlayer:"+SESSION_ID,JSON.stringify({
+          id:PLAYER_ID,token:PLAYER_TOKEN,displayName
+        }));
+      }catch(e){}
     }catch(e){
-      err.textContent=e.message==="finished"?"המשחק כבר הסתיים.":"לא הצלחנו להצטרף כרגע. נסה שוב.";
+      const status=await getSessionStatus();
+      err.textContent=status==="finished"?"המשחק כבר הסתיים.":"לא הצלחנו להצטרף כרגע. נסה שוב.";
       btn.disabled=false;
       btn.textContent="הצטרף למשחק";
       return;
     }
   }
 
-  PLAYER_NAME=name;
-  document.getElementById("playerName").textContent=name;
-  document.getElementById("waitingPlayerName").textContent=name;
+  PLAYER_NAME=displayName;
+  document.getElementById("playerName").textContent=displayName;
+  document.getElementById("waitingPlayerName").textContent=displayName;
   document.getElementById("joinModal").classList.remove("show");
 
   if(SESSION_ID){
