@@ -55,6 +55,30 @@ const apps = [
     ]
   },
   {
+    name: 'ארבע על ארבע',
+    eyebrow: 'פאזל רביעיות',
+    description: 'מסובבים ומחליפים ריבועים עד שבכל נקודת מפגש נפגשים ארבעה מושגים ששייכים לאותה רביעייה.',
+    href: '/four-on-four',
+    kind: 'fouronfour',
+    tags: ['משחקיות','רביעיות','חזרה ותרגול'],
+    details: [
+      ['מה עושים?', 'המורה יוצר מאגר רביעיות ובוחר לוח 2×2, 3×3 או 4×4.'],
+      ['מתאים ל־', 'קבוצות מושגים, קטגוריות, קשרים בין ארבעה פריטים וסיכום יחידה.']
+    ]
+  },
+  {
+    name: 'X בריבוע',
+    eyebrow: 'פאזל התאמות',
+    description: 'מסובבים, מזיזים ומחברים ריבועים עד שכל המושגים שנפגשים בצלע משותפת מתאימים זה לזה.',
+    href: '/x-squared',
+    kind: 'xsquared',
+    tags: ['משחקיות','התאמות','חזרה ותרגול'],
+    details: [
+      ['מה עושים?', 'המורה יוצר מאגר זוגות ובוחר לוח 3×3, 4×4 או 5×5.'],
+      ['מתאים ל־', 'מושג–הגדרה, סיבה–תוצאה, מבנה–תפקיד וקשרים בין רעיונות.']
+    ]
+  },
+  {
     name: 'MAPI',
     eyebrow: 'מסלול למידה אינטראקטיבי',
     description: 'יוצרים מסלול למידה על גבי תמונה או מפה, עם שאלות, משימות וסרטונים. התלמיד מתקדם בין התחנות ובסיום מתקבל סיכום תשובות מלא למורה.',
@@ -146,6 +170,20 @@ export default function AppsPage(){
                     <img className="catalog-image theme-card theme-card-mauve" src="/domiknow-purple.png" alt="DomiKnow" />
                     <img className="catalog-image theme-card theme-card-botanical domiknow-botanical-image" src="/DomiKnow-card.png" alt="DomiKnow" />
                   </>
+                )}
+                {app.kind === 'fouronfour' && (
+                  <div className="catalog-image catalog-game-fallback fouronfour-catalog-fallback" role="img" aria-label="ארבע על ארבע">
+                    <span className="catalog-game-symbol">4×4</span>
+                    <span className="catalog-game-title">ארבע על ארבע</span>
+                    <span className="catalog-game-tagline">ארבעה מושגים. נקודת מפגש אחת.</span>
+                  </div>
+                )}
+                {app.kind === 'xsquared' && (
+                  <div className="catalog-image catalog-game-fallback xsquared-catalog-fallback" role="img" aria-label="X בריבוע">
+                    <span className="catalog-game-symbol">X²</span>
+                    <span className="catalog-game-title">X בריבוע</span>
+                    <span className="catalog-game-tagline">מסובבים. מזיזים. מחברים.</span>
+                  </div>
                 )}
                 {app.kind === 'mapi' && (
                   <>
