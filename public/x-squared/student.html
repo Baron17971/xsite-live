@@ -1144,10 +1144,17 @@ body{display:flex;justify-content:center;align-items:flex-start}
 
 
 .join-card,.waiting-card,.instructions-card{
-  width:min(430px,100%);background:var(--panel);border-radius:26px;padding:25px 22px;
-  text-align:center;box-shadow:0 25px 80px rgba(0,0,0,.22)
+  width:min(430px,100%);
+  background:#fffaf3!important;
+  opacity:1!important;
+  border:1px solid rgba(39,79,97,.14);
+  border-radius:26px;
+  padding:25px 22px;
+  text-align:center;
+  box-shadow:0 25px 80px rgba(0,0,0,.34),0 0 0 1px rgba(255,255,255,.72) inset;
 }
-.join-card h2,.waiting-card h2,.instructions-card h2{margin:0 0 10px;font-size:27px}
+.modal.show{background:rgba(15,25,31,.68)!important;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.join-card h2,.waiting-card h2,.instructions-card h2{margin:0 0 10px;font-size:27px;color:#214c63}
 .join-card p,.waiting-card p{margin:0 0 16px;color:var(--muted);line-height:1.5}
 .join-card input{width:100%;min-height:52px;border:1px solid var(--line);border-radius:15px;background:#fff;padding:10px 13px;font:inherit;font-size:18px;color:var(--ink);text-align:center;outline:none}
 .join-card button,.instructions-card button{width:100%;margin-top:11px;min-height:50px;border:0;border-radius:15px;background:linear-gradient(145deg,#315e72,#24495a);color:#fff;font-weight:950}
@@ -1159,6 +1166,11 @@ body{display:flex;justify-content:center;align-items:flex-start}
 @keyframes waitPulse{0%,80%,100%{opacity:.25;transform:scale(.8)}40%{opacity:1;transform:scale(1.15)}}
 .instructions-list{display:grid;gap:10px;text-align:right;margin:14px 0}
 .instruction-row{background:#fffdf8;border:1px solid var(--line);border-radius:14px;padding:10px 12px;line-height:1.4}
+
+body.projector-mode .modal{display:none!important}
+body.projector-mode .stage{pointer-events:none}
+body.projector-mode .hotspot{pointer-events:none!important}
+body.projector-mode{overflow:auto}
 </style>
 </head>
 <body>
@@ -1233,7 +1245,9 @@ body{display:flex;justify-content:center;align-items:flex-start}
 
 const SB_URL="https://zydhfhfhspflvhlpmokj.supabase.co";
 const SB_KEY="sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x";
-const SESSION_ID=new URLSearchParams(location.search).get("session");
+const PAGE_QS=new URLSearchParams(location.search);
+const SESSION_ID=PAGE_QS.get("session");
+const PROJECTOR_MODE=PAGE_QS.get("projector")==="1";
 
 async function sbRequest(path,options={}){
   const headers={apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json",...(options.headers||{})};
@@ -1887,12 +1901,39 @@ document.getElementById("playerNameInput").addEventListener("keydown",e=>{if(e.k
 document.getElementById("startGameBtn").addEventListener("click",()=>{
   document.getElementById("instructionsModal").classList.remove("show");gameStarted=true;startTime=Date.now();document.getElementById("timer").textContent="00:00";
 });
+async function refreshProjectorPodium(){
+  if(!PROJECTOR_MODE||!SESSION_ID)return;
+  try{
+    const res=await sbRequest("/rest/v1/x_squared_players?session_id=eq."+encodeURIComponent(SESSION_ID)+
+      "&forfeited=eq.false&elapsed_ms=not.is.null&select=id,name,elapsed_ms,finished_at&order=elapsed_ms.asc,finished_at.asc&limit=3");
+    const rows=await res.json();
+    if(res.ok&&Array.isArray(rows)){
+      winners=rows.map((w,i)=>({id:w.id,name:w.name,place:i+1,elapsed_ms:w.elapsed_ms}));
+      renderPodium();
+    }
+  }catch(e){}
+}
+
 const titleEl=document.querySelector(".brand-text h1");if(titleEl)titleEl.textContent=GAME.activityName||"X בריבוע";
 const subEl=document.querySelector(".brand-text small");if(subEl)subEl.textContent=[GAME.subject,GAME.className].filter(Boolean).join(" · ")||subEl.textContent;
 document.getElementById("joinActivity").textContent=GAME.activityName||"X בריבוע";
 
+if(PROJECTOR_MODE){
+  document.body.classList.add("projector-mode");
+  document.getElementById("joinModal").classList.remove("show");
+  document.getElementById("waitingModal").classList.remove("show");
+  document.getElementById("instructionsModal").classList.remove("show");
+  PLAYER_NAME="מקרן";
+  document.getElementById("playerName").textContent=GAME.className||"כיתה";
+}
+
 renderPodium();
 shuffle();
+
+if(PROJECTOR_MODE){
+  refreshProjectorPodium();
+  setInterval(refreshProjectorPodium,1000);
+}
 
 
 // Sync preserved game logic into the dynamic areas in the fixed artwork shell.
