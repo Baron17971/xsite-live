@@ -823,6 +823,23 @@ button{
 }
 .join-error{min-height:18px;margin-top:7px;color:#a45e5e;font-size:13px}
 
+
+.waiting-card{
+  width:min(420px,100%);
+  background:var(--panel);
+  border-radius:26px;
+  padding:28px 22px;
+  text-align:center;
+  box-shadow:0 25px 80px rgba(0,0,0,.22);
+}
+.waiting-card .waiting-icon{font-size:42px;margin-bottom:8px}
+.waiting-card h2{margin:0 0 8px;font-size:27px}
+.waiting-card p{margin:0;color:var(--muted);line-height:1.55}
+.waiting-name{font-weight:950;color:var(--ink)}
+.waiting-dots{display:flex;justify-content:center;gap:7px;margin-top:18px}
+.waiting-dots i{width:8px;height:8px;border-radius:50%;background:#3d8998;animation:waitPulse 1.2s infinite ease-in-out}
+.waiting-dots i:nth-child(2){animation-delay:.15s}.waiting-dots i:nth-child(3){animation-delay:.3s}
+@keyframes waitPulse{0%,80%,100%{opacity:.25;transform:scale(.8)}40%{opacity:1;transform:scale(1.15)}}
 </style>
 </head>
 <body>
@@ -930,6 +947,16 @@ button{
   </div>
 </div>
 
+
+<div class="modal" id="waitingModal">
+  <div class="waiting-card">
+    <div class="waiting-icon">⏳</div>
+    <h2>הצטרפת למשחק</h2>
+    <p><span class="waiting-name" id="waitingPlayerName"></span>, אתה בפנים.<br>ממתינים שהמורה יפתח את המשחק.</p>
+    <div class="waiting-dots"><i></i><i></i><i></i></div>
+  </div>
+</div>
+
 <div class="modal" id="instructionsModal">
   <div class="instructions-card">
     <h2>איך משחקים?</h2>
@@ -951,7 +978,7 @@ button{
   </div>
 </div>
 
-<script>
+<script type="module">
 function decodeGameConfig(){
   try{
     const hash=location.hash||"";
@@ -963,7 +990,45 @@ function decodeGameConfig(){
     return JSON.parse(new TextDecoder().decode(bytes));
   }catch(e){return null}
 }
-const GAME=decodeGameConfig()||{};
+const SB_URL="https://zydhfhfhspflvhlpmokj.supabase.co";
+const SB_KEY="sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x";
+const SESSION_ID=new URLSearchParams(location.search).get("session");
+
+async function sbRequest(path,options={}){
+  const headers={
+    apikey:SB_KEY,
+    Authorization:"Bearer "+SB_KEY,
+    "Content-Type":"application/json",
+    ...(options.headers||{})
+  };
+  return fetch(SB_URL+path,{...options,headers});
+}
+
+async function loadGameConfig(){
+  if(!SESSION_ID)return decodeGameConfig()||{};
+  try{
+    const res=await sbRequest("/rest/v1/four_on_four_sessions?id=eq."+encodeURIComponent(SESSION_ID)+"&select=id,code,activity_name,subject,class_name,topic,board_size,groups,status");
+    const rows=await res.json();
+    if(!res.ok||!Array.isArray(rows)||!rows[0])throw new Error("session");
+    const s=rows[0];
+    return {
+      sessionId:s.id,
+      code:s.code,
+      activityName:s.activity_name,
+      subject:s.subject,
+      className:s.class_name,
+      topic:s.topic,
+      n:s.board_size,
+      groups:s.groups,
+      status:s.status
+    };
+  }catch(e){
+    document.getElementById("joinError").textContent="לא הצלחנו לטעון את הכיתה. בקש מהמורה קישור חדש.";
+    document.getElementById("joinGameBtn").disabled=true;
+    return {};
+  }
+}
+const GAME=await loadGameConfig();
 const N=[2,3,4].includes(Number(GAME.n))?Number(GAME.n):3;
 const boardEl=document.getElementById("board");
 const progressEl=document.getElementById("progress");
@@ -998,3 +1063,751 @@ const GROUPS=Array.from({length:N*N},(_,i)=>({
 const filler=[
   "תא","רקמה","איבר","מערכת",
   "אנזים","ממברנה","ציטופלזמה","מים",
+  "דיפוזיה","אוסמוזה","הומאוסטזיס","מיטוזה",
+  "נשימה","תורשה","סביבה","מבנה",
+  "תפקוד","חומר","אנרגיה","מידע"
+];
+
+let fi=0;
+function fillerItem(){
+  return {group:null,text:filler[fi++%filler.length],filler:true};
+}
+
+function makeSolved(){
+  const tiles=Array.from({length:N*N},(_,i)=>({
+    id:i,
+    rot:0,
+    theme:i%5,
+    corners:{tl:null,tr:null,bl:null,br:null}
+  }));
+
+  // There are 9 toroidal meeting points in a 3x3 cyclic board.
+  // At each meeting point, one concept comes from each surrounding tile:
+  // top-left tile -> bottom-right corner
+  // top-right tile -> bottom-left corner
+  // bottom-left tile -> top-right corner
+  // bottom-right tile -> top-left corner
+  let g=0;
+  for(let r=0;r<N;r++){
+    for(let c=0;c<N;c++){
+      const group=GROUPS[g++];
+
+      const topRow=(r-1+N)%N;
+      const leftCol=(c-1+N)%N;
+
+      const tl=topRow*N+leftCol;
+      const tr=topRow*N+c;
+      const bl=r*N+leftCol;
+      const br=r*N+c;
+
+      tiles[tl].corners.br={group:group.id,text:group.items[0]};
+      tiles[tr].corners.bl={group:group.id,text:group.items[1]};
+      tiles[bl].corners.tr={group:group.id,text:group.items[2]};
+      tiles[br].corners.tl={group:group.id,text:group.items[3]};
+    }
+  }
+
+  return tiles;
+}
+
+
+const solved=makeSolved();
+
+function scoreArrangement(arr){
+  let ok=0;
+
+  for(let r=1;r<N;r++){
+    for(let c=1;c<N;c++){
+      const A=arr[(r-1)*N+(c-1)].corners.br;
+      const B=arr[(r-1)*N+c].corners.bl;
+      const C=arr[r*N+(c-1)].corners.tr;
+      const D=arr[r*N+c].corners.tl;
+
+      const ids=[A,B,C,D].map(x=>x?.group);
+      if(ids.every(x=>x!==null && x!==undefined) && new Set(ids).size===1){
+        ok++;
+      }
+    }
+  }
+
+  return ok;
+}
+
+function cyclicShiftSolved(arr,rowShift,colShift){
+  const out=Array(N*N);
+  for(let r=0;r<N;r++){
+    for(let c=0;c<N;c++){
+      const nr=(r+rowShift+N)%N;
+      const nc=(c+colShift+N)%N;
+      out[nr*N+nc]=arr[r*N+c];
+    }
+  }
+  return out;
+}
+
+function validateAllCyclicSolutions(){
+  for(let rs=0;rs<N;rs++){
+    for(let cs=0;cs<N;cs++){
+      const shifted=cyclicShiftSolved(solved,rs,cs);
+      if(scoreArrangement(shifted)!==((N-1)*(N-1))){
+        throw new Error(`Cyclic validation failed at rowShift=${rs}, colShift=${cs}`);
+      }
+    }
+  }
+  return true;
+}
+validateAllCyclicSolutions();
+
+let tiles=[],selected=null,attempts=0,startTime=null,gameStarted=false;
+let dragIndex=null,pointerDragging=false;
+let answerShown=false,savedBeforeAnswer=null;
+let liveSolvedKeys=new Set();
+
+let PLAYER_NAME="";
+let playerState="playing"; // playing | finished | forfeited
+let winners=[];
+document.getElementById("playerName").textContent="—";
+
+function rotatedCorners(tile){
+  const order=["tl","tr","br","bl"]; // clockwise
+  const out={};
+  const steps=((tile.rot/90)%4+4)%4;
+  for(let i=0;i<4;i++){
+    const src=order[(i-steps+4)%4];
+    out[order[i]]=tile.corners[src];
+  }
+  return out;
+}
+
+function score(){
+  let ok=0,total=0;
+  for(let r=1;r<N;r++){
+    for(let c=1;c<N;c++){
+      total++;
+      const A=rotatedCorners(tiles[(r-1)*N+(c-1)]).br;
+      const B=rotatedCorners(tiles[(r-1)*N+c]).bl;
+      const C=rotatedCorners(tiles[r*N+(c-1)]).tr;
+      const D=rotatedCorners(tiles[r*N+c]).tl;
+
+      const ids=[A,B,C,D].map(x=>x?.group);
+      if(ids.every(x=>x!==null && x!==undefined) && new Set(ids).size===1){
+        ok++;
+      }
+    }
+  }
+  return {ok,total};
+}
+
+
+function getSolvedIntersectionKeys(){
+  const solvedKeys=[];
+
+  for(let r=1;r<N;r++){
+    for(let c=1;c<N;c++){
+      const A=rotatedCorners(tiles[(r-1)*N+(c-1)]).br;
+      const B=rotatedCorners(tiles[(r-1)*N+c]).bl;
+      const C=rotatedCorners(tiles[r*N+(c-1)]).tr;
+      const D=rotatedCorners(tiles[r*N+c]).tl;
+
+      const ids=[A,B,C,D].map(x=>x?.group);
+      if(ids.every(x=>x!==null && x!==undefined) && new Set(ids).size===1){
+        solvedKeys.push(`${r}-${c}`);
+      }
+    }
+  }
+
+  return solvedKeys;
+}
+
+function renderIntersectionFeedback(){
+  const layer=document.getElementById("intersectionLayer");
+  if(!layer)return;
+
+  layer.innerHTML="";
+  const currentSolved=new Set(getSolvedIntersectionKeys());
+  const boardRect=boardEl.getBoundingClientRect();
+
+  for(let r=1;r<N;r++){
+    for(let c=1;c<N;c++){
+      const tl=boardEl.querySelector(`.tile[data-index="${(r-1)*N+(c-1)}"]`);
+      const tr=boardEl.querySelector(`.tile[data-index="${(r-1)*N+c}"]`);
+      const bl=boardEl.querySelector(`.tile[data-index="${r*N+(c-1)}"]`);
+      const br=boardEl.querySelector(`.tile[data-index="${r*N+c}"]`);
+      if(!tl||!tr||!bl||!br) continue;
+
+      const rtl=tl.getBoundingClientRect();
+      const rtr=tr.getBoundingClientRect();
+      const rbl=bl.getBoundingClientRect();
+      const rbr=br.getBoundingClientRect();
+
+      const x=((rtl.right+rtr.left+rbl.right+rbr.left)/4)-boardRect.left;
+      const y=((rtl.bottom+rbl.top+rtr.bottom+rbr.top)/4)-boardRect.top;
+
+      const key=`${r}-${c}`;
+      const spark=document.createElement("div");
+      spark.className="intersection-spark";
+      spark.style.left=x+"px";
+      spark.style.top=y+"px";
+
+      if(currentSolved.has(key)){
+        spark.classList.add("active");
+        if(!liveSolvedKeys.has(key)){
+          spark.classList.add("burst");
+        }
+      }
+
+      layer.appendChild(spark);
+    }
+  }
+
+  liveSolvedKeys=currentSolved;
+}
+
+function fitConceptText(el){
+  const tile=el.closest(".tile");
+  if(!tile)return;
+  const tileW=tile.getBoundingClientRect().width;
+  const maxFont=Math.max(10.5,Math.min(16.5,tileW*0.088));
+  const minFont=Math.max(6.4,tileW*0.040);
+  let low=minFont,high=maxFont,best=minFont;
+
+  for(let i=0;i<13;i++){
+    const mid=(low+high)/2;
+    el.style.fontSize=mid+"px";
+    const fits=
+      el.scrollWidth<=el.clientWidth+0.5 &&
+      el.scrollHeight<=el.clientHeight+0.5;
+    if(fits){best=mid;low=mid}else{high=mid}
+  }
+  el.style.fontSize=best+"px";
+
+  let guard=0;
+  while(
+    (el.scrollWidth>el.clientWidth+0.5 || el.scrollHeight>el.clientHeight+0.5) &&
+    guard<25
+  ){
+    const current=parseFloat(getComputedStyle(el).fontSize);
+    if(current<=minFont)break;
+    el.style.fontSize=Math.max(minFont,current-.30)+"px";
+    guard++;
+  }
+}
+
+function fitAllConcepts(){
+  document.querySelectorAll(".concept").forEach(fitConceptText);
+}
+
+function swapTiles(a,b){
+  if(a===null||b===null||a===b)return;
+  // Swap the WHOLE tile object: content + rotation + theme/color.
+  const movingTile=tiles[a];
+  tiles[a]=tiles[b];
+  tiles[b]=movingTile;
+  dragIndex=null;
+  render();
+  update();
+}
+
+function clearTargets(){
+  document.querySelectorAll(".tile.drop-target").forEach(el=>el.classList.remove("drop-target"));
+}
+
+
+let dragGhost=null;
+
+function rotateTileFromCenter(idx){
+  const tile=tiles[idx];
+  if(!tile)return;
+  tile.rot=(tile.rot+90)%360;
+  render();
+  update();
+}
+
+function createDragGhost(tileEl,x,y){
+  removeDragGhost();
+  dragGhost=tileEl.cloneNode(true);
+  dragGhost.classList.add("drag-ghost");
+  dragGhost.classList.remove("dragging","drop-target","selected");
+  const r=tileEl.getBoundingClientRect();
+  dragGhost.style.width=r.width+"px";
+  dragGhost.style.height=r.height+"px";
+  dragGhost.style.left=x+"px";
+  dragGhost.style.top=y+"px";
+  document.body.appendChild(dragGhost);
+}
+
+function moveDragGhost(x,y){
+  if(!dragGhost)return;
+  dragGhost.style.left=x+"px";
+  dragGhost.style.top=y+"px";
+}
+
+function removeDragGhost(){
+  if(dragGhost){
+    dragGhost.remove();
+    dragGhost=null;
+  }
+}
+
+
+function nearestTileIndex(x,y,excludeIdx){
+  const candidates=[...boardEl.querySelectorAll(".tile")]
+    .filter(el=>Number(el.dataset.index)!==excludeIdx);
+  if(!candidates.length)return null;
+
+  let best=null, bestDist=Infinity;
+  candidates.forEach(el=>{
+    const r=el.getBoundingClientRect();
+    const cx=(r.left+r.right)/2;
+    const cy=(r.top+r.bottom)/2;
+    const dist=Math.hypot(x-cx,y-cy);
+    if(dist<bestDist){
+      bestDist=dist;
+      best=Number(el.dataset.index);
+    }
+  });
+
+  const boardRect=boardEl.getBoundingClientRect();
+  const pad=Math.max(28, boardRect.width*0.045);
+  const inside=
+    x>=boardRect.left-pad && x<=boardRect.right+pad &&
+    y>=boardRect.top-pad && y<=boardRect.bottom+pad;
+
+  return inside ? best : null;
+}
+
+function render(){
+  boardEl.innerHTML="";
+  boardEl.style.gridTemplateColumns=`repeat(${N},1fr)`;
+  tiles.forEach((tile,idx)=>{
+    const c=rotatedCorners(tile);
+    const d=document.createElement("div");
+    d.className=`tile theme-${tile.theme}`;
+    d.dataset.index=idx;
+    d.innerHTML=`
+      <div class="plus-lines"></div>
+      <div class="concept tl">${c.tl.text}</div>
+      <div class="concept tr">${c.tr.text}</div>
+      <div class="concept bl">${c.bl.text}</div>
+      <div class="concept br">${c.br.text}</div>
+      <div class="plus-core">+</div>
+      <div class="tile-id">${tile.id+1}</div>
+    `;
+
+    d.addEventListener("pointerdown",ev=>{
+      const plus=ev.target.closest(".plus-core");
+      if(plus){
+        ev.preventDefault();
+        ev.stopPropagation();
+        rotateTileFromCenter(idx);
+        return;
+      }
+      dragIndex=idx;
+      pointerDragging=false;
+      d.setPointerCapture?.(ev.pointerId);
+      d.dataset.startX=ev.clientX;
+      d.dataset.startY=ev.clientY;
+    });
+
+    d.addEventListener("pointermove",ev=>{
+      if(dragIndex!==idx)return;
+      const sx=parseFloat(d.dataset.startX||ev.clientX);
+      const sy=parseFloat(d.dataset.startY||ev.clientY);
+      const moved=Math.hypot(ev.clientX-sx,ev.clientY-sy);
+      if(moved>5){
+        if(!pointerDragging){
+          pointerDragging=true;
+          d.classList.add("dragging");
+          createDragGhost(d,ev.clientX,ev.clientY);
+        }else{
+          moveDragGhost(ev.clientX,ev.clientY);
+        }
+        clearTargets();
+        const nearest=nearestTileIndex(ev.clientX,ev.clientY,idx);
+        if(nearest!==null){
+          const target=boardEl.querySelector(`.tile[data-index="${nearest}"]`);
+          target?.classList.add("drop-target");
+        }
+      }
+    });
+
+    d.addEventListener("pointerup",ev=>{
+      if(dragIndex!==idx)return;
+      d.classList.remove("dragging");
+      const targetIndex=nearestTileIndex(ev.clientX,ev.clientY,idx);
+      clearTargets();
+
+      removeDragGhost();
+      if(pointerDragging&&targetIndex!==null&&targetIndex!==idx){
+        swapTiles(idx,targetIndex);
+      }else{
+        d.classList.remove("dragging");
+      }
+      dragIndex=null;
+      pointerDragging=false;
+    });
+
+    d.addEventListener("pointercancel",()=>{
+      d.classList.remove("dragging");
+      clearTargets();
+      removeDragGhost();
+      dragIndex=null;
+      pointerDragging=false;
+    });
+
+    boardEl.appendChild(d);
+  });
+
+  const intersectionLayer=document.createElement("div");
+  intersectionLayer.className="intersection-layer";
+  intersectionLayer.id="intersectionLayer";
+  boardEl.appendChild(intersectionLayer);
+
+  requestAnimationFrame(()=>{
+    fitAllConcepts();
+    requestAnimationFrame(()=>{
+      fitAllConcepts();
+      renderIntersectionFeedback();
+    });
+  });
+}
+
+function update(){
+  const {ok,total}=score();
+  progressEl.style.width=(ok/total*100)+"%";
+  progressText.textContent=`${ok} מתוך ${total} רביעיות נכונות`;
+}
+
+function shuffle(){
+  tiles=solved.map(t=>({
+    id:t.id,
+    rot:[0,90,180,270][Math.floor(Math.random()*4)],
+    theme:t.theme,
+    corners:JSON.parse(JSON.stringify(t.corners))
+  }));
+
+  for(let i=tiles.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [tiles[i],tiles[j]]=[tiles[j],tiles[i]];
+  }
+
+  selected=null;
+  liveSolvedKeys=new Set();
+  attempts=0;
+  attemptsEl.textContent="0 בדיקות";
+  render();update();
+}
+
+function moveTopRowToBottom(){
+  const rows=Array.from({length:N},(_,r)=>tiles.slice(r*N,(r+1)*N));
+  rows.push(rows.shift());
+  tiles=rows.flat();
+  selected=null; render(); update();
+  const sc=score(); showToast(`השורה העליונה עברה לתחתית · ${sc.ok}/${sc.total} רביעיות נכונות`);
+}
+
+function moveBottomRowToTop(){
+  const rows=Array.from({length:N},(_,r)=>tiles.slice(r*N,(r+1)*N));
+  rows.unshift(rows.pop());
+  tiles=rows.flat();
+  selected=null; render(); update();
+  const sc=score(); showToast(`השורה התחתונה עברה לראש · ${sc.ok}/${sc.total} רביעיות נכונות`);
+}
+
+function moveRightColumnToLeft(){
+  const out=Array(N*N);
+  for(let r=0;r<N;r++){
+    for(let c=0;c<N;c++){
+      const src=(c+N-1)%N;
+      out[r*N+c]=tiles[r*N+src];
+    }
+  }
+  tiles=out; selected=null; render(); update();
+  const sc=score(); showToast(`העמודה הימנית עברה לשמאל · ${sc.ok}/${sc.total} רביעיות נכונות`);
+}
+
+function moveLeftColumnToRight(){
+  const out=Array(N*N);
+  for(let r=0;r<N;r++){
+    for(let c=0;c<N;c++){
+      const src=(c+1)%N;
+      out[r*N+c]=tiles[r*N+src];
+    }
+  }
+  tiles=out; selected=null; render(); update();
+  const sc=score(); showToast(`העמודה השמאלית עברה לימין · ${sc.ok}/${sc.total} רביעיות נכונות`);
+}
+
+function cloneTilesState(list){
+  return list.map(t=>({
+    id:t.id,
+    rot:t.rot,
+    theme:t.theme,
+    corners:JSON.parse(JSON.stringify(t.corners))
+  }));
+}
+
+function showAnswer(){
+  if(playerState==="forfeited"){
+    if(!answerShown){
+      savedBeforeAnswer=cloneTilesState(tiles);
+      tiles=cloneTilesState(solved);
+      tiles.forEach(t=>t.rot=0);
+      answerShown=true;
+      document.getElementById("answerBtn").textContent="חזור ללוח";
+      render();update();
+    }else{
+      if(savedBeforeAnswer)tiles=cloneTilesState(savedBeforeAnswer);
+      answerShown=false;
+      document.getElementById("answerBtn").textContent="הצג תשובה";
+      render();update();
+    }
+    return;
+  }
+
+  if(playerState==="finished"){
+    showToast("כבר סיימת את המשחק");
+    return;
+  }
+
+  document.getElementById("forfeitModal").classList.add("show");
+}
+
+function forfeitAndReveal(){
+  playerState="forfeited";
+  document.getElementById("forfeitModal").classList.remove("show");
+  document.getElementById("playerStatus").textContent="פרש וצפה בפתרון";
+
+  savedBeforeAnswer=cloneTilesState(tiles);
+  tiles=cloneTilesState(solved);
+  tiles.forEach(t=>t.rot=0);
+  answerShown=true;
+  document.getElementById("answerBtn").textContent="חזור ללוח";
+
+  render();update();
+  showToast("יצאת מהתחרות — הפתרון מוצג");
+}
+
+function registerWinner(){
+  if(playerState!=="playing")return null;
+  playerState="finished";
+  document.getElementById("playerStatus").textContent="סיים";
+
+  const existing=winners.find(w=>w.name===PLAYER_NAME);
+  if(existing)return existing.place;
+
+  if(winners.length<3){
+    const place=winners.length+1;
+    winners.push({name:PLAYER_NAME,place});
+    renderPodium();
+    return place;
+  }
+  return null;
+}
+
+function renderPodium(){
+  const labels={
+    1:{medal:"🥇",title:"מקום ראשון"},
+    2:{medal:"🥈",title:"מקום שני"},
+    3:{medal:"🥉",title:"מקום שלישי"}
+  };
+
+  [1,2,3].forEach(place=>{
+    const slot=document.getElementById("winner"+place);
+    const w=winners.find(x=>x.place===place);
+    const meta=labels[place];
+    slot.textContent=w
+      ? `${meta.medal} ${meta.title} — ${w.name}`
+      : `${meta.medal} ${meta.title} — פנוי`;
+    slot.classList.toggle("filled",!!w);
+  });
+}
+
+let toastTimer;
+function showToast(msg){
+  clearTimeout(toastTimer);
+  toast.classList.remove("show");
+  void toast.offsetWidth;
+  toast.textContent=msg;
+  toast.classList.add("show");
+  toastTimer=setTimeout(()=>toast.classList.remove("show"),1450);
+}
+
+document.getElementById("checkBtn").onclick=()=>{
+  attempts++;
+  attemptsEl.textContent=`${attempts} בדיקות`;
+  const {ok,total}=score();
+
+  if(ok===total){
+    if(playerState==="forfeited"){
+      showToast("הפתרון מוצג — אינך משתתף עוד בתחרות");
+      return;
+    }
+
+    const place=registerWinner();
+    const time=document.getElementById("timer").textContent;
+
+    if(place&&place<=3){
+      const medal=place===1?"🥇":place===2?"🥈":"🥉";
+      document.getElementById("winTitle").textContent=`${medal} מקום ${place}!`;
+      document.getElementById("winText").textContent=
+        `${PLAYER_NAME}, השלמת את ארבע על ארבע בזמן ${time}.`;
+    }else{
+      document.getElementById("winTitle").textContent="4×4 הושלם!";
+      document.getElementById("winText").textContent=
+        `חיברת נכון את כל ${total} הרביעיות בזמן ${time}.`;
+    }
+    document.getElementById("winModal").classList.add("show");
+  }else{
+    showToast(`יש עדיין ${total-ok} רביעיות שצריך לתקן`);
+    [...boardEl.children].forEach(el=>el.classList.add("wrong"));
+    setTimeout(()=>[...boardEl.children].forEach(el=>el.classList.remove("wrong")),260);
+  }
+};
+
+document.getElementById("answerBtn").onclick=showAnswer;
+document.getElementById("cancelForfeit").onclick=()=>{
+  document.getElementById("forfeitModal").classList.remove("show");
+};
+document.getElementById("confirmForfeit").onclick=forfeitAndReveal;
+
+document.getElementById("shuffleBtn").onclick=()=>{
+  answerShown=false;
+  savedBeforeAnswer=null;
+  playerState="playing";
+  document.getElementById("playerStatus").textContent="משחק";
+  document.getElementById("answerBtn").textContent="הצג תשובה";
+  shuffle();
+};
+
+
+document.getElementById("boardMoveToggle").onclick=()=>{
+  const box=document.getElementById("boardMoveContent");
+  box.classList.toggle("open");
+  document.getElementById("boardMoveToggle").textContent=
+    box.classList.contains("open") ? "סגור הזזת לוח" : "הזזת לוח";
+};
+
+document.getElementById("topToBottomBtn").onclick=moveTopRowToBottom;
+document.getElementById("bottomToTopBtn").onclick=moveBottomRowToTop;
+document.getElementById("rightToLeftBtn").onclick=moveRightColumnToLeft;
+document.getElementById("leftToRightBtn").onclick=moveLeftColumnToRight;
+
+setInterval(()=>{
+  if(!gameStarted||!startTime)return;
+  const sec=Math.floor((Date.now()-startTime)/1000);
+  document.getElementById("timer").textContent=
+    `${String(Math.floor(sec/60)).padStart(2,"0")}:${String(sec%60).padStart(2,"0")}`;
+},1000);
+
+let resizeTimer;
+window.addEventListener("resize",()=>{
+  clearTimeout(resizeTimer);
+  resizeTimer=setTimeout(()=>{
+    fitAllConcepts();
+    renderIntersectionFeedback();
+  },80);
+});
+document.getElementById("startGameBtn").addEventListener("click",()=>{
+  document.getElementById("instructionsModal").classList.remove("show");
+  gameStarted=true;
+  startTime=Date.now();
+  document.getElementById("timer").textContent="00:00";
+});
+
+
+let waitTimer=null;
+async function getSessionStatus(){
+  if(!SESSION_ID)return "running";
+  try{
+    const res=await sbRequest("/rest/v1/four_on_four_sessions?id=eq."+encodeURIComponent(SESSION_ID)+"&select=status");
+    const rows=await res.json();
+    return rows?.[0]?.status||"waiting";
+  }catch(e){return "waiting"}
+}
+async function waitForTeacherStart(){
+  const check=async()=>{
+    const status=await getSessionStatus();
+    if(status==="running"){
+      if(waitTimer)clearInterval(waitTimer);
+      document.getElementById("waitingModal").classList.remove("show");
+      document.getElementById("instructionsModal").classList.add("show");
+    }else if(status==="finished"){
+      if(waitTimer)clearInterval(waitTimer);
+      document.querySelector("#waitingModal h2").textContent="המשחק הסתיים";
+      document.querySelector("#waitingModal p").textContent="בקש מהמורה לפתוח משחק חדש.";
+    }
+  };
+  await check();
+  if(!waitTimer)waitTimer=setInterval(check,1000);
+}
+
+document.getElementById("joinGameBtn").addEventListener("click",async()=>{
+  const input=document.getElementById("playerNameInput");
+  const name=(input.value||"").trim();
+  const err=document.getElementById("joinError");
+  const btn=document.getElementById("joinGameBtn");
+  if(!name){
+    err.textContent="יש להזין שם כדי להצטרף.";
+    input.focus();
+    return;
+  }
+  err.textContent="";
+  btn.disabled=true;
+  btn.textContent="מצטרף…";
+
+  if(SESSION_ID){
+    try{
+      const res=await sbRequest("/rest/v1/four_on_four_players?on_conflict=session_id,name",{
+        method:"POST",
+        headers:{Prefer:"resolution=merge-duplicates,return=representation"},
+        body:JSON.stringify({session_id:SESSION_ID,name})
+      });
+      if(!res.ok){
+        const status=await getSessionStatus();
+        if(status==="finished")throw new Error("finished");
+        throw new Error("join");
+      }
+    }catch(e){
+      err.textContent=e.message==="finished"?"המשחק כבר הסתיים.":"לא הצלחנו להצטרף כרגע. נסה שוב.";
+      btn.disabled=false;
+      btn.textContent="הצטרף למשחק";
+      return;
+    }
+  }
+
+  PLAYER_NAME=name;
+  document.getElementById("playerName").textContent=name;
+  document.getElementById("waitingPlayerName").textContent=name;
+  document.getElementById("joinModal").classList.remove("show");
+
+  if(SESSION_ID){
+    document.getElementById("waitingModal").classList.add("show");
+    waitForTeacherStart();
+  }else{
+    document.getElementById("instructionsModal").classList.add("show");
+  }
+});
+document.getElementById("playerNameInput").addEventListener("keydown",ev=>{
+  if(ev.key==="Enter")document.getElementById("joinGameBtn").click();
+});
+
+document.getElementById("sizeBadge").textContent=`${N}×${N}`;
+document.getElementById("gameTitle").textContent=GAME.activityName||"ארבע על ארבע";
+document.getElementById("gameSubtitle").textContent=
+  [GAME.subject,GAME.className].filter(Boolean).join(" · ") || "מסובבים. מזיזים. מחברים רביעיות.";
+document.getElementById("joinActivity").textContent=GAME.activityName||"ארבע על ארבע";
+document.querySelector(".board").style.gridTemplateColumns=`repeat(${N},1fr)`;
+
+window.addEventListener("orientationchange",()=>{
+  setTimeout(()=>{
+    fitAllConcepts();
+    renderIntersectionFeedback();
+  },180);
+});
+
+renderPodium();
+shuffle();
+</script>
+</body>
+</html>
