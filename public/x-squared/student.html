@@ -329,8 +329,19 @@ body{
   box-shadow:
     0 8px 18px rgba(35,50,60,.20),
     inset 0 0 0 1px rgba(255,255,255,.10);
-  z-index:3;
-  pointer-events:none;
+  z-index:6;
+  pointer-events:auto;
+  cursor:pointer;
+  touch-action:manipulation;
+  transition:transform .14s ease, box-shadow .14s ease;
+}
+.x-core:active{
+  transform:translate(-50%,-50%) scale(.94);
+}
+.x-core:hover{
+  box-shadow:
+    0 9px 20px rgba(35,50,60,.24),
+    inset 0 0 0 1px rgba(255,255,255,.14);
 }
 .x-core span{
   transform:none;
@@ -380,20 +391,6 @@ body{
   height:28%;
 }
 
-.rotate{
-  position:absolute;left:8px;bottom:8px;z-index:6;
-  width:31px;height:31px;min-width:31px;min-height:31px;
-  padding:0;
-  border-radius:50%;
-  border:1px solid rgba(255,246,233,.18);
-  background:rgba(28,57,72,.82);
-  color:#fff6e9;
-  display:grid;place-items:center;
-  font-size:15px;line-height:1;
-  cursor:pointer;
-  box-shadow:0 2px 7px rgba(0,0,0,.08)
-}
-.rotate:hover{transform:translateY(-1px)}
 .tile-id{
   direction:ltr;
   position:absolute;
@@ -719,7 +716,7 @@ button{
     </div>
   </div>
 
-  <div class="tip">↻ מסובב את הריבוע • גרירה מעבירה אותו למקום אחר</div>
+  <div class="tip">לחיצה על ה־X מסובבת את הריבוע • גרירה מעבירה אותו למקום אחר</div>
   <div class="move-tip"><span class="move-icon">↔</span><span>במובייל אפשר גם לגעת בריבוע ואז לגעת במיקום היעד</span></div>
 </div>
 
@@ -770,7 +767,7 @@ button{
   <div class="instructions-card">
     <h2>איך משחקים?</h2>
     <div class="instructions-list">
-      <div class="instruction-row"><b>↻ סיבוב:</b> סובב ריבוע ב־90° כדי לכוון את המושגים לצד הנכון.</div>
+      <div class="instruction-row"><b>X סיבוב:</b> לחץ על ה־X שבמרכז הריבוע כדי לסובב אותו ב־90° ולכוון את המושגים לצד הנכון.</div>
       <div class="instruction-row"><b>↔ הזזה:</b> גרור ריבוע למקום אחר כדי להחליף ביניהם.</div>
       <div class="instruction-row"><b>X:</b> המטרה היא שכל זוג מושגים שנפגש בקצה משותף יהיה זוג מתאים.</div>
     </div>
@@ -1075,13 +1072,12 @@ function render(){
       <div class="concept bottom">${e.bottom.text}</div>
       <div class="concept left">${e.left.text}</div>
       <div class="x-core"><span>X</span></div>
-      <button class="rotate" title="סובב">↻</button>
       <div class="tile-id">${tile.id+1}</div>
     `;
 
     if(selected===idx) d.classList.add("selected");
 
-    d.querySelector(".rotate").addEventListener("click",ev=>{
+    d.querySelector(".x-core").addEventListener("click",ev=>{
       ev.stopPropagation();
       tile.rot=(tile.rot+90)%360;
       selected=null;
@@ -1090,7 +1086,7 @@ function render(){
     });
 
     d.addEventListener("pointerdown",ev=>{
-      if(ev.target.closest(".rotate")) return;
+      if(ev.target.closest(".x-core")) return;
       dragIndex=idx;
       pointerDragging=false;
       d.setPointerCapture?.(ev.pointerId);
