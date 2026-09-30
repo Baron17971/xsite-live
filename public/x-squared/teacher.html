@@ -645,6 +645,7 @@ const els={
 };
 
 const DRAFT_KEY="xSquaredTeacherDraftV1";
+let AUTOSAVE_READY=false;
 function derivedActivityName(){
   const topic=els.topic.value.trim();
   return topic?("X בריבוע — "+topic):"X בריבוע";
@@ -671,7 +672,8 @@ function draftPayload(){
   };
 }
 function saveDraft(){
-  try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draftPayload()));setStatus(state.created?"מוכנה":"טיוטה");}catch(e){}
+  if(!AUTOSAVE_READY)return;
+  try{localStorage.setItem(DRAFT_KEY,JSON.stringify(draftPayload()));setStatus(state.archived?"בארכיון":"טיוטה");}catch(e){}
 }
 function restoreDraft(){
   try{
@@ -688,7 +690,7 @@ function restoreDraft(){
     document.querySelectorAll(".size-option").forEach(btn=>btn.classList.toggle("active",Number(btn.dataset.n)===state.n));
     document.getElementById("saveStage").hidden=!state.created;
     document.getElementById("createGame").textContent=state.created?"צור מחדש":"צור פעילות";
-    setStatus(state.created?"מוכנה":"טיוטה");
+    setStatus("טיוטה");
     return true;
   }catch(e){return false;}
 }
@@ -936,10 +938,12 @@ document.getElementById("loadExample").addEventListener("click",()=>{
 });
 
 document.getElementById("clearBtn").addEventListener("click",()=>{
+  if((els.rawInput.value.trim()||state.groups.length)&&!confirm("לנקות את המאגר? הפעולה תמחק את התוכן שהוזן מהטיוטה הנוכחית."))return;
   els.rawInput.value="";
   state.groups=[];
   renderGroups();
   els.parseStatus.classList.remove("show");
+  saveDraft();
 });
 
 document.getElementById("addGroup").addEventListener("click",()=>{
@@ -1220,7 +1224,7 @@ document.getElementById("createGame").addEventListener("click",()=>{
   document.getElementById("shareSection").hidden=true;
   document.getElementById("openProjector").disabled=true;
   document.getElementById("createGame").textContent="צור מחדש";
-  setStatus("מוכנה");
+  setStatus("טיוטה");
   saveDraft();
   document.getElementById("archiveStatus").textContent="";
   document.getElementById("flowNote").textContent=
@@ -1285,12 +1289,21 @@ async function loadXsiteProjectFromUrl(){
     renderGroups();
     renderProjectorBoard();
     state.created=true;
+    AUTOSAVE_READY=true;
     document.getElementById("saveStage").hidden=false;
     document.getElementById("createGame").textContent="צור מחדש";
-    setStatus("מוכנה");
+    setStatus("טיוטה");
     saveDraft();
     document.getElementById("flowNote").textContent="הפעילות נטענה מהספרייה האישית של Xsite. אפשר לערוך וליצור מחדש.";
   }catch(e){
+    if(!AUTOSAVE_READY){
+      restoreDraft();
+      AUTOSAVE_READY=true;
+      syncDerivedActivityName();
+      buildPrompt();
+      renderGroups();
+      renderProjectorBoard();
+    }
     alert("לא הצלחנו לפתוח את הפעילות מהספרייה.");
   }
 }
@@ -1357,7 +1370,10 @@ document.getElementById("openExistingCode").addEventListener("click",async()=>{
 window.addEventListener("qr-ready",()=>drawQr());
 
 const hasEditProject=new URLSearchParams(location.search).has("edit");
-if(!hasEditProject)restoreDraft();
+if(!hasEditProject){
+  restoreDraft();
+  AUTOSAVE_READY=true;
+}
 syncDerivedActivityName();
 buildPrompt();
 renderGroups();
