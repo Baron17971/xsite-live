@@ -252,13 +252,16 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
   .teacher-x-board{gap:7px}
   .teacher-board-controls{grid-template-columns:1fr 1fr}
 }
+
+.class-status-pill{display:inline-flex;align-items:center;border:1px solid #d9e4df;background:#f7faf8;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900;color:#557178}
+@media(max-width:720px){.top>div:last-child{flex-wrap:wrap;justify-content:flex-end}}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top">
   <div class="brand"><div class="logo" id="sizeBadge">X²</div><div><h1 id="activityTitle">X בריבוע</h1><small id="activityMeta"></small></div></div>
-  <div style="display:flex;gap:8px"><button class="btn primary" id="projectorBtn">פתח מקרן</button><button class="btn soft" onclick="location.href='teacher.html'">חזרה לעריכה</button></div>
+  <div style="display:flex;gap:8px;align-items:center"><span class="class-status-pill" id="classActivityStatus">פעילה</span><button class="btn primary" id="projectorBtn">פתח מקרן</button><button class="btn soft" onclick="location.href='teacher.html'">חזרה לעריכה</button></div>
 </header>
 
 <section class="card">
@@ -698,13 +701,19 @@ async function refreshLive(){
   if(session){
     game=session;
     const btn=document.getElementById("startClassBtn");
+    const statusPill=document.getElementById("classActivityStatus");
     if(session.status==="running"){
+      if(statusPill)statusPill.textContent="פעילה";
       btn.textContent="המשחק פתוח ✓";
       btn.disabled=true;
       document.getElementById("liveStatus").textContent=(players.length?document.getElementById("liveStatus").textContent+" · ":"")+"המשחק התחיל";
     }else if(session.status==="finished"){
+      if(statusPill)statusPill.textContent="הסתיימה";
+      document.getElementById("liveStatus").textContent="הפעילות הסתיימה";
       btn.textContent="המשחק הסתיים";
       btn.disabled=true;
+    }else{
+      if(statusPill)statusPill.textContent="פעילה";
     }
   }
 }
