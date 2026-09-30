@@ -7,6 +7,7 @@ import { supabase } from '../lib/supabaseClient';
 const projectEditLinks = {
   mapi: (projectId)=>'https://mapi-interactive.vercel.app/?edit='+encodeURIComponent(projectId),
   bingo: (projectId)=>'https://classroom-bingo-live.vercel.app/?edit='+encodeURIComponent(projectId),
+  linkup: (projectId)=>'https://linkup-classroom-live.vercel.app/?edit='+encodeURIComponent(projectId),
   'four-on-four': (projectId)=>'/four-on-four/teacher.html?edit='+encodeURIComponent(projectId),
   'x-squared': (projectId)=>'/x-squared/teacher.html?edit='+encodeURIComponent(projectId)
 };
