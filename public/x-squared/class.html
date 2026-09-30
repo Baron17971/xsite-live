@@ -404,7 +404,7 @@ async function copyText(t){
 }
 async function loadPlayers(){
   if(!SESSION_ID)return [];
-  const res=await sb("/rest/v1/x_squared_players?session_id=eq."+encodeURIComponent(SESSION_ID)+"&select=id,name,joined_at,elapsed_ms,finished_at,forfeited&order=joined_at.asc");
+  const res=await sb("/rest/v1/x_squared_players?session_id=eq."+encodeURIComponent(SESSION_ID)+"&select=id,display_name,joined_at,elapsed_ms,finished_at,forfeited&order=joined_at.asc");
   const rows=await res.json();
   return res.ok&&Array.isArray(rows)?rows:[];
 }
@@ -416,7 +416,7 @@ function renderPlayers(players){
     status.textContent="ממתינים לתלמידים…";
     return;
   }
-  list.innerHTML=players.map(p=>'<div class="player-chip">'+escapeHtml(p.name)+'</div>').join("");
+  list.innerHTML=players.map(p=>'<div class="player-chip">'+escapeHtml(p.display_name)+'</div>').join("");
   status.textContent=players.length===1?"תלמיד אחד הצטרף":players.length+" תלמידים הצטרפו";
 }
 function escapeHtml(v){
@@ -439,7 +439,7 @@ function podiumHtml(top){
   const names=["מקום ראשון","מקום שני","מקום שלישי"];
   return [0,1,2].map(i=>{
     const w=top[i];
-    return '<div class="podium-place"><div class="medal">'+medals[i]+'</div><b>'+escapeHtml(w?w.name:"פנוי")+'</b><span>'+(w?formatMs(w.elapsed_ms):names[i])+'</span></div>';
+    return '<div class="podium-place"><div class="medal">'+medals[i]+'</div><b>'+escapeHtml(w?w.display_name:"פנוי")+'</b><span>'+(w?formatMs(w.elapsed_ms):names[i])+'</span></div>';
   }).join("");
 }
 function renderPodiums(players){
