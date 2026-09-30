@@ -930,7 +930,52 @@ document.getElementById("newCode").addEventListener("click",()=>{
 
 
 
-document.getElementById("saveArchive").addEventListener("click",()=>{
+
+function getXsiteAuthSession(){
+  try{
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i);
+      if(!key || !key.startsWith("sb-") || !key.endsWith("-auth-token")) continue;
+      const raw=localStorage.getItem(key);
+      if(!raw) continue;
+      const parsed=JSON.parse(raw);
+      const session=Array.isArray(parsed)?parsed[0]:parsed;
+      if(session?.access_token && session?.user?.id) return session;
+    }
+  }catch(e){}
+  return null;
+}
+
+async function saveToXsiteArchive(project){
+  const session=getXsiteAuthSession();
+  if(!session) return {ok:false,reason:"auth"};
+
+  const res=await fetch("https://zydhfhfhspflvhlpmokj.supabase.co/rest/v1/teacher_projects",{
+    method:"POST",
+    headers:{
+      apikey:"sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x",
+      Authorization:"Bearer "+session.access_token,
+      "Content-Type":"application/json",
+      Prefer:"return=representation"
+    },
+    body:JSON.stringify({
+      teacher_id:session.user.id,
+      app_id:"x-squared",
+      title:(project.activityName||"ללא כותרת").trim()||"ללא כותרת",
+      subject:(project.subject||"").trim()||null,
+      payload:project
+    })
+  });
+
+  if(!res.ok){
+    let detail="";
+    try{detail=JSON.stringify(await res.json());}catch(e){}
+    return {ok:false,reason:"save",detail};
+  }
+  return {ok:true,data:await res.json()};
+}
+
+document.getElementById("saveArchive").addEventListener("click",async()=>{
   if(!state.created)return;
 
   const payload={
@@ -939,18 +984,28 @@ document.getElementById("saveArchive").addEventListener("click",()=>{
     className:els.className.value,
     topic:els.topic.value,
     n:state.n,
-    groups:state.groups.slice(0,requiredGroups())
+    pairs:state.groups.slice(0,requiredGroups())
   };
 
+  const status=document.getElementById("archiveStatus");
+  const btn=document.getElementById("saveArchive");
+  btn.disabled=true;
+  status.textContent="שומר בארכיון Xsite…";
+
   try{
-    const key="xSquaredArchive";
-    const archive=JSON.parse(localStorage.getItem(key)||"[]");
-    archive.push({...payload,savedAt:new Date().toISOString()});
-    localStorage.setItem(key,JSON.stringify(archive));
-    state.archived=true;
-    document.getElementById("archiveStatus").textContent="המשחק נשמר בארכיון האישי ✓";
+    const result=await saveToXsiteArchive(payload);
+    if(result.ok){
+      state.archived=true;
+      status.textContent="המשחק נשמר בארכיון האישי של Xsite ✓";
+    }else if(result.reason==="auth"){
+      status.textContent="כדי לשמור בארכיון האישי יש להתחבר ל־Xsite.";
+    }else{
+      status.textContent="לא הצלחנו לשמור בארכיון Xsite כרגע.";
+    }
   }catch(e){
-    document.getElementById("archiveStatus").textContent="לא ניתן היה לשמור מקומית בדפדפן.";
+    status.textContent="לא הצלחנו לשמור בארכיון Xsite כרגע.";
+  }finally{
+    btn.disabled=false;
   }
 });
 
