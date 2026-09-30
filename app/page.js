@@ -53,6 +53,19 @@ const apps = [
     ]
   },
   {
+    name: 'X בריבוע',
+    eyebrow: 'פאזל התאמות',
+    description: 'מסובבים, מזיזים ומחברים ריבועים עד שכל המושגים שנפגשים בצלע משותפת מתאימים זה לזה.',
+    href: '/x-squared',
+    kind: 'xsquared',
+    details: [
+      ['מה עושים?', 'המורה יוצר מאגר של זוגות מושגים והתאמות ובוחר לוח 3×3, 4×4 או 5×5.'],
+      ['איך משחקים?', 'התלמידים מסובבים ומחליפים ריבועים, בודקים את החיבורים ומנסים להשלים את הלוח בזמן הקצר ביותר.'],
+      ['כיתה חיה', 'התלמידים מצטרפים בקישור או QR, ממתינים לפתיחת המשחק, ושלושת המסיימים המהירים מוצגים למורה.'],
+      ['מתאים ל־', 'תרגול התאמות, מושג–הגדרה, סיבה–תוצאה, מבנה–תפקיד וקשרים בין רעיונות.']
+    ]
+  },
+  {
     name: 'MAPI',
     eyebrow: 'מסלול למידה אינטראקטיבי',
     description: 'יוצרים מסלול למידה על גבי תמונה או מפה, עם שאלות, משימות וסרטונים. התלמיד מתקדם בין התחנות ובסיום מתקבל סיכום תשובות מלא למורה.',
@@ -200,6 +213,13 @@ export default function Home() {
                     <img className="app-card-image theme-card theme-card-mauve" src="/domiknow-purple.png" alt="DomiKnow" />
                     <img className="app-card-image theme-card theme-card-botanical domiknow-botanical-image" src="/DomiKnow-card.png" alt="DomiKnow" />
                   </>
+                )}
+                {app.kind === 'xsquared' && (
+                  <div className="app-card-image xsquared-card-fallback" role="img" aria-label="X בריבוע">
+                    <span className="xsquared-card-symbol">X²</span>
+                    <span className="xsquared-card-title">X בריבוע</span>
+                    <span className="xsquared-card-tagline">מסובבים. מזיזים. מחברים.</span>
+                  </div>
                 )}
                 {app.kind === 'mapi' && (
                   <>
