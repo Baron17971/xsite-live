@@ -64,31 +64,181 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
 .xedge.left{left:3%;top:37%;width:28%;height:26%}.xedge.right{right:3%;top:37%;width:28%;height:26%}
 .xmark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;color:#263f4b;font-weight:950;font-size:18px}
 
-.real-student-preview-card{overflow:hidden}
-.real-student-preview{display:flex;justify-content:center;align-items:flex-start;padding:4px 0 8px}
-.student-shell-frame{
-  width:min(100%,460px);
-  aspect-ratio:9/16;
-  height:auto;
-  min-height:760px;
-  border:0;
-  border-radius:22px;
-  background:#f7f3ea;
-  box-shadow:0 14px 34px rgba(40,48,56,.12);
-}
-.real-projector-card{display:flex;justify-content:center;align-items:flex-start;background:#efe9dd!important}
-.projector-student-frame{
-  width:min(100%,520px);
-  aspect-ratio:9/16;
-  min-height:880px;
-  border:0;
-  border-radius:22px;
-  background:#f7f3ea;
-  box-shadow:0 14px 36px rgba(40,48,56,.18);
-}
-@media(max-width:720px){
-  .student-shell-frame{width:100%;min-height:690px}
   .projector-student-frame{width:100%;min-height:720px}
+}
+
+.teacher-board-card{overflow:visible}
+.teacher-game-preview{
+  width:min(100%,620px);
+  margin:0 auto;
+  background:linear-gradient(180deg,#f8f6ef,#f0ebe2);
+  border:1px solid rgba(64,91,103,.16);
+  border-radius:26px;
+  padding:16px;
+  box-shadow:0 14px 34px rgba(42,66,73,.10);
+}
+.teacher-preview-progress{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+  direction:ltr;
+}
+.teacher-preview-progress-bar{
+  flex:1;
+  height:14px;
+  background:#e7e1d8;
+  border-radius:999px;
+  overflow:hidden;
+  box-shadow:inset 0 1px 2px rgba(40,50,58,.08);
+}
+.teacher-preview-progress-bar span{
+  display:block;
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#78b37b,#5e9a69);
+  border-radius:inherit;
+  transition:width .2s ease;
+}
+.teacher-preview-progress strong{
+  min-width:58px;
+  text-align:center;
+  color:#274f61;
+  font-size:15px;
+}
+.teacher-x-board{
+  display:grid;
+  gap:10px;
+  direction:ltr;
+  aspect-ratio:1;
+  width:100%;
+}
+.teacher-x-tile{
+  --c-top:#e8f4fb;
+  --c-right:#f8ebe8;
+  --c-bottom:#dff1ea;
+  --c-left:#e4eff8;
+  position:relative;
+  border-radius:18px;
+  overflow:hidden;
+  user-select:none;
+  touch-action:none;
+  cursor:grab;
+  border:1px solid rgba(48,74,88,.36);
+  background:#f8f6ef;
+  box-shadow:
+    0 10px 14px rgba(38,58,68,.19),
+    0 3px 5px rgba(38,58,68,.14),
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -2px 0 rgba(44,72,86,.09);
+  transform:translateY(-1px);
+}
+.teacher-x-tile:nth-child(2){--c-top:#f9eeee;--c-right:#f6dfe7;--c-bottom:#dfe7fa;--c-left:#f6e7ef}
+.teacher-x-tile:nth-child(3){--c-top:#fff4d8;--c-right:#faecc4;--c-bottom:#f7e7bb;--c-left:#fff7e5}
+.teacher-x-tile:nth-child(4){--c-top:#f1f8e9;--c-right:#e8f5e8;--c-bottom:#dcefe2;--c-left:#f5f8ec}
+.teacher-x-tile:nth-child(5){--c-top:#edf5fb;--c-right:#e2eff8;--c-bottom:#d8eaf6;--c-left:#e9f2f9}
+.teacher-x-tile:nth-child(6){--c-top:#eef8ea;--c-right:#e4f2e6;--c-bottom:#d8ecdf;--c-left:#f4f8ec}
+.teacher-x-tile:nth-child(7){--c-top:#fcebed;--c-right:#f8dce7;--c-bottom:#e2e4f8;--c-left:#f5e6ef}
+.teacher-x-tile:nth-child(8){--c-top:#efeffb;--c-right:#e8e7fa;--c-bottom:#dfe2f7;--c-left:#f3f1fb}
+.teacher-x-tile:nth-child(9){--c-top:#fff3d3;--c-right:#f9e7b6;--c-bottom:#f5e3ad;--c-left:#fff8e7}
+.teacher-x-tile .facet{position:absolute;z-index:1}
+.teacher-x-tile .facet.top{left:0;right:0;top:0;height:50%;clip-path:polygon(0 0,100% 0,50% 100%);background:linear-gradient(180deg,color-mix(in srgb,var(--c-top) 97%,#fff 3%),var(--c-top))}
+.teacher-x-tile .facet.right{right:0;top:0;bottom:0;width:50%;clip-path:polygon(0 50%,100% 0,100% 100%);background:linear-gradient(90deg,var(--c-right),color-mix(in srgb,var(--c-right) 96%,#fff 4%))}
+.teacher-x-tile .facet.bottom{left:0;right:0;bottom:0;height:50%;clip-path:polygon(0 100%,100% 100%,50% 0);background:linear-gradient(0deg,color-mix(in srgb,var(--c-bottom) 96%,#fff 4%),var(--c-bottom))}
+.teacher-x-tile .facet.left{left:0;top:0;bottom:0;width:50%;clip-path:polygon(100% 50%,0 100%,0 0);background:linear-gradient(90deg,color-mix(in srgb,var(--c-left) 97%,#fff 3%),var(--c-left))}
+.teacher-x-tile .x-lines::before,.teacher-x-tile .x-lines::after{
+  content:"";
+  position:absolute;
+  left:50%;top:50%;
+  width:142%;
+  height:1px;
+  background:rgba(56,93,108,.26);
+  transform-origin:center;
+  z-index:2;
+  pointer-events:none;
+}
+.teacher-x-tile .x-lines::before{transform:translate(-50%,-50%) rotate(45deg)}
+.teacher-x-tile .x-lines::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.teacher-x-tile .edge-text{
+  position:absolute;
+  z-index:4;
+  direction:rtl;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-weight:850;
+  line-height:1.08;
+  color:#234f61;
+  text-shadow:0 1px 0 rgba(255,255,255,.58);
+  overflow:hidden;
+  padding:1px 2px;
+  font-size:clamp(9px,1.7vw,15px);
+}
+.teacher-x-tile .edge-text.top{top:4%;left:24%;width:52%;height:22%}
+.teacher-x-tile .edge-text.bottom{bottom:4%;left:24%;width:52%;height:22%}
+.teacher-x-tile .edge-text.left{left:3.5%;top:37%;width:27%;height:26%}
+.teacher-x-tile .edge-text.right{right:3.5%;top:37%;width:27%;height:26%}
+.teacher-x-tile .x-core{
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:23%;
+  aspect-ratio:1;
+  border-radius:24%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#213540,#162731);
+  color:#fffaf0;
+  font-weight:950;
+  font-size:clamp(16px,3vw,25px);
+  z-index:8;
+  box-shadow:0 5px 10px rgba(35,50,60,.22),inset 0 1px 0 rgba(255,255,255,.12);
+  cursor:pointer;
+}
+.teacher-x-tile.selected{outline:3px solid rgba(30,165,175,.45);outline-offset:-2px}
+.teacher-x-tile.dragging{opacity:.65;transform:scale(.97)}
+.teacher-x-tile.drop-target{outline:3px solid rgba(70,180,145,.5)}
+.teacher-board-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:14px;
+}
+.teacher-control{
+  min-height:48px;
+  border:0;
+  border-radius:15px;
+  font-weight:900;
+  font-size:16px;
+}
+.teacher-control.primary{background:linear-gradient(145deg,#2f8695,#286d7b);color:#fff}
+.teacher-control.secondary{background:linear-gradient(145deg,#5f756e,#465a53);color:#fff}
+.teacher-move-panel{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+  margin-top:10px;
+}
+.move-control{
+  min-height:48px;
+  border:1px solid #d8d1c7;
+  border-radius:14px;
+  background:#f9f6ef;
+  color:#285366;
+  font-size:24px;
+  font-weight:950;
+  box-shadow:0 4px 10px rgba(42,66,73,.08);
+}
+.projector-board-heading{text-align:center;margin-bottom:12px}
+.projector-board-heading h2{margin:0;font-size:26px}
+.projector-board-heading div{color:var(--muted);margin-top:4px}
+.projector-game-preview{width:min(100%,720px)}
+.projector-x-board{max-width:680px;margin:0 auto}
+@media(max-width:720px){
+  .teacher-game-preview{padding:10px}
+  .teacher-x-board{gap:7px}
+  .teacher-board-controls{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>
@@ -125,10 +275,28 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
   <button class="start-class-btn" id="startClassBtn">פתח את המשחק לתלמידים</button>
 </section>
 
-<section class="card board-wrap real-student-preview-card">
+<section class="card board-wrap teacher-board-card">
   <div class="board-title"><h2 id="topicTitle"></h2><div id="classTitle"></div></div>
-  <div class="real-student-preview">
-    <iframe id="studentPreviewFrame" class="student-shell-frame" title="תצוגת תלמיד"></iframe>
+
+  <div class="teacher-game-preview">
+    <div class="teacher-preview-progress">
+      <div class="teacher-preview-progress-bar"><span id="teacherProgressFill"></span></div>
+      <strong id="teacherProgressText">0/12</strong>
+    </div>
+
+    <div class="teacher-x-board" id="teacherBoard"></div>
+
+    <div class="teacher-board-controls">
+      <button class="teacher-control secondary" id="teacherAnswerBtn">הצג תשובה</button>
+      <button class="teacher-control primary" id="teacherMoveToggle">הזז לוח</button>
+    </div>
+
+    <div class="teacher-move-panel" id="teacherMovePanel" hidden>
+      <button class="move-control" id="teacherLeftToRight" aria-label="עמודה שמאלית לימין">→</button>
+      <button class="move-control" id="teacherRightToLeft" aria-label="עמודה ימנית לשמאל">←</button>
+      <button class="move-control" id="teacherBottomToTop" aria-label="שורה תחתונה לראש">↑</button>
+      <button class="move-control" id="teacherTopToBottom" aria-label="שורה עליונה לתחתית">↓</button>
+    </div>
   </div>
 </section>
 
@@ -150,7 +318,33 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
     </div>
     <div class="projector-main">
       <div class="projector-board-card real-projector-card">
-        <iframe id="projectorStudentFrame" class="projector-student-frame" title="מצב מקרן — X בריבוע"></iframe>
+        <div class="projector-board-heading">
+          <h2 id="projectorTopic"></h2>
+          <div id="projectorClass"></div>
+        </div>
+
+        <div class="teacher-game-preview projector-game-preview">
+          <div class="teacher-preview-progress">
+            <div class="teacher-preview-progress-bar"><span id="projectorProgressFill"></span></div>
+            <strong id="projectorProgressText">0/12</strong>
+          </div>
+          <div class="teacher-x-board projector-x-board" id="projectorBoard"></div>
+          <div class="teacher-board-controls">
+            <button class="teacher-control secondary" id="projectorAnswerBtn">הצג תשובה</button>
+            <button class="teacher-control primary" id="projectorMoveToggle">הזז לוח</button>
+          </div>
+          <div class="teacher-move-panel" id="projectorMovePanel" hidden>
+            <button class="move-control" id="projectorLeftToRight" aria-label="עמודה שמאלית לימין">→</button>
+            <button class="move-control" id="projectorRightToLeft" aria-label="עמודה ימנית לשמאל">←</button>
+            <button class="move-control" id="projectorBottomToTop" aria-label="שורה תחתונה לראש">↑</button>
+            <button class="move-control" id="projectorTopToBottom" aria-label="שורה עליונה לתחתית">↓</button>
+          </div>
+        </div>
+
+        <div class="projector-winners">
+          <div class="podium-title">🏆 שלושת המסיימים המהירים</div>
+          <div class="podium-grid" id="projectorPodium"></div>
+        </div>
       </div>
       <div class="projector-side">
         <div class="projector-code"><div class="sub">קוד כניסה</div><div class="code" id="projectorCode">------</div></div>
@@ -190,11 +384,6 @@ function studentUrl(){
   const p=u.pathname.split("/");p[p.length-1]="student.html";u.pathname=p.join("/");
   u.search="?session="+encodeURIComponent(SESSION_ID);
   u.hash="";
-  return u.toString();
-}
-function projectorStudentUrl(){
-  const u=new URL(studentUrl());
-  u.searchParams.set("projector","1");
   return u.toString();
 }
 async function copyText(t){
@@ -249,17 +438,209 @@ function renderPodiums(players){
   if(pp)pp.innerHTML=html;
 }
 function renderProjectorBoard(){
-  const preview=document.getElementById("studentPreviewFrame");
-  const projector=document.getElementById("projectorStudentFrame");
-  const src=projectorStudentUrl();
-  if(preview&&preview.src!==src)preview.src=src;
-  if(projector&&projector.src!==src)projector.src=src;
+  if(!game)return;
+  ensureTeacherBoardState();
+  renderTeacherBoardInto("teacherBoard");
+  renderTeacherBoardInto("projectorBoard");
+  updateTeacherProgress();
 }
 function drawProjectorQr(){
   const q=document.getElementById("projectorQr");
   if(!q)return;
   q.innerHTML="";
   if(window.QRCode)new QRCode(q,{text:studentUrl(),width:220,height:220,colorDark:"#234f63",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+}
+
+let teacherSolvedTiles=[];
+let teacherTiles=[];
+let teacherSavedBeforeAnswer=null;
+let teacherAnswerShown=false;
+let teacherSelected=null;
+let teacherDragIndex=null;
+let teacherDragging=false;
+
+function cloneTeacherTiles(list){
+  return list.map(t=>({id:t.id,rot:t.rot,edges:{...t.edges}}));
+}
+function buildTeacherSolved(){
+  const N=Number(game.board_size)||3;
+  const pairs=(game.pairs||[]).slice(0,2*N*N);
+  let pi=0;
+  const tiles=Array.from({length:N*N},(_,i)=>({id:i,rot:0,edges:{top:null,right:null,bottom:null,left:null}}));
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+    const p=pairs[pi++]||["",""],i=r*N+c,j=r*N+((c+1)%N);
+    tiles[i].edges.right={pair:pi-1,text:p[0]||""};
+    tiles[j].edges.left={pair:pi-1,text:p[1]||""};
+  }
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+    const p=pairs[pi++]||["",""],i=r*N+c,j=((r+1)%N)*N+c;
+    tiles[i].edges.bottom={pair:pi-1,text:p[0]||""};
+    tiles[j].edges.top={pair:pi-1,text:p[1]||""};
+  }
+  return tiles;
+}
+function ensureTeacherBoardState(){
+  const N=Number(game.board_size)||3;
+  if(teacherSolvedTiles.length===N*N&&teacherTiles.length===N*N)return;
+  teacherSolvedTiles=buildTeacherSolved();
+  teacherTiles=cloneTeacherTiles(teacherSolvedTiles).map(t=>({...t,rot:[0,90,180,270][Math.floor(Math.random()*4)]}));
+  for(let i=teacherTiles.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [teacherTiles[i],teacherTiles[j]]=[teacherTiles[j],teacherTiles[i]];
+  }
+}
+function teacherRotatedEdges(tile){
+  const order=["top","right","bottom","left"],out={};
+  for(let i=0;i<4;i++){
+    const src=order[(i-tile.rot/90+4)%4];
+    out[order[i]]=tile.edges[src];
+  }
+  return out;
+}
+function teacherScore(){
+  const N=Number(game.board_size)||3;
+  let ok=0,total=0;
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+    const i=r*N+c,a=teacherRotatedEdges(teacherTiles[i]);
+    if(c<N-1){
+      total++;
+      const b=teacherRotatedEdges(teacherTiles[i+1]);
+      if(a.right&&b.left&&a.right.pair===b.left.pair)ok++;
+    }
+    if(r<N-1){
+      total++;
+      const b=teacherRotatedEdges(teacherTiles[i+N]);
+      if(a.bottom&&b.top&&a.bottom.pair===b.top.pair)ok++;
+    }
+  }
+  return {ok,total};
+}
+function renderTeacherBoardInto(id){
+  const board=document.getElementById(id);
+  if(!board)return;
+  const N=Number(game.board_size)||3;
+  board.style.gridTemplateColumns="repeat("+N+",1fr)";
+  board.innerHTML="";
+  teacherTiles.forEach((tile,idx)=>{
+    const e=teacherRotatedEdges(tile);
+    const el=document.createElement("div");
+    el.className="teacher-x-tile";
+    el.dataset.index=idx;
+    el.innerHTML=
+      '<div class="facet top"></div><div class="facet right"></div><div class="facet bottom"></div><div class="facet left"></div>'+
+      '<div class="x-lines"></div>'+
+      '<span class="edge-text top">'+escapeHtml(e.top?.text||"")+'</span>'+
+      '<span class="edge-text right">'+escapeHtml(e.right?.text||"")+'</span>'+
+      '<span class="edge-text bottom">'+escapeHtml(e.bottom?.text||"")+'</span>'+
+      '<span class="edge-text left">'+escapeHtml(e.left?.text||"")+'</span>'+
+      '<button class="x-core" type="button" aria-label="סובב">X</button>';
+
+    if(teacherSelected===idx)el.classList.add("selected");
+
+    el.querySelector(".x-core").onclick=(ev)=>{
+      ev.stopPropagation();
+      teacherTiles[idx].rot=(teacherTiles[idx].rot+90)%360;
+      teacherSelected=null;
+      renderBoard();
+    };
+
+    el.addEventListener("pointerdown",ev=>{
+      if(ev.target.closest(".x-core"))return;
+      teacherDragIndex=idx;teacherDragging=false;
+      el.setPointerCapture?.(ev.pointerId);
+      el.dataset.startX=ev.clientX;el.dataset.startY=ev.clientY;
+    });
+    el.addEventListener("pointermove",ev=>{
+      if(teacherDragIndex!==idx)return;
+      const sx=Number(el.dataset.startX||ev.clientX),sy=Number(el.dataset.startY||ev.clientY);
+      if(Math.hypot(ev.clientX-sx,ev.clientY-sy)>8){
+        teacherDragging=true;el.classList.add("dragging");
+        document.querySelectorAll(".teacher-x-tile.drop-target").forEach(x=>x.classList.remove("drop-target"));
+        const target=document.elementFromPoint(ev.clientX,ev.clientY)?.closest?.(".teacher-x-tile");
+        if(target&&target!==el)target.classList.add("drop-target");
+      }
+    });
+    el.addEventListener("pointerup",ev=>{
+      if(teacherDragIndex!==idx)return;
+      el.classList.remove("dragging");
+      const target=document.elementFromPoint(ev.clientX,ev.clientY)?.closest?.(".teacher-x-tile");
+      const targetIndex=target?Number(target.dataset.index):null;
+      document.querySelectorAll(".teacher-x-tile.drop-target").forEach(x=>x.classList.remove("drop-target"));
+
+      if(teacherDragging&&targetIndex!==null&&targetIndex!==idx){
+        [teacherTiles[idx],teacherTiles[targetIndex]]=[teacherTiles[targetIndex],teacherTiles[idx]];
+      }else if(!teacherDragging){
+        if(teacherSelected===null)teacherSelected=idx;
+        else if(teacherSelected===idx)teacherSelected=null;
+        else{
+          [teacherTiles[teacherSelected],teacherTiles[idx]]=[teacherTiles[idx],teacherTiles[teacherSelected]];
+          teacherSelected=null;
+        }
+      }
+      teacherDragIndex=null;teacherDragging=false;renderBoard();
+    });
+    el.addEventListener("pointercancel",()=>{teacherDragIndex=null;teacherDragging=false;renderBoard();});
+    board.appendChild(el);
+  });
+}
+function updateTeacherProgress(){
+  const {ok,total}=teacherScore();
+  const pct=total?ok/total*100:0;
+  const tf=document.getElementById("teacherProgressFill");
+  const tt=document.getElementById("teacherProgressText");
+  const pf=document.getElementById("projectorProgressFill");
+  const pt=document.getElementById("projectorProgressText");
+  if(tf)tf.style.width=pct+"%";
+  if(tt)tt.textContent=ok+"/"+total;
+  if(pf)pf.style.width=pct+"%";
+  if(pt)pt.textContent=ok+"/"+total;
+}
+function toggleTeacherAnswer(){
+  if(!teacherAnswerShown){
+    teacherSavedBeforeAnswer=cloneTeacherTiles(teacherTiles);
+    teacherTiles=cloneTeacherTiles(teacherSolvedTiles);
+    teacherTiles.forEach(t=>t.rot=0);
+    teacherAnswerShown=true;
+  }else{
+    if(teacherSavedBeforeAnswer)teacherTiles=cloneTeacherTiles(teacherSavedBeforeAnswer);
+    teacherAnswerShown=false;
+  }
+  document.querySelectorAll("#teacherAnswerBtn,#projectorAnswerBtn").forEach(b=>b.textContent=teacherAnswerShown?"חזור ללוח":"הצג תשובה");
+  renderBoard();
+}
+function moveTeacherTopToBottom(){
+  const N=Number(game.board_size)||3,rows=Array.from({length:N},(_,r)=>teacherTiles.slice(r*N,(r+1)*N));
+  rows.push(rows.shift());teacherTiles=rows.flat();renderBoard();
+}
+function moveTeacherBottomToTop(){
+  const N=Number(game.board_size)||3,rows=Array.from({length:N},(_,r)=>teacherTiles.slice(r*N,(r+1)*N));
+  rows.unshift(rows.pop());teacherTiles=rows.flat();renderBoard();
+}
+function moveTeacherRightToLeft(){
+  const N=Number(game.board_size)||3,out=Array(N*N);
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++)out[r*N+c]=teacherTiles[r*N+((c+N-1)%N)];
+  teacherTiles=out;renderBoard();
+}
+function moveTeacherLeftToRight(){
+  const N=Number(game.board_size)||3,out=Array(N*N);
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++)out[r*N+c]=teacherTiles[r*N+((c+1)%N)];
+  teacherTiles=out;renderBoard();
+}
+function wireTeacherBoardControls(){
+  const pairs=[
+    ["teacherAnswerBtn",toggleTeacherAnswer],["projectorAnswerBtn",toggleTeacherAnswer],
+    ["teacherTopToBottom",moveTeacherTopToBottom],["projectorTopToBottom",moveTeacherTopToBottom],
+    ["teacherBottomToTop",moveTeacherBottomToTop],["projectorBottomToTop",moveTeacherBottomToTop],
+    ["teacherRightToLeft",moveTeacherRightToLeft],["projectorRightToLeft",moveTeacherRightToLeft],
+    ["teacherLeftToRight",moveTeacherLeftToRight],["projectorLeftToRight",moveTeacherLeftToRight]
+  ];
+  pairs.forEach(([id,fn])=>{const el=document.getElementById(id);if(el)el.onclick=fn;});
+
+  const toggles=[["teacherMoveToggle","teacherMovePanel"],["projectorMoveToggle","projectorMovePanel"]];
+  toggles.forEach(([btnId,panelId])=>{
+    const btn=document.getElementById(btnId),panel=document.getElementById(panelId);
+    if(btn&&panel)btn.onclick=()=>{panel.hidden=!panel.hidden;btn.textContent=panel.hidden?"הזז לוח":"סגור הזזה";};
+  });
 }
 async function refreshLive(){
   const [players,session]=await Promise.all([loadPlayers(),loadSession()]);
@@ -279,20 +660,11 @@ async function refreshLive(){
   }
 }
 function renderBoard(){
-  const N=Number(game.board_size)||3,pairs=(game.pairs||[]).slice(0,2*N*N);
-  let pi=0;
-  const tiles=Array.from({length:N*N},(_,i)=>({theme:i%5,e:{top:"",right:"",bottom:"",left:""}}));
-  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
-    const p=pairs[pi++]||["",""],i=r*N+c,j=r*N+((c+1)%N);
-    tiles[i].e.right=p[0]||"";tiles[j].e.left=p[1]||"";
-  }
-  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
-    const p=pairs[pi++]||["",""],i=r*N+c,j=((r+1)%N)*N+c;
-    tiles[i].e.bottom=p[0]||"";tiles[j].e.top=p[1]||"";
-  }
-  const board=document.getElementById("board");
-  board.style.gridTemplateColumns="repeat("+N+",1fr)";
-  board.innerHTML=tiles.map(t=>'<div class="tile t'+t.theme+' x-tile"><div class="xedge top">'+escapeHtml(t.e.top)+'</div><div class="xedge right">'+escapeHtml(t.e.right)+'</div><div class="xedge bottom">'+escapeHtml(t.e.bottom)+'</div><div class="xedge left">'+escapeHtml(t.e.left)+'</div><div class="xmark">X</div></div>').join("");
+  if(!game)return;
+  ensureTeacherBoardState();
+  renderTeacherBoardInto("teacherBoard");
+  renderTeacherBoardInto("projectorBoard");
+  updateTeacherProgress();
 }
 function drawQr(){
   const q=document.getElementById("qr");q.innerHTML="";
@@ -349,13 +721,12 @@ document.getElementById("startClassBtn").onclick=async()=>{
 };
 document.getElementById("projectorBtn").onclick=()=>{
   renderProjectorBoard();
-  const frame=document.getElementById("projectorStudentFrame");
-  if(frame)frame.src=projectorStudentUrl()+"&t="+Date.now();
   drawProjectorQr();
   document.getElementById("projectorModal").classList.add("show");
 };
 document.getElementById("closeProjector").onclick=()=>document.getElementById("projectorModal").classList.remove("show");
 window.addEventListener("qr-ready",()=>{drawQr();drawProjectorQr();});
+wireTeacherBoardControls();
 boot();
 </script>
 </body>
