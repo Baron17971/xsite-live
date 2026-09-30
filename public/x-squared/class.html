@@ -162,6 +162,12 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
 .teacher-x-tile .edge-text{
   position:absolute;
   z-index:4;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  margin:0!important;
   direction:rtl;
   display:flex;
   align-items:center;
@@ -175,7 +181,20 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
   padding:1px 2px;
   font-size:clamp(9px,1.7vw,15px);
 }
-.teacher-x-tile .edge-text.top{top:4%;left:24%;width:52%;height:22%}
+.teacher-x-tile .edge-text.top{
+  position:absolute!important;
+  top:4%!important;
+  left:24%!important;
+  right:auto!important;
+  width:52%!important;
+  height:22%!important;
+  padding:1px 2px!important;
+  display:flex!important;
+  justify-content:center!important;
+  align-items:center!important;
+  background:transparent!important;
+  border:0!important;
+}
 .teacher-x-tile .edge-text.bottom{bottom:4%;left:24%;width:52%;height:22%}
 .teacher-x-tile .edge-text.left{left:3.5%;top:37%;width:27%;height:26%}
 .teacher-x-tile .edge-text.right{right:3.5%;top:37%;width:27%;height:26%}
