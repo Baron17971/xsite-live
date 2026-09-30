@@ -34,13 +34,33 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
 .empty-players{color:var(--muted);font-size:14px;padding:8px 0}
 .start-class-btn{width:100%;margin-top:13px;min-height:54px;border:0;border-radius:16px;background:linear-gradient(145deg,#75a96f,#5c9160);color:#fff;font-weight:950;font-size:18px;box-shadow:0 10px 20px rgba(80,125,84,.18)}
 .start-class-btn:disabled{opacity:.5;cursor:not-allowed;box-shadow:none}
+
+.podium-card{margin-top:14px}
+.podium-title{font-size:20px;font-weight:950;text-align:center;margin-bottom:12px}
+.podium-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.podium-place{border:1px solid var(--line);border-radius:18px;padding:14px 10px;text-align:center;background:#fffdfa;min-height:96px;display:flex;flex-direction:column;justify-content:center}
+.podium-place .medal{font-size:28px}.podium-place b{font-size:18px;margin-top:4px}.podium-place span{font-size:13px;color:var(--muted);margin-top:3px}
+.projector-modal{position:fixed;inset:0;background:#f7f3ea;z-index:100;display:none;overflow:auto;padding:18px}
+.projector-modal.show{display:block}
+.projector-shell{max-width:1180px;margin:auto}
+.projector-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px}
+.projector-title h1{margin:0;font-size:34px}.projector-title div{color:var(--muted);font-size:17px;margin-top:4px}
+.projector-close{border:0;background:#263e49;color:#fff;width:48px;height:48px;border-radius:50%;font-size:26px}
+.projector-main{display:grid;grid-template-columns:1fr 280px;gap:16px;align-items:start}
+.projector-side{display:grid;gap:14px}
+.projector-code{background:#fff;border:1px solid var(--line);border-radius:22px;padding:16px;text-align:center}
+.projector-code .code{font-size:44px}
+.projector-board-card{background:#fffdfa;border:1px solid var(--line);border-radius:24px;padding:16px}
+.projector-board{display:grid;gap:9px;direction:ltr}
+.projector-winners{margin-top:14px}
+@media(max-width:820px){.projector-main{grid-template-columns:1fr}.projector-side{grid-template-columns:1fr 1fr}.podium-grid{grid-template-columns:1fr 1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top">
   <div class="brand"><div class="logo" id="sizeBadge">4×4</div><div><h1 id="activityTitle">ארבע על ארבע</h1><small id="activityMeta"></small></div></div>
-  <button class="btn soft" onclick="history.back()">חזרה לעריכה</button>
+  <div style="display:flex;gap:8px"><button class="btn primary" id="projectorBtn">מצב מקרן</button><button class="btn soft" onclick="history.back()">חזרה לעריכה</button></div>
 </header>
 
 <section class="card">
@@ -73,6 +93,38 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
   <div class="board-title"><h2 id="topicTitle"></h2><div id="classTitle"></div></div>
   <div class="board" id="board"></div>
 </section>
+
+<section class="card podium-card">
+  <div class="podium-title">🏆 שלושת המסיימים המהירים</div>
+  <div class="podium-grid" id="teacherPodium">
+    <div class="podium-place"><div class="medal">🥇</div><b>פנוי</b><span>מקום ראשון</span></div>
+    <div class="podium-place"><div class="medal">🥈</div><b>פנוי</b><span>מקום שני</span></div>
+    <div class="podium-place"><div class="medal">🥉</div><b>פנוי</b><span>מקום שלישי</span></div>
+  </div>
+</section>
+</div>
+
+<div class="projector-modal" id="projectorModal">
+  <div class="projector-shell">
+    <div class="projector-top">
+      <div class="projector-title"><h1 id="projectorTitle">ארבע על ארבע</h1><div id="projectorMeta"></div></div>
+      <button class="projector-close" id="closeProjector">×</button>
+    </div>
+    <div class="projector-main">
+      <div class="projector-board-card">
+        <div class="board-title"><h2 id="projectorTopic"></h2><div id="projectorClass"></div></div>
+        <div class="projector-board" id="projectorBoard"></div>
+        <div class="projector-winners">
+          <div class="podium-title">🏆 שלושת המסיימים המהירים</div>
+          <div class="podium-grid" id="projectorPodium"></div>
+        </div>
+      </div>
+      <div class="projector-side">
+        <div class="projector-code"><div class="sub">קוד כניסה</div><div class="code" id="projectorCode">------</div></div>
+        <div class="qrbox"><div id="projectorQr"></div></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onload="window.dispatchEvent(new Event('qr-ready'))"></script>
@@ -113,7 +165,7 @@ async function copyText(t){
 }
 async function loadPlayers(){
   if(!SESSION_ID)return [];
-  const res=await sb("/rest/v1/four_on_four_players?session_id=eq."+encodeURIComponent(SESSION_ID)+"&select=id,name,joined_at&order=joined_at.asc");
+  const res=await sb("/rest/v1/four_on_four_players?session_id=eq."+encodeURIComponent(SESSION_ID)+"&select=id,name,joined_at,elapsed_ms,finished_at,forfeited&order=joined_at.asc");
   const rows=await res.json();
   return res.ok&&Array.isArray(rows)?rows:[];
 }
@@ -131,9 +183,50 @@ function renderPlayers(players){
 function escapeHtml(v){
   const d=document.createElement("div");d.textContent=String(v??"");return d.innerHTML;
 }
+function formatMs(ms){
+  if(ms===null||ms===undefined)return "";
+  const total=Math.floor(Number(ms)/1000);
+  const min=Math.floor(total/60),sec=total%60;
+  return String(min).padStart(2,"0")+":"+String(sec).padStart(2,"0");
+}
+function getTop3(players){
+  return players
+    .filter(p=>!p.forfeited && p.elapsed_ms!==null && p.elapsed_ms!==undefined)
+    .sort((a,b)=>Number(a.elapsed_ms)-Number(b.elapsed_ms) || new Date(a.finished_at)-new Date(b.finished_at))
+    .slice(0,3);
+}
+function podiumHtml(top){
+  const medals=["🥇","🥈","🥉"];
+  const names=["מקום ראשון","מקום שני","מקום שלישי"];
+  return [0,1,2].map(i=>{
+    const w=top[i];
+    return '<div class="podium-place"><div class="medal">'+medals[i]+'</div><b>'+escapeHtml(w?w.name:"פנוי")+'</b><span>'+(w?formatMs(w.elapsed_ms):names[i])+'</span></div>';
+  }).join("");
+}
+function renderPodiums(players){
+  const top=getTop3(players);
+  const html=podiumHtml(top);
+  document.getElementById("teacherPodium").innerHTML=html;
+  const pp=document.getElementById("projectorPodium");
+  if(pp)pp.innerHTML=html;
+}
+function renderProjectorBoard(){
+  const src=document.getElementById("board");
+  const dst=document.getElementById("projectorBoard");
+  if(!src||!dst)return;
+  dst.style.gridTemplateColumns=src.style.gridTemplateColumns;
+  dst.innerHTML=src.innerHTML;
+}
+function drawProjectorQr(){
+  const q=document.getElementById("projectorQr");
+  if(!q)return;
+  q.innerHTML="";
+  if(window.QRCode)new QRCode(q,{text:studentUrl(),width:220,height:220,colorDark:"#234f63",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+}
 async function refreshLive(){
   const [players,session]=await Promise.all([loadPlayers(),loadSession()]);
   renderPlayers(players);
+  renderPodiums(players);
   if(session){
     game=session;
     const btn=document.getElementById("startClassBtn");
@@ -179,8 +272,15 @@ async function boot(){
   document.getElementById("classTitle").textContent=game.class_name?("כיתה: "+game.class_name):"";
   document.getElementById("classCode").textContent=game.code||"------";
   document.getElementById("sizeBadge").textContent=(game.board_size||3)+"×"+(game.board_size||3);
+  document.getElementById("projectorTitle").textContent=game.activity_name||"ארבע על ארבע";
+  document.getElementById("projectorMeta").textContent=[game.subject,game.class_name].filter(Boolean).join(" · ");
+  document.getElementById("projectorTopic").textContent=game.topic?("נושא הפעילות: "+game.topic):(game.activity_name||"");
+  document.getElementById("projectorClass").textContent=game.class_name?("כיתה: "+game.class_name):"";
+  document.getElementById("projectorCode").textContent=game.code||"------";
   renderBoard();
+  renderProjectorBoard();
   drawQr();
+  drawProjectorQr();
   await refreshLive();
   rosterTimer=setInterval(refreshLive,1000);
 }
@@ -209,7 +309,13 @@ document.getElementById("startClassBtn").onclick=async()=>{
     alert("לא הצלחנו לפתוח את המשחק. נסה שוב.");
   }
 };
-window.addEventListener("qr-ready",drawQr);
+document.getElementById("projectorBtn").onclick=()=>{
+  renderProjectorBoard();
+  drawProjectorQr();
+  document.getElementById("projectorModal").classList.add("show");
+};
+document.getElementById("closeProjector").onclick=()=>document.getElementById("projectorModal").classList.remove("show");
+window.addEventListener("qr-ready",()=>{drawQr();drawProjectorQr();});
 boot();
 </script>
 </body>
