@@ -4307,3 +4307,39 @@ main.catalog-page:has(#theme-mauve:target) .catalog-card.mapi .theme-card-mauve{
   transform:none !important;
   height:100% !important;
 }
+
+
+/* Restore the page navigation row on mobile */
+@media(max-width:680px){
+  .topbar{
+    height:auto !important;
+    min-height:118px;
+    padding-bottom:8px;
+  }
+
+  .topbar nav{
+    display:flex !important;
+    grid-area:nav;
+    width:100%;
+    gap:18px;
+    padding:8px 2px 4px;
+    justify-content:flex-start;
+    align-items:center;
+    overflow-x:auto;
+    direction:rtl;
+    white-space:nowrap;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .topbar nav::-webkit-scrollbar{
+    display:none;
+  }
+
+  .topbar nav a{
+    flex:0 0 auto;
+    font-size:13px;
+    line-height:1;
+    padding:7px 2px 8px;
+  }
+}
