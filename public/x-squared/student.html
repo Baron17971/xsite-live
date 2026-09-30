@@ -1386,6 +1386,7 @@ let savedBeforeAnswer=null;
 
 let PLAYER_NAME="";
 let PLAYER_ID=null;
+let PLAYER_TOKEN=null;
 let resultSubmitted=false;
 let playerState="playing"; // playing | finished | forfeited
 let winners=[]; // prototype only; realtime class sync will come from backend
@@ -1743,7 +1744,7 @@ function showAnswer(){
 
 async function forfeitAndReveal(){
   playerState="forfeited";
-  if(SESSION_ID&&PLAYER_ID){try{await sbRequest("/rest/v1/x_squared_players?id=eq."+encodeURIComponent(PLAYER_ID),{method:"PATCH",body:JSON.stringify({forfeited:true,attempts})});}catch(e){}}
+  if(SESSION_ID&&PLAYER_ID&&PLAYER_TOKEN){try{await sbRequest("/rest/v1/rpc/x_squared_update_player",{method:"POST",body:JSON.stringify({p_player_id:PLAYER_ID,p_player_token:PLAYER_TOKEN,p_attempts:attempts,p_forfeited:true,p_finish:false})});}catch(e){}}
   document.getElementById("forfeitModal").classList.remove("show");
   document.getElementById("playerStatus").textContent="פרש וצפה בפתרון";
 
@@ -1765,15 +1766,16 @@ async function registerWinner(){
   if(SESSION_ID&&PLAYER_ID&&!resultSubmitted){
     resultSubmitted=true;
     try{
-      const patch=await sbRequest("/rest/v1/x_squared_players?id=eq."+encodeURIComponent(PLAYER_ID),{
-        method:"PATCH",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({elapsed_ms:elapsedMs,finished_at:new Date().toISOString(),attempts,forfeited:false})
+      const patch=await sbRequest("/rest/v1/rpc/x_squared_update_player",{
+        method:"POST",
+        body:JSON.stringify({p_player_id:PLAYER_ID,p_player_token:PLAYER_TOKEN,p_elapsed_ms:elapsedMs,p_attempts:attempts,p_forfeited:false,p_finish:true})
       });
-      if(!patch.ok)throw new Error("finish");
-      const topRes=await sbRequest("/rest/v1/x_squared_players?session_id=eq."+encodeURIComponent(SESSION_ID)+"&forfeited=eq.false&elapsed_ms=not.is.null&select=id,name,elapsed_ms&order=elapsed_ms.asc,finished_at.asc&limit=3");
+      const patchOk=await patch.json();
+      if(!patch.ok||patchOk!==true)throw new Error("finish");
+      const topRes=await sbRequest("/rest/v1/x_squared_players?session_id=eq."+encodeURIComponent(SESSION_ID)+"&forfeited=eq.false&elapsed_ms=not.is.null&select=id,display_name,elapsed_ms&order=elapsed_ms.asc,finished_at.asc&limit=3");
       const top=await topRes.json();
       if(topRes.ok&&Array.isArray(top)){
-        winners=top.map((w,i)=>({id:w.id,name:w.name,place:i+1,elapsed_ms:w.elapsed_ms}));
+        winners=top.map((w,i)=>({id:w.id,name:w.display_name,place:i+1,elapsed_ms:w.elapsed_ms}));
         renderPodium();const mine=winners.find(w=>w.id===PLAYER_ID);return mine?mine.place:null;
       }
     }catch(e){resultSubmitted=false;}
@@ -1919,19 +1921,57 @@ async function waitForTeacherStart(){
   await check();if(!waitTimer)waitTimer=setInterval(check,1000);
 }
 document.getElementById("joinGameBtn").addEventListener("click",async()=>{
-  const input=document.getElementById("playerNameInput"),name=(input.value||"").trim(),err=document.getElementById("joinError"),btn=document.getElementById("joinGameBtn");
-  if(!name){err.textContent="יש להזין שם כדי להצטרף.";input.focus();return;}
-  err.textContent="";btn.disabled=true;btn.textContent="מצטרף…";
+  const input=document.getElementById("playerNameInput");
+  const name=(input.value||"").trim();
+  const err=document.getElementById("joinError");
+  const btn=document.getElementById("joinGameBtn");
+  if(!name){
+    err.textContent="יש להזין שם כדי להצטרף.";
+    input.focus();
+    return;
+  }
+  err.textContent="";
+  btn.disabled=true;
+  btn.textContent="מצטרף…";
+
+  let displayName=name;
   if(SESSION_ID){
     try{
-      const res=await sbRequest("/rest/v1/x_squared_players?on_conflict=session_id,name",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=representation"},body:JSON.stringify({session_id:SESSION_ID,name})});
-      const rows=await res.json();if(res.ok&&rows?.[0])PLAYER_ID=rows[0].id;if(!res.ok)throw new Error("join");
-    }catch(e){err.textContent="לא הצלחנו להצטרף כרגע. נסה שוב.";btn.disabled=false;btn.textContent="הצטרף למשחק";return;}
+      const res=await sbRequest("/rest/v1/rpc/x_squared_join_player",{
+        method:"POST",
+        body:JSON.stringify({p_session_id:SESSION_ID,p_name:name})
+      });
+      const rows=await res.json();
+      const joined=Array.isArray(rows)?rows[0]:null;
+      if(!res.ok||!joined)throw new Error("join");
+      PLAYER_ID=joined.id;
+      PLAYER_TOKEN=joined.player_token;
+      displayName=joined.display_name||name;
+      try{
+        localStorage.setItem("xSquaredPlayer:"+SESSION_ID,JSON.stringify({
+          id:PLAYER_ID,token:PLAYER_TOKEN,displayName
+        }));
+      }catch(e){}
+    }catch(e){
+      const status=await getSessionStatus();
+      err.textContent=status==="finished"?"המשחק כבר הסתיים.":"לא הצלחנו להצטרף כרגע. נסה שוב.";
+      btn.disabled=false;
+      btn.textContent="הצטרף למשחק";
+      return;
+    }
   }
-  PLAYER_NAME=name;document.getElementById("playerName").textContent=name;document.getElementById("waitingPlayerName").textContent=name;
+
+  PLAYER_NAME=displayName;
+  document.getElementById("playerName").textContent=displayName;
+  document.getElementById("waitingPlayerName").textContent=displayName;
   document.getElementById("joinModal").classList.remove("show");
-  if(SESSION_ID){document.getElementById("waitingModal").classList.add("show");waitForTeacherStart();}
-  else document.getElementById("instructionsModal").classList.add("show");
+
+  if(SESSION_ID){
+    document.getElementById("waitingModal").classList.add("show");
+    waitForTeacherStart();
+  }else{
+    document.getElementById("instructionsModal").classList.add("show");
+  }
 });
 document.getElementById("playerNameInput").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("joinGameBtn").click();});
 document.getElementById("startGameBtn").addEventListener("click",()=>{
@@ -1941,10 +1981,10 @@ async function refreshProjectorPodium(){
   if(!PROJECTOR_MODE||!SESSION_ID)return;
   try{
     const res=await sbRequest("/rest/v1/x_squared_players?session_id=eq."+encodeURIComponent(SESSION_ID)+
-      "&forfeited=eq.false&elapsed_ms=not.is.null&select=id,name,elapsed_ms,finished_at&order=elapsed_ms.asc,finished_at.asc&limit=3");
+      "&forfeited=eq.false&elapsed_ms=not.is.null&select=id,display_name,elapsed_ms,finished_at&order=elapsed_ms.asc,finished_at.asc&limit=3");
     const rows=await res.json();
     if(res.ok&&Array.isArray(rows)){
-      winners=rows.map((w,i)=>({id:w.id,name:w.name,place:i+1,elapsed_ms:w.elapsed_ms}));
+      winners=rows.map((w,i)=>({id:w.id,name:w.display_name,place:i+1,elapsed_ms:w.elapsed_ms}));
       renderPodium();
     }
   }catch(e){}
