@@ -95,6 +95,7 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
   </div>
   <div class="player-list" id="playerList"><div class="empty-players">עדיין לא הצטרפו תלמידים.</div></div>
   <button class="start-class-btn" id="startClassBtn">פתח את המשחק לתלמידים</button>
+  <button class="btn soft" id="finishClassBtn" style="width:100%;margin-top:9px">סיים פעילות</button>
 </section>
 
 <section class="card board-wrap">
@@ -165,6 +166,11 @@ function studentUrl(){
   const p=u.pathname.split("/");p[p.length-1]="student.html";u.pathname=p.join("/");
   u.search="?session="+encodeURIComponent(SESSION_ID);
   u.hash="";
+  return u.toString();
+}
+function previewStudentUrl(){
+  const u=new URL(studentUrl());
+  u.searchParams.set("preview","1");
   return u.toString();
 }
 async function copyText(t){
@@ -381,6 +387,8 @@ async function refreshLive(){
       document.getElementById("liveStatus").textContent="הפעילות הסתיימה";
       btn.textContent="המשחק הסתיים";
       btn.disabled=true;
+      const finishBtn=document.getElementById("finishClassBtn");
+      if(finishBtn){finishBtn.disabled=true;finishBtn.textContent="הפעילות הסתיימה";}
     }
   }
 }
@@ -426,7 +434,7 @@ document.getElementById("copyStudent").onclick=async()=>{
   b.textContent=ok?"הקישור הועתק ✓":"לא ניתן להעתיק";
   setTimeout(()=>b.textContent="העתק קישור תלמיד",1300);
 };
-document.getElementById("openStudent").onclick=()=>window.open(studentUrl(),"_blank");
+document.getElementById("openStudent").onclick=()=>window.open(previewStudentUrl(),"_blank","noopener");
 document.getElementById("startClassBtn").onclick=async()=>{
   const btn=document.getElementById("startClassBtn");
   if(!SESSION_ID||!HOST_TOKEN)return;
@@ -444,6 +452,28 @@ document.getElementById("startClassBtn").onclick=async()=>{
   }catch(e){
     btn.disabled=false;btn.textContent="פתח את המשחק לתלמידים";
     alert("לא הצלחנו לפתוח את המשחק. נסה שוב.");
+  }
+};
+document.getElementById("finishClassBtn").onclick=async()=>{
+  const btn=document.getElementById("finishClassBtn");
+  if(!SESSION_ID||!HOST_TOKEN)return;
+  if(game?.status==="finished"){btn.disabled=true;btn.textContent="הפעילות הסתיימה";return;}
+  if(!confirm("לסיים את הפעילות? התלמידים לא יוכלו להמשיך לשחק בסשן הזה."))return;
+  btn.disabled=true;btn.textContent="מסיים פעילות…";
+  try{
+    const res=await sb("/rest/v1/rpc/four_on_four_finish_session",{
+      method:"POST",
+      body:JSON.stringify({p_session_id:SESSION_ID,p_host_token:HOST_TOKEN})
+    });
+    const ok=await res.json();
+    if(!res.ok||ok!==true)throw new Error("finish");
+    btn.textContent="הפעילות הסתיימה";
+    const pill=document.getElementById("classActivityStatus");if(pill)pill.textContent="הסתיימה";
+    document.getElementById("liveStatus").textContent="הפעילות הסתיימה";
+    await refreshLive();
+  }catch(e){
+    btn.disabled=false;btn.textContent="סיים פעילות";
+    alert("לא הצלחנו לסיים את הפעילות. נסה שוב.");
   }
 };
 document.getElementById("projectorBtn").onclick=()=>{
