@@ -985,28 +985,59 @@ document.getElementById("saveArchive").addEventListener("click",()=>{
   }
 });
 
-document.getElementById("openClass").addEventListener("click",()=>{
+document.getElementById("openClass").addEventListener("click",async()=>{
   if(!state.created)return;
-  if(!state.code){
-    state.code=String(Math.floor(100000+Math.random()*900000));
+  const btn=document.getElementById("openClass");
+  const SB_URL="https://zydhfhfhspflvhlpmokj.supabase.co";
+  const SB_KEY="sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x";
+  btn.disabled=true;
+  btn.textContent="פותח כיתה…";
+
+  const hostToken=crypto.randomUUID();
+  let created=null;
+  let lastError=null;
+
+  for(let attempt=0;attempt<4&&!created;attempt++){
+    const code=String(Math.floor(100000+Math.random()*900000));
+    try{
+      const res=await fetch(SB_URL+"/rest/v1/rpc/four_on_four_create_session",{
+        method:"POST",
+        headers:{
+          apikey:SB_KEY,
+          Authorization:"Bearer "+SB_KEY,
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          p_code:code,
+          p_activity_name:els.activityName.value.trim(),
+          p_subject:els.subject.value.trim(),
+          p_class_name:els.className.value.trim(),
+          p_topic:els.topic.value.trim(),
+          p_board_size:state.n,
+          p_groups:state.groups.slice(0,requiredGroups()),
+          p_host_token:hostToken
+        })
+      });
+      const data=await res.json();
+      if(res.ok&&Array.isArray(data)&&data[0])created=data[0];
+      else lastError=data;
+    }catch(e){lastError=e}
   }
+
+  if(!created){
+    btn.disabled=false;
+    btn.textContent="פתח כיתה";
+    alert("לא הצלחנו לפתוח כיתה כרגע. נסה שוב.");
+    return;
+  }
+
+  state.code=created.code;
   state.classOpen=true;
-  const payload={
-    activityName:els.activityName.value.trim(),
-    subject:els.subject.value.trim(),
-    className:els.className.value.trim(),
-    topic:els.topic.value.trim(),
-    n:state.n,
-    groups:state.groups.slice(0,requiredGroups()),
-    code:state.code
-  };
   try{
-    sessionStorage.setItem("fourOnFourCurrentClass",JSON.stringify(payload));
+    sessionStorage.setItem("fourOnFourHostToken",hostToken);
+    sessionStorage.setItem("fourOnFourSessionId",created.id);
   }catch(e){}
-  const bytes=new TextEncoder().encode(JSON.stringify(payload));
-  let bin=""; bytes.forEach(b=>bin+=String.fromCharCode(b));
-  const encoded=encodeURIComponent(btoa(bin));
-  window.location.href="class.html#game="+encoded;
+  window.location.href="class.html?session="+encodeURIComponent(created.id)+"&host="+encodeURIComponent(hostToken);
 });
 
 
