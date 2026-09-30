@@ -4424,3 +4424,29 @@ main:has(#theme-botanical:target) .library-search-wrap,
 main:has(#theme-botanical:target) .library-filter-grid select{
   background:#FFFEFB !important;
 }
+
+
+/* X squared app card */
+.xsquared-card-fallback{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  background:linear-gradient(145deg,#f8f1e6,#e9f1ed);
+  color:#274f61;
+}
+.xsquared-card-symbol{
+  display:grid;
+  place-items:center;
+  width:74px;
+  height:74px;
+  border-radius:22px;
+  background:linear-gradient(145deg,#365a68,#263f4a);
+  color:#fff8eb;
+  font-size:35px;
+  font-weight:900;
+  box-shadow:0 12px 25px rgba(42,64,74,.2);
+}
+.xsquared-card-title{font-size:24px;font-weight:900}
+.xsquared-card-tagline{font-size:13px;font-weight:700;opacity:.72}
