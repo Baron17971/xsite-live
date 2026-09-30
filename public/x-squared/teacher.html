@@ -1,0 +1,1047 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>X בריבוע — צד מורה</title>
+<style>
+:root{
+  --bg:#f5f1e9;
+  --panel:#fffdf8;
+  --panel2:#fbf7ef;
+  --ink:#244f63;
+  --muted:#7f8a8f;
+  --line:#ddd5ca;
+  --teal:#3da8ad;
+  --teal2:#7cc2bd;
+  --sage:#a9bea0;
+  --sand:#e9d8b7;
+  --gold:#e7bf5a;
+  --shadow:0 12px 28px rgba(52,67,73,.10);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 8% 5%,rgba(71,175,180,.10),transparent 22%),
+    radial-gradient(circle at 92% 4%,rgba(231,191,90,.10),transparent 20%),
+    linear-gradient(180deg,#faf7f0,var(--bg));
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:980px;margin:auto;padding:14px 14px 34px}
+.top{
+  position:sticky;top:0;z-index:20;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:10px 4px 12px;
+  background:rgba(250,247,240,.92);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(221,213,202,.7);
+}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:58px;height:58px;border-radius:18px;
+  background:linear-gradient(145deg,#35677d,#244d61);
+  color:#fff;display:grid;place-items:center;
+  font-size:21px;font-weight:950;box-shadow:var(--shadow)
+}
+.brand h1{margin:0;font-size:24px}
+.brand small{display:block;color:var(--muted);margin-top:2px}
+.projector-btn{
+  border:0;border-radius:15px;padding:11px 15px;
+  background:linear-gradient(145deg,#2f8394,#23697b);
+  color:#fff;font-weight:900;box-shadow:var(--shadow)
+}
+.card{
+  background:rgba(255,253,248,.94);
+  border:1px solid var(--line);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+  padding:18px;
+  margin-top:14px;
+}
+.card h2{margin:0 0 13px;font-size:19px}
+.sub{color:var(--muted);font-size:13px;margin-top:-6px;margin-bottom:14px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.field{display:grid;gap:6px}
+.field label{font-size:13px;font-weight:800;color:#526a76}
+.field input,.field textarea,.field select{
+  width:100%;border:1px solid var(--line);border-radius:14px;
+  background:#fffdfa;color:var(--ink);
+  padding:11px 12px;outline:none
+}
+.field input:focus,.field textarea:focus,.field select:focus{
+  border-color:#86b9bd;box-shadow:0 0 0 3px rgba(61,168,173,.10)
+}
+.size-picker{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.size-option{
+  border:1px solid var(--line);background:#fffdfa;border-radius:18px;
+  min-height:90px;padding:10px;color:var(--ink);font-weight:900
+}
+.size-option .big{font-size:25px;display:block;margin-bottom:4px}
+.size-option .meta{font-size:12px;color:var(--muted);font-weight:700}
+.size-option.active{
+  border-color:#6cb8bb;
+  background:linear-gradient(180deg,#f1fbfa,#e8f5f3);
+  box-shadow:0 0 0 3px rgba(61,168,173,.10)
+}
+.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px}
+.prompt-box{
+  background:#f3f7f7;border:1px solid #d9e5e5;border-radius:16px;
+  padding:13px;white-space:pre-wrap;font-size:13px;line-height:1.55;
+  max-height:270px;overflow:auto
+}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap}
+.btn{
+  border:0;border-radius:14px;padding:10px 13px;font-weight:900
+}
+.btn.primary{background:#2d7e90;color:#fff}
+.btn.soft{background:#edf2f1;color:var(--ink);border:1px solid var(--line)}
+.btn.gold{background:#edc65d;color:#624817}
+.btn.green{background:#78a77d;color:#fff}
+.paste textarea{min-height:180px;resize:vertical}
+.parse-status{
+  margin-top:9px;padding:9px 11px;border-radius:12px;
+  background:#eef5f4;color:#48666e;font-size:13px;display:none
+}
+.parse-status.show{display:block}
+.groups-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}
+.groups-count{font-size:13px;color:var(--muted)}
+.groups{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px
+}
+.group{
+  border:1px solid var(--line);border-radius:16px;background:#fffdfa;padding:10px
+}
+.group-title{font-size:12px;color:var(--muted);font-weight:900;margin-bottom:7px}
+.words{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.words input{
+  min-width:0;border:1px solid #e2dbd1;border-radius:10px;padding:8px 9px;
+  color:var(--ink);background:#fff
+}
+.session{
+  display:grid;grid-template-columns:1fr 220px;gap:16px;align-items:center
+}
+.codebox{
+  border:1px solid var(--line);border-radius:18px;padding:14px;background:#fffdfa
+}
+.code{
+  font-size:34px;font-weight:950;letter-spacing:.08em;text-align:center;
+  direction:ltr;color:#24556b
+}
+.join-url{
+  margin-top:9px;font-size:12px;color:var(--muted);overflow-wrap:anywhere;text-align:center
+}
+.qrbox{
+  min-height:190px;border-radius:18px;background:#fff;display:grid;place-items:center;
+  border:1px solid var(--line);padding:10px
+}
+.launch{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px
+}
+.summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px
+}
+.metric{
+  background:#f5f8f7;border:1px solid #e0e8e5;border-radius:14px;padding:10px;text-align:center
+}
+.metric b{display:block;font-size:20px}
+.metric span{font-size:11px;color:var(--muted)}
+.modal{
+  position:fixed;inset:0;background:rgba(24,34,39,.45);display:none;
+  place-items:center;padding:18px;z-index:50
+}
+.modal.show{display:grid}
+.projector{
+  width:min(1000px,96vw);max-height:92vh;overflow:auto;
+  background:#f8f5ed;border-radius:28px;padding:24px;box-shadow:0 30px 90px rgba(0,0,0,.28)
+}
+.projector-top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.projector h2{font-size:34px;margin:0}
+.projector-code{font-size:44px;font-weight:950;letter-spacing:.08em;direction:ltr}
+.projector-main{
+  margin-top:20px;display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start
+}
+.projector-qr{
+  background:#fff;border-radius:22px;padding:14px;display:grid;place-items:center;
+  border:1px solid var(--line)
+}
+.connected{
+  background:#fffdfa;border:1px solid var(--line);border-radius:22px;padding:18px
+}
+.connected h3{margin:0 0 10px}
+.connected-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.student{
+  padding:9px;border-radius:12px;background:#eef5f4;text-align:center;font-weight:800
+}
+.closex{
+  border:0;background:#2d3c44;color:#fff;border-radius:50%;
+  width:42px;height:42px;font-size:20px
+}
+@media(max-width:720px){
+  .grid-3,.groups,.session,.projector-main{grid-template-columns:1fr}
+  .size-picker{grid-template-columns:repeat(3,1fr)}
+  .summary{grid-template-columns:1fr 1fr 1fr}
+  .brand small{display:none}
+  .projector h2{font-size:25px}
+}
+
+/* v2 teacher-side improvements */
+.copy-feedback{
+  font-size:12px;color:#4f6f78;margin-top:7px;display:none
+}
+.copy-feedback.show{display:block}
+
+.student-link-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px
+}
+.create-game-btn{
+  width:100%;margin-top:12px;min-height:54px;
+  border:0;border-radius:16px;
+  background:linear-gradient(145deg,#2e8495,#256c7c);
+  color:#fff;font-weight:950;font-size:17px;
+  box-shadow:0 10px 20px rgba(45,126,144,.18)
+}
+
+.projector-board-wrap{
+  background:#fffdfa;border:1px solid var(--line);
+  border-radius:22px;padding:14px;margin-top:16px
+}
+.projector-board-title{
+  text-align:center;font-weight:900;margin-bottom:10px
+}
+.projector-board{
+  display:grid;gap:8px;direction:ltr
+}
+.proj-tile{
+  position:relative;aspect-ratio:1/1;border-radius:16px;
+  background:#f5f1e8;border:1px solid rgba(73,94,105,.18);
+  box-shadow:0 6px 12px rgba(42,58,66,.10);
+  overflow:hidden
+}
+.proj-tile::before,.proj-tile::after{
+  content:"";position:absolute;left:50%;top:50%;background:rgba(50,78,90,.18);z-index:1
+}
+.proj-tile::before{width:78%;height:1px;transform:translate(-50%,-50%)}
+.proj-tile::after{width:1px;height:78%;transform:translate(-50%,-50%)}
+.proj-word{
+  position:absolute;width:40%;height:34%;display:flex;align-items:center;justify-content:center;
+  text-align:center;color:#274e61;font-weight:800;line-height:1.05;font-size:clamp(8px,1.45vw,13px);
+  padding:2px;overflow:hidden;direction:rtl;z-index:2
+}
+.proj-word.tl{left:5%;top:5%}.proj-word.tr{right:5%;top:5%}
+.proj-word.bl{left:5%;bottom:5%}.proj-word.br{right:5%;bottom:5%}
+.proj-plus{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:28px;height:28px;border-radius:9px;background:#234e62;color:#fff;
+  display:grid;place-items:center;font-weight:950;z-index:3;font-size:17px
+}
+.projector-meta{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px
+}
+.projector-meta .metric{font-size:12px}
+
+@media(max-width:720px){
+  .student-link-row{grid-template-columns:1fr}
+  .projector-board-wrap{padding:10px}
+}
+
+
+/* v3 projector board mirrors the student board */
+.projector-board{
+  display:grid;
+  gap:8px;
+  direction:ltr;
+}
+.proj-tile{
+  --tile-color:#dce9f3;
+  position:relative;
+  aspect-ratio:1/1;
+  border-radius:18px;
+  overflow:hidden;
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--tile-color) 96%,#fff 4%),
+    color-mix(in srgb,var(--tile-color) 98%,#b9c8cf 2%));
+  border:1px solid rgba(69,91,103,.22);
+  box-shadow:
+    0 8px 16px rgba(42,58,66,.12),
+    0 2px 5px rgba(42,58,66,.08),
+    inset 0 1px 0 rgba(255,255,255,.84);
+}
+.proj-tile.theme-0{--tile-color:#dce9f3}
+.proj-tile.theme-1{--tile-color:#e4efe5}
+.proj-tile.theme-2{--tile-color:#f1e4de}
+.proj-tile.theme-3{--tile-color:#e8e7f2}
+.proj-tile.theme-4{--tile-color:#efe8d8}
+.proj-tile::before,.proj-tile::after{
+  content:"";position:absolute;left:50%;top:50%;
+  background:rgba(55,82,95,.24);z-index:1
+}
+.proj-tile::before{width:88%;height:1.4px;transform:translate(-50%,-50%)}
+.proj-tile::after{width:1.4px;height:88%;transform:translate(-50%,-50%)}
+.proj-word{
+  position:absolute;width:38%;height:36%;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;color:#274e61;font-weight:850;line-height:1.04;
+  font-size:clamp(8px,1.45vw,14px);padding:3px;overflow:hidden;
+  direction:rtl;z-index:2;
+}
+.proj-word.tl{left:5%;top:5%}.proj-word.tr{right:5%;top:5%}
+.proj-word.bl{left:5%;bottom:5%}.proj-word.br{right:5%;bottom:5%}
+.proj-plus{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:32px;height:32px;border-radius:10px;
+  background:linear-gradient(145deg,#2b4655,#1c313d);
+  color:#fff8eb;display:grid;place-items:center;font-weight:900;
+  box-shadow:0 4px 9px rgba(28,45,55,.22),inset 0 1px 0 rgba(255,255,255,.10);
+  z-index:3;font-size:20px
+}
+
+
+/* v4 — explicit create -> save -> share flow */
+#shareSection[hidden],
+#saveStage[hidden]{
+  display:none!important;
+}
+.flow-note{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:13px;
+  background:#f3f7f6;
+  border:1px solid #dce7e4;
+  color:#527078;
+  font-size:13px;
+  line-height:1.45;
+}
+.create-game-btn[disabled],
+.projector-btn[disabled]{
+  opacity:.45;
+  cursor:not-allowed;
+  filter:grayscale(.15);
+  box-shadow:none;
+}
+#saveStage{
+  margin-top:12px;
+  padding:14px;
+  border:1px solid #d9e4df;
+  border-radius:16px;
+  background:#f7faf8;
+}
+#saveStage .save-title{
+  font-weight:900;
+  margin-bottom:6px;
+}
+#saveStage .save-sub{
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+
+
+/* v6 — separate archive save from live class opening */
+.flow-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+.archive-btn{
+  min-height:52px;
+  border:1px solid #cfdad6;
+  border-radius:16px;
+  background:linear-gradient(180deg,#f6faf8,#edf5f1);
+  color:#315b62;
+  font-weight:950;
+}
+.open-class-btn{
+  min-height:52px;
+  border:0;
+  border-radius:16px;
+  background:linear-gradient(145deg,#2e8495,#256c7c);
+  color:#fff;
+  font-weight:950;
+  box-shadow:0 10px 20px rgba(45,126,144,.18);
+}
+.archive-status{
+  margin-top:10px;
+  font-size:13px;
+  color:#557178;
+}
+
+
+.x-square-tile{position:relative!important}
+.x-square-tile::before,.x-square-tile::after{content:"";position:absolute;left:50%;top:50%;width:78%;height:1.5px;background:rgba(51,72,82,.22);z-index:1}
+.x-square-tile::before{transform:translate(-50%,-50%) rotate(45deg)}
+.x-square-tile::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.proj-edge{position:absolute;z-index:2;display:flex;align-items:center;justify-content:center;text-align:center;color:#274e61;font-weight:850;line-height:1.05;font-size:clamp(7px,1.25vw,13px);overflow:hidden;padding:2px}
+.proj-edge.top{top:3%;left:27%;width:46%;height:25%}.proj-edge.bottom{bottom:3%;left:27%;width:46%;height:25%}
+.proj-edge.left{left:3%;top:37%;width:28%;height:26%}.proj-edge.right{right:3%;top:37%;width:28%;height:26%}
+.proj-x{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;color:#253b46;font-weight:950;font-size:18px}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <div class="logo">X²</div>
+      <div>
+        <h1>X בריבוע — מורה</h1>
+        <small>יוצרים פעילות, טוענים זוגות ופותחים כיתה</small>
+      </div>
+    </div>
+    <button class="projector-btn" id="openProjector" disabled style="display:none">מצב מקרן</button>
+  </header>
+
+  <section class="card">
+    <h2>1. פרטי הפעילות</h2>
+    <div class="grid-3">
+      <div class="field"><label>שם הפעילות</label><input id="activityName" value="התאמות בביולוגיה"></div>
+      <div class="field"><label>מקצוע</label><input id="subject" value="ביולוגיה"></div>
+      <div class="field"><label>כיתה</label><input id="className" value="י׳"></div>
+    </div>
+    <div class="field" style="margin-top:10px">
+      <label>נושא / מיקוד</label>
+      <input id="topic" value="אברוני התא ותהליכים תאיים">
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>2. גודל הלוח</h2>
+    <div class="sub">הבחירה קובעת כמה אריחים יהיו וכמה זוגות צריך להזין למאגר.</div>
+    <div class="size-picker">
+      <button class="size-option active" data-n="3"><span class="big">3×3</span><span class="meta">9 ריבועים · 18 זוגות למאגר</span></button>
+      <button class="size-option" data-n="4"><span class="big">4×4</span><span class="meta">16 ריבועים · 32 זוגות למאגר</span></button>
+      <button class="size-option" data-n="5"><span class="big">5×5</span><span class="meta">25 ריבועים · 50 זוגות למאגר</span></button>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="prompt-head">
+      <div>
+        <h2 style="margin-bottom:4px">3. יצירת הזוגות בעזרת AI</h2>
+        <div class="sub" style="margin:0">העתק את הפרומפט, הדבק ב־AI, ואז החזר לכאן את הפלט.</div>
+      </div>
+      <button class="btn primary" id="copyPrompt">העתק פרומפט</button>
+      <div class="copy-feedback" id="copyFeedback"></div>
+    </div>
+    <div class="prompt-box" id="promptBox"></div><div style="margin-top:8px;font-size:12px;color:var(--muted)">הפרומפט דורש מה־AI להחזיר את כל הזוגות בתוך חלונית קוד אחת, כדי שכל זוג תישאר בשורה אחת בעת ההעתקה.</div>
+  </section>
+
+  <section class="card paste">
+    <h2>4. טעינת מאגר</h2>
+    <div class="sub">הדבק כאן את הפלט שקיבלת. המערכת מקבלת גם מספור, נקודות, Markdown וסוגים שונים של קו מפריד. כל זוג צריכה להכיל 2 מושגים.</div>
+    <div class="field">
+      <textarea id="rawInput" placeholder="מיטוכונדריה | הפקת אנרגיה&#10;גלוקוז | חמצן | מיטוכונדריה | ATP"></textarea><div id="pasteHint" style="font-size:12px;color:var(--muted);margin-top:6px">ממתין להדבקה…</div>
+    </div>
+    <div class="btn-row" style="margin-top:10px">
+      <button class="btn primary" id="parseBtn">טען למאגר</button>
+      <button class="btn soft" id="loadExample">טען דוגמה</button>
+      <button class="btn soft" id="clearBtn">נקה</button>
+    </div>
+    <div class="parse-status" id="parseStatus"></div>
+  </section>
+
+  <section class="card">
+    <div class="groups-toolbar">
+      <div>
+        <h2 style="margin:0">5. בדיקה ועריכה</h2>
+        <div class="groups-count" id="groupsCount">0 זוגות נטענו</div>
+      </div>
+      <button class="btn gold" id="addGroup">+ הוסף זוג</button>
+    </div>
+    <div class="groups" id="groups"></div>
+  </section>
+
+  
+
+<section class="card">
+  <h2>6. סיום יצירת המשחק</h2>
+  <div class="sub">אחרי שבדקת את הזוגות, צור את המשחק. לאחר מכן אפשר לשמור אותו בארכיון האישי, לפתוח כיתה חיה — או לעשות את שניהם.</div>
+
+  <button class="create-game-btn" id="createGame">צור משחק</button>
+
+  <div id="saveStage" hidden>
+    <div class="save-title">המשחק מוכן ✓</div>
+    <div class="save-sub">בחר מה לעשות עכשיו:</div>
+
+    <div class="flow-actions">
+      <button class="archive-btn" id="saveArchive">שמור בארכיון האישי</button>
+      <button class="open-class-btn" id="openClass">פתח כיתה</button>
+    </div>
+
+    <div class="archive-status" id="archiveStatus"></div>
+  </div>
+
+  <div class="flow-note" id="flowNote">
+    יצירת המשחק אינה פותחת כיתה אוטומטית. „פתח כיתה” יעביר למסך כיתה נפרד.
+  </div>
+</section>
+
+
+<section class="card" id="shareSection" hidden>
+  <h2>7. כיתה פתוחה</h2>
+  <div class="session">
+    <div>
+      <div class="codebox">
+        <div class="sub" style="text-align:center;margin:0 0 4px">קוד כניסה</div>
+        <div class="code" id="sessionCode">------</div>
+        <div class="join-url" id="joinUrlText"></div>
+      </div>
+
+      <div class="student-link-row">
+        <button class="btn soft" id="copyStudentLink">העתק קישור כתלמיד</button>
+        <button class="btn soft" id="openAsStudent">פתח כתלמיד</button>
+      </div>
+
+      <div class="launch">
+        <button class="btn primary" id="newCode">צור קוד חדש</button>
+        <button class="btn primary" id="openProjectorInline">פתח מצב מקרן</button>
+      </div>
+    </div>
+
+    <div class="qrbox"><div id="qrcode"></div></div>
+  </div>
+
+  <div class="summary">
+    <div class="metric"><b id="metricSize">3×3</b><span>גודל לוח</span></div>
+    <div class="metric"><b id="metricGroups">0/9</b><span>זוגות במאגר</span></div>
+    <div class="metric"><b id="metricVisible">4</b><span>נקודות חיבור נראות</span></div>
+  </div>
+</section>
+</div>
+
+<div class="modal" id="projectorModal">
+  <div class="projector">
+    <div class="projector-top">
+      <div>
+        <h2 id="projTitle">X בריבוע</h2>
+        <div class="sub" id="projSubtitle" style="margin:4px 0 0">ביולוגיה · י׳</div>
+      </div>
+      <button class="closex" id="closeProjector">×</button>
+    </div>
+    <div class="projector-main">
+      <div class="connected">
+        <div style="text-align:center;color:var(--muted)">קוד כניסה</div>
+        <div class="projector-code" id="projCode">482731</div>
+        <h3 style="margin-top:20px">תלמידים מחוברים</h3>
+        <div class="connected-list" id="connectedList">
+          <div class="student">נועם</div>
+          <div class="student">מאיה</div>
+          <div class="student">אורי</div>
+          <div class="student">שירה</div>
+        </div>
+        <div class="sub" style="margin:12px 0 0;text-align:center">בדמו זה מספר התלמידים הוא תצוגה בלבד. בחיבור ל־Supabase הוא יתעדכן בזמן אמת.</div>
+      </div>
+      <div class="projector-qr"><div id="qrcodeProjector"></div></div>
+    </div>
+
+    <div class="projector-board-wrap">
+      <div class="projector-board-title">
+        <div id="projectorActivityTopic" style="font-size:20px;font-weight:950;line-height:1.2"></div>
+        <div id="projectorClassName" style="font-size:14px;color:var(--muted);margin-top:3px"></div>
+      </div>
+      <div class="projector-board" id="projectorBoard"></div>
+      <div class="projector-meta">
+        <div class="metric"><b id="projSize">3×3</b><span>גודל לוח</span></div>
+        <div class="metric"><b id="projGroups">0/9</b><span>זוגות</span></div>
+        <div class="metric"><b id="projConnected">4</b><span>מחוברים</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onload="window.dispatchEvent(new Event('qr-ready'))"></script>
+<script>
+const state={n:3,groups:[],code:"",created:false,archived:false,classOpen:false};
+
+const els={
+  activityName:document.getElementById("activityName"),
+  subject:document.getElementById("subject"),
+  className:document.getElementById("className"),
+  topic:document.getElementById("topic"),
+  promptBox:document.getElementById("promptBox"),
+  rawInput:document.getElementById("rawInput"),
+  groups:document.getElementById("groups"),
+  groupsCount:document.getElementById("groupsCount"),
+  parseStatus:document.getElementById("parseStatus"),
+  sessionCode:document.getElementById("sessionCode"),
+  joinUrlText:document.getElementById("joinUrlText"),
+  metricSize:document.getElementById("metricSize"),
+  metricGroups:document.getElementById("metricGroups"),
+  metricVisible:document.getElementById("metricVisible")
+};
+
+function requiredGroups(){return 2*state.n*state.n}
+function visibleMeetings(){return 2*state.n*(state.n-1)}
+
+
+async function copyTextRobust(text){
+  try{
+    if(navigator.clipboard && window.isSecureContext){
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+  }catch(e){}
+  try{
+    const ta=document.createElement("textarea");
+    ta.value=text;
+    ta.setAttribute("readonly","");
+    ta.style.position="fixed";
+    ta.style.opacity="0";
+    document.body.appendChild(ta);
+    ta.select();
+    ta.setSelectionRange(0,ta.value.length);
+    const ok=document.execCommand("copy");
+    ta.remove();
+    return !!ok;
+  }catch(e){
+    return false;
+  }
+}
+
+function buildPrompt(){
+  const k=requiredGroups();
+  const subject=els.subject.value.trim()||"המקצוע";
+  const cls=els.className.value.trim()||"הכיתה";
+  const topic=els.topic.value.trim()||els.activityName.value.trim()||"הנושא";
+
+  els.promptBox.textContent=
+`אני בונה משחק לימודי בשם "X בריבוע" עבור ${cls} במקצוע ${subject}.
+נושא הפעילות: ${topic}.
+
+צור בדיוק ${k} זוגות של מושגים/ביטויים משלימים.
+בכל זוג צריכים להיות שני פריטים שיש ביניהם קשר ברור ומדויק, כך שכאשר הם נפגשים על צלע משותפת של שני ריבועים ברור שהם מתאימים זה לזה.
+כל זוג חייב להיות שונה מהאחרים. הימנע מחפיפות מבלבלות.
+התאם את רמת הקושי ל-${cls}.
+שמור על ניסוחים קצרים ככל האפשר כדי שיתאימו לצלעות הריבועים.
+
+חשוב מאוד — הפלט חייב להיות בפורמט קשיח כדי שאוכל להדביק אותו ישירות למערכת:
+
+החזר את כל התשובה בתוך חלונית קוד אחת בלבד (code block), כטקסט פשוט.
+אין לכתוב שום דבר לפני חלונית הקוד או אחריה.
+
+בתוך חלונית הקוד:
+1. החזר בדיוק ${k} שורות בלבד.
+2. כל זוג חייב להופיע בשורה אחת בלבד.
+3. בכל שורה חייבים להופיע בדיוק 2 מושגים/ביטויים.
+4. הפרד בין שני הפריטים אך ורק באמצעות הסימן |.
+5. אין לשבור זוג לשתי שורות.
+6. אין להוסיף שורות ריקות.
+7. אין להוסיף מספור, bullets, מקפים, כותרות, הסברים, הערות או Markdown בתוך החלונית.
+8. אין לכתוב "זוג 1", "זוג 2" וכדומה.
+9. כל שורה חייבת להיראות בדיוק כך:
+מושג | התאמה
+
+בדיקת חובה לפני שליחה:
+- ודא שיש בדיוק ${k} שורות בתוך חלונית הקוד.
+- ודא שבכל שורה יש בדיוק סימן | אחד המפריד בין 2 פריטים.
+- ודא שכל זוג נמצא כולו בשורה אחת.
+- ודא שאין שום טקסט מחוץ לחלונית הקוד.
+
+החזר רק חלונית קוד אחת עם השורות עצמן.`;
+}
+
+function renderMetrics(){
+  els.metricSize.textContent=`${state.n}×${state.n}`;
+  els.metricGroups.textContent=`${state.groups.length}/${requiredGroups()}`;
+  els.metricVisible.textContent=visibleMeetings();
+}
+
+function setSize(n){
+  state.n=n;
+  document.querySelectorAll(".size-option").forEach(b=>b.classList.toggle("active",Number(b.dataset.n)===n));
+  buildPrompt();
+  renderMetrics();
+}
+
+document.querySelectorAll(".size-option").forEach(btn=>{
+  btn.addEventListener("click",()=>setSize(Number(btn.dataset.n)));
+});
+
+[els.activityName,els.subject,els.className,els.topic].forEach(el=>el.addEventListener("input",()=>{
+  buildPrompt();
+  renderProjectorBoard();
+}));
+
+document.getElementById("copyPrompt").addEventListener("click",async()=>{
+  const btn=document.getElementById("copyPrompt");
+  const feedback=document.getElementById("copyFeedback");
+  const ok=await copyTextRobust(els.promptBox.textContent);
+  if(ok){
+    btn.textContent="הועתק ✓";
+    feedback.textContent="הפרומפט הועתק ללוח.";
+    feedback.classList.add("show");
+    setTimeout(()=>{btn.textContent="העתק פרומפט";feedback.classList.remove("show")},1400);
+  }else{
+    const range=document.createRange();
+    range.selectNodeContents(els.promptBox);
+    const sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    feedback.textContent="ההעתקה האוטומטית נחסמה. הפרומפט סומן — לחץ העתק.";
+    feedback.classList.add("show");
+  }
+});
+
+function normalizeLine(line){
+  return String(line||"")
+    .replace(/```(?:text|txt|markdown|md)?/gi,"")
+    .replace(/```/g,"")
+    .replace(/^\s*[-•●▪◦*]+\s*/u,"")
+    .replace(/^\s*(?:\d+\s*[\.\)\-:]|זוג\s*\d+\s*[:\-]?)\s*/u,"")
+    .replace(/\*\*/g,"")
+    .replace(/^["'“”׳״]+|["'“”׳״]+$/g,"")
+    .trim();
+}
+
+function splitPairLine(line){
+  let cleaned=normalizeLine(line);
+  if(!cleaned)return [];
+  cleaned=cleaned.replace(/[｜¦│]/g,"|").replace(/\t+/g,"|");
+  let parts=cleaned.split("|").map(x=>x.trim()).filter(Boolean);
+  if(parts.length!==2&&cleaned.includes(";"))parts=cleaned.split(";").map(x=>x.trim()).filter(Boolean);
+  if(parts.length!==2&&cleaned.includes("؛"))parts=cleaned.split("؛").map(x=>x.trim()).filter(Boolean);
+  return parts;
+}
+
+function parseInput(){
+  const raw=els.rawInput.value || "";
+  const lines=raw
+    .replace(/\r/g,"")
+    .split(/\n+/)
+    .map(x=>x.trim())
+    .filter(Boolean)
+    .filter(x=>!/^```/.test(x));
+
+  const groups=[];
+  const bad=[];
+
+  lines.forEach((line,i)=>{
+    const parts=splitPairLine(line);
+    if(parts.length===2){
+      groups.push(parts);
+    }else{
+      bad.push({line:i+1,text:line,count:parts.length});
+    }
+  });
+
+  if(groups.length===0){
+    els.parseStatus.innerHTML=
+      `לא נמצאה אף זוג תקינה. ודא שבכל שורה יש 2 מושגים.<br>`+
+      `<b>דוגמה:</b> מיטוכונדריה | הפקת אנרגיה`;
+    els.parseStatus.classList.add("show");
+    return;
+  }
+
+  state.groups=groups.slice(0,requiredGroups());
+  state.created=false;
+  state.archived=false;
+  state.classOpen=false;
+  document.getElementById("saveStage").hidden=true;
+  document.getElementById("shareSection").hidden=true;
+  document.getElementById("openProjector").disabled=true;
+
+  renderGroups();
+
+  const wanted=requiredGroups();
+  let msg=`נטענו בהצלחה ${state.groups.length} מתוך ${wanted} זוגות.`;
+
+  if(bad.length){
+    const sample=bad.slice(0,3).map(x=>`שורה ${x.line}`).join(", ");
+    msg+=` ${bad.length} שורות לא נקלטו (${sample}${bad.length>3?"…":""}).`;
+  }
+  if(groups.length>wanted){
+    msg+=` נמצאו ${groups.length} זוגות; נטענו רק ${wanted} בהתאם לגודל הלוח.`;
+  }
+  if(state.groups.length<wanted){
+    msg+=` חסרות עוד ${wanted-state.groups.length} זוגות.`;
+  }
+
+  els.parseStatus.textContent=msg;
+  els.parseStatus.classList.add("show");
+  document.getElementById("groups").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+document.getElementById("parseBtn").addEventListener("click",parseInput);
+
+els.rawInput.addEventListener("input",()=>{
+  const nonEmpty=(els.rawInput.value||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).length;
+  document.getElementById("pasteHint").textContent=
+    nonEmpty ? `זוהו ${nonEmpty} שורות להטעינה. לחץ "טען למאגר".` : "ממתין להדבקה…";
+});
+
+document.getElementById("loadExample").addEventListener("click",()=>{
+  const ex=[
+    ["מיטוכונדריה","הפקת אנרגיה"],["גרעין","מכיל DNA"],["ריבוזום","בניית חלבונים"],["קרום התא","בררנות מעבר"],
+    ["כלורופלסט","פוטוסינתזה"],["אנזים","זרוז תגובה"],["גלוקוז","מקור אנרגיה"],["חמצן","נשימה תאית"],
+    ["DNA","מידע תורשתי"],["RNA","תיווך בבניית חלבון"],["מיטוזה","חלוקת תא"],["הומאוסטזיס","שמירת יציבות"],
+    ["דיפוזיה","מעבר מריכוז גבוה לנמוך"],["אוסמוזה","מעבר מים"],["ATP","מטבע אנרגיה"],["כרומוזום","DNA ארוז"],
+    ["חלבון","מבנה ותפקוד"],["ציטופלזמה","סביבה תוך־תאית"],["ליזוזום","פירוק חומרים"],["חלולית","אגירת חומרים"],
+    ["מערכת גולג'י","עיבוד ואריזה"],["רשת אנדופלזמית","הובלה בתא"],["נוקלאוטיד","יחידת DNA"],["חומצת אמינו","יחידת חלבון"],
+    ["פוספוליפיד","מרכיב קרום"],["נשא","העברה דרך קרום"],["קולטן","קליטת אות"],["משוב שלילי","שמירת יציבות"],
+    ["תא","יחידת חיים"],["רקמה","קבוצת תאים"],["איבר","מספר רקמות"],["מערכת","מספר איברים"],
+    ["פוטוסינתזה","יצירת גלוקוז"],["נשימה תאית","הפקת ATP"],["שכפול DNA","העתקת מידע"],["תעתוק","יצירת RNA"],
+    ["תרגום","בניית חלבון"],["מוטציה","שינוי ב-DNA"],["אלל","גרסת גן"],["גן","קטע DNA"],
+    ["הורמון","מסר כימי"],["מערכת עצבים","מסר חשמלי"],["נוגדן","קישור לאנטיגן"],["אנטיגן","מעורר תגובה חיסונית"],
+    ["דם","הובלת חומרים"],["המוגלובין","נשיאת חמצן"],["נאדיות","חילוף גזים"],["כליה","סינון דם"],
+    ["כבד","עיבוד חומרים"],["לבלב","ויסות גלוקוז"]
+  ];
+  els.rawInput.value=ex.slice(0,requiredGroups()).map(g=>g.join(" | ")).join("\n");
+  parseInput();
+});
+
+document.getElementById("clearBtn").addEventListener("click",()=>{
+  els.rawInput.value="";
+  state.groups=[];
+  renderGroups();
+  els.parseStatus.classList.remove("show");
+});
+
+document.getElementById("addGroup").addEventListener("click",()=>{
+  if(state.groups.length>=requiredGroups())return;
+  state.groups.push(["",""]);
+  renderGroups();
+});
+
+
+
+function buildSolvedTilesForProjector(){
+  const N=state.n,pairs=state.groups.slice(0,2*N*N);
+  let pi=0;
+  const tiles=Array.from({length:N*N},(_,i)=>({id:i,theme:i%5,edges:{top:"",right:"",bottom:"",left:""}}));
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+    const p=pairs[pi++]||["",""],i=r*N+c,j=r*N+((c+1)%N);
+    tiles[i].edges.right=p[0]||"";tiles[j].edges.left=p[1]||"";
+  }
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++){
+    const p=pairs[pi++]||["",""],i=r*N+c,j=((r+1)%N)*N+c;
+    tiles[i].edges.bottom=p[0]||"";tiles[j].edges.top=p[1]||"";
+  }
+  return tiles;
+}
+
+function renderProjectorBoard(){
+  const board=document.getElementById("projectorBoard");
+  if(!board)return;
+  board.innerHTML="";
+  board.style.gridTemplateColumns=`repeat(${state.n},1fr)`;
+  buildSolvedTilesForProjector().forEach(tile=>{
+    const e=tile.edges,el=document.createElement("div");
+    el.className=`proj-tile theme-${tile.theme} x-square-tile`;
+    el.innerHTML=`<div class="proj-edge top">${e.top||""}</div><div class="proj-edge right">${e.right||""}</div><div class="proj-edge bottom">${e.bottom||""}</div><div class="proj-edge left">${e.left||""}</div><div class="proj-x">X</div>`;
+    board.appendChild(el);
+  });
+  document.getElementById("projSize").textContent=`${state.n}×${state.n}`;
+  document.getElementById("projGroups").textContent=`${state.groups.length}/${requiredGroups()}`;
+  const topicText=(els.topic.value||els.activityName.value||"").trim(),classText=(els.className.value||"").trim();
+  const topicEl=document.getElementById("projectorActivityTopic"),classEl=document.getElementById("projectorClassName");
+  if(topicEl)topicEl.textContent=topicText?`נושא הפעילות: ${topicText}`:"";
+  if(classEl)classEl.textContent=classText?`כיתה: ${classText}`:"";
+}
+
+function renderGroups(){
+  els.groups.innerHTML="";
+  state.groups.forEach((group,gi)=>{
+    const box=document.createElement("div");
+    box.className="group";
+    box.innerHTML=`<div class="group-title">זוג ${gi+1}</div><div class="words"></div>`;
+    const words=box.querySelector(".words");
+    group.slice(0,2).forEach((word,wi)=>{
+      const inp=document.createElement("input");
+      inp.value=word;
+      inp.placeholder=wi===0?"מושג":"התאמה";
+      inp.addEventListener("input",()=>state.groups[gi][wi]=inp.value);
+      words.appendChild(inp);
+    });
+    els.groups.appendChild(box);
+  });
+  els.groupsCount.textContent=`${state.groups.length} זוגות נטענו · נדרשות ${requiredGroups()}`;
+  renderMetrics();
+  renderProjectorBoard();
+}
+
+function encodeGameConfig(){
+  const payload={
+    activityName:els.activityName.value.trim(),
+    subject:els.subject.value.trim(),
+    className:els.className.value.trim(),
+    topic:els.topic.value.trim(),
+    n:state.n,
+    pairs:state.groups.slice(0,requiredGroups()),
+    code:state.code
+  };
+  const bytes=new TextEncoder().encode(JSON.stringify(payload));
+  let bin=""; bytes.forEach(b=>bin+=String.fromCharCode(b));
+  return encodeURIComponent(btoa(bin));
+}
+function joinUrl(){
+  const current=new URL(window.location.href);
+  const parts=current.pathname.split("/");
+  parts[parts.length-1]="student.html";
+  current.pathname=parts.join("/");
+  current.search="";
+  current.hash=`game=${encodeGameConfig()}`;
+  return current.toString();
+}
+
+let qr1=null, qr2=null;
+function drawQr(){
+  const q1=document.getElementById("qrcode");
+  const q2=document.getElementById("qrcodeProjector");
+  if(q1)q1.innerHTML="";
+  if(q2)q2.innerHTML="";
+
+  if(!state.classOpen || !state.code){
+    els.sessionCode.textContent="------";
+    els.joinUrlText.textContent="";
+    document.getElementById("projCode").textContent="------";
+    return;
+  }
+
+  const url=joinUrl();
+  els.sessionCode.textContent=state.code;
+  els.joinUrlText.textContent=url;
+  document.getElementById("projCode").textContent=state.code;
+
+  if(window.QRCode){
+    qr1=new QRCode(q1,{text:url,width:170,height:170,colorDark:"#234f63",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+    qr2=new QRCode(q2,{text:url,width:260,height:260,colorDark:"#234f63",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.M});
+  }else{
+    if(q1)q1.textContent="QR יופיע כאשר ספריית ה-QR נטענת";
+    if(q2)q2.textContent=url;
+  }
+}
+
+
+document.getElementById("newCode").addEventListener("click",()=>{
+  if(!state.classOpen)return;
+  state.code=String(Math.floor(100000+Math.random()*900000));
+  drawQr();
+});
+
+
+
+
+
+
+
+
+
+document.getElementById("saveArchive").addEventListener("click",()=>{
+  if(!state.created)return;
+
+  const payload={
+    activityName:els.activityName.value,
+    subject:els.subject.value,
+    className:els.className.value,
+    topic:els.topic.value,
+    n:state.n,
+    groups:state.groups.slice(0,requiredGroups())
+  };
+
+  try{
+    const key="xSquaredArchive";
+    const archive=JSON.parse(localStorage.getItem(key)||"[]");
+    archive.push({...payload,savedAt:new Date().toISOString()});
+    localStorage.setItem(key,JSON.stringify(archive));
+    state.archived=true;
+    document.getElementById("archiveStatus").textContent="המשחק נשמר בארכיון האישי ✓";
+  }catch(e){
+    document.getElementById("archiveStatus").textContent="לא ניתן היה לשמור מקומית בדפדפן.";
+  }
+});
+
+document.getElementById("openClass").addEventListener("click",async()=>{
+  if(!state.created)return;
+  const btn=document.getElementById("openClass"),SB_URL="https://zydhfhfhspflvhlpmokj.supabase.co",SB_KEY="sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x";
+  btn.disabled=true;btn.textContent="פותח כיתה…";
+  const hostToken=crypto.randomUUID();let created=null;
+  for(let attempt=0;attempt<4&&!created;attempt++){
+    const code=String(Math.floor(100000+Math.random()*900000));
+    try{
+      const res=await fetch(SB_URL+"/rest/v1/rpc/x_squared_create_session",{
+        method:"POST",headers:{apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json"},
+        body:JSON.stringify({
+          p_code:code,p_activity_name:els.activityName.value.trim(),p_subject:els.subject.value.trim(),
+          p_class_name:els.className.value.trim(),p_topic:els.topic.value.trim(),p_board_size:state.n,
+          p_pairs:state.groups.slice(0,requiredGroups()),p_host_token:hostToken
+        })
+      });
+      const data=await res.json();if(res.ok&&Array.isArray(data)&&data[0])created=data[0];
+    }catch(e){}
+  }
+  if(!created){btn.disabled=false;btn.textContent="פתח כיתה";alert("לא הצלחנו לפתוח כיתה כרגע. נסה שוב.");return;}
+  sessionStorage.setItem("xSquaredHostToken",hostToken);
+  sessionStorage.setItem("xSquaredSessionId",created.id);
+  window.location.href="class.html?session="+encodeURIComponent(created.id)+"&host="+encodeURIComponent(hostToken);
+});
+
+
+document.getElementById("copyStudentLink").addEventListener("click",async()=>{
+  if(!state.classOpen)return;
+  const btn=document.getElementById("copyStudentLink");
+  const ok=await copyTextRobust(joinUrl());
+  btn.textContent=ok?"הקישור הועתק ✓":"לא ניתן להעתיק";
+  setTimeout(()=>btn.textContent="העתק קישור כתלמיד",1400);
+});
+
+document.getElementById("openAsStudent").addEventListener("click",()=>{
+  if(!state.classOpen)return;
+  window.open(joinUrl(),"_blank");
+});
+
+document.getElementById("createGame").addEventListener("click",()=>{
+  const need=requiredGroups();
+  if(state.groups.length<need){
+    alert(`חסרות זוגות. נטענו ${state.groups.length} מתוך ${need}.`);
+    return;
+  }
+  const hasEmpty=state.groups.slice(0,need).some(g=>g.some(x=>!String(x).trim()));
+  if(hasEmpty){
+    alert("יש זוגות עם מושגים ריקים. השלם אותן לפני יצירת המשחק.");
+    return;
+  }
+
+  state.created=true;
+  state.archived=false;
+  state.classOpen=false;
+  state.code="";
+  document.getElementById("saveStage").hidden=false;
+  document.getElementById("shareSection").hidden=true;
+  document.getElementById("openProjector").disabled=true;
+  document.getElementById("createGame").textContent="צור מחדש";
+  document.getElementById("archiveStatus").textContent="";
+  document.getElementById("flowNote").textContent=
+    "המשחק מוכן. אפשר לשמור אותו בארכיון האישי ו/או לפתוח כיתה חיה.";
+  renderProjectorBoard();
+});
+
+
+document.getElementById("openProjector").addEventListener("click",()=>{
+  if(!state.classOpen)return;
+  document.getElementById("projTitle").textContent=els.activityName.value||"X בריבוע";
+  document.getElementById("projSubtitle").textContent=`${els.subject.value||""} · ${els.className.value||""}`;
+  drawQr();
+  renderProjectorBoard();
+  document.getElementById("projectorModal").classList.add("show");
+});
+document.getElementById("closeProjector").addEventListener("click",()=>document.getElementById("projectorModal").classList.remove("show"));
+
+document.getElementById("openProjectorInline").addEventListener("click",()=>{
+  document.getElementById("openProjector").click();
+});
+
+
+window.addEventListener("qr-ready",()=>drawQr());
+
+buildPrompt();
+renderGroups();
+setSize(3);
+drawQr();
+renderProjectorBoard();
+</script>
+</body>
+</html>
