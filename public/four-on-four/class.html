@@ -59,13 +59,16 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
 .tile.dragging{opacity:.66;transform:scale(.97);z-index:8}
 .tile.drop-target{outline:3px solid rgba(58,157,146,.48);outline-offset:-2px}
 .plus{pointer-events:auto;cursor:pointer;touch-action:none}
+
+.class-status-pill{display:inline-flex;align-items:center;border:1px solid #d9e4df;background:#f7faf8;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900;color:#557178}
+@media(max-width:720px){.top>div:last-child{flex-wrap:wrap;justify-content:flex-end}}
 </style>
 </head>
 <body>
 <div class="app">
 <header class="top">
   <div class="brand"><div class="logo" id="sizeBadge">4×4</div><div><h1 id="activityTitle">ארבע על ארבע</h1><small id="activityMeta"></small></div></div>
-  <div style="display:flex;gap:8px"><button class="btn primary" id="projectorBtn">מצב מקרן</button><button class="btn soft" onclick="history.back()">חזרה לעריכה</button></div>
+  <div style="display:flex;gap:8px;align-items:center"><span class="class-status-pill" id="classActivityStatus">פעילה</span><button class="btn primary" id="projectorBtn">פתח מקרן</button><button class="btn soft" onclick="location.href='teacher.html'">חזרה לעריכה</button></div>
 </header>
 
 <section class="card">
@@ -73,11 +76,11 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
     <div>
       <div class="codebox">
         <div class="sub">קוד כניסה לכיתה</div>
-        <div class="code" id="classCode">------</div>
+        <div class="code" id="classCode">------</div><button class="btn soft" id="copyCode" style="margin-top:8px">העתק קוד</button>
       </div>
       <div class="actions">
-        <button class="btn primary" id="copyStudent">העתק קישור לתלמיד</button>
-        <button class="btn soft" id="openStudent">פתח כתלמיד</button>
+        <button class="btn primary" id="copyStudent">העתק קישור תלמיד</button>
+        <button class="btn soft" id="openStudent">צפה כתלמיד</button>
       </div>
       <div class="note">הקישור עצמו אינו מוצג במסך. אפשר להעתיק אותו או לפתוח אותו כתלמיד.</div>
     </div>
@@ -367,11 +370,15 @@ async function refreshLive(){
   if(session){
     game=session;
     const btn=document.getElementById("startClassBtn");
+    const statusPill=document.getElementById("classActivityStatus");
     if(session.status==="running"){
+      if(statusPill)statusPill.textContent="פעילה";
       btn.textContent="המשחק פתוח ✓";
       btn.disabled=true;
       document.getElementById("liveStatus").textContent=(players.length?document.getElementById("liveStatus").textContent+" · ":"")+"המשחק התחיל";
     }else if(session.status==="finished"){
+      if(statusPill)statusPill.textContent="הסתיימה";
+      document.getElementById("liveStatus").textContent="הפעילות הסתיימה";
       btn.textContent="המשחק הסתיים";
       btn.disabled=true;
     }
@@ -409,10 +416,15 @@ async function boot(){
   await refreshLive();
   rosterTimer=setInterval(refreshLive,1000);
 }
+document.getElementById("copyCode").onclick=async()=>{
+  const b=document.getElementById("copyCode"),ok=await copyText(String(game?.code||""));
+  b.textContent=ok?"הועתק ✓":"לא ניתן להעתיק";
+  setTimeout(()=>b.textContent="העתק קוד",1300);
+};
 document.getElementById("copyStudent").onclick=async()=>{
   const b=document.getElementById("copyStudent"),ok=await copyText(studentUrl());
   b.textContent=ok?"הקישור הועתק ✓":"לא ניתן להעתיק";
-  setTimeout(()=>b.textContent="העתק קישור לתלמיד",1300);
+  setTimeout(()=>b.textContent="העתק קישור תלמיד",1300);
 };
 document.getElementById("openStudent").onclick=()=>window.open(studentUrl(),"_blank");
 document.getElementById("startClassBtn").onclick=async()=>{
