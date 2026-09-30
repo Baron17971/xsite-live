@@ -8,7 +8,9 @@ const appLinks = {
   mapi: 'https://mapi-interactive.vercel.app/',
   bingo: 'https://classroom-bingo-live.vercel.app',
   linkup: 'https://linkup-classroom-live.vercel.app',
-  domiknow: 'https://domiknow.vercel.app'
+  domiknow: 'https://domiknow.vercel.app',
+  'four-on-four': '/four-on-four',
+  'x-squared': '/x-squared'
 };
 
 const projectEditLinks = {
@@ -253,7 +255,7 @@ export default function AccountPage(){
           <div className="library-empty">
             <div className="library-empty-mark">✦</div>
             <h3>הספרייה שלך מחכה לפעילות הראשונה</h3>
-            <p>כשנחבר את MAPI, Bingo, LinkUp ו־DomiKnow לשמירה בענן, כל פעילות שתשמור תופיע כאן אוטומטית.</p>
+            <p>פעילויות שתשמור באפליקציות המחוברות ל־Xsite יופיעו כאן אוטומטית.</p>
           </div>
         ) : (
           <div className="library-grid">
