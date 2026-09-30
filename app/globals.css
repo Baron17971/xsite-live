@@ -4266,12 +4266,12 @@ main.catalog-page:has(#theme-mauve:target) .catalog-card .theme-card-mauve{
 
 main:has(#theme-mauve:target) .app-card.bingo .theme-card-mauve,
 main.catalog-page:has(#theme-mauve:target) .catalog-card.bingo .theme-card-mauve{
-  object-position:center 24%;
+  object-position:center 37%;
 }
 
 main:has(#theme-mauve:target) .app-card.domiknow .theme-card-mauve,
 main.catalog-page:has(#theme-mauve:target) .catalog-card.domiknow .theme-card-mauve{
-  object-position:center 30%;
+  object-position:center 34%;
 }
 
 main:has(#theme-mauve:target) .app-card.cloud .theme-card-mauve,
