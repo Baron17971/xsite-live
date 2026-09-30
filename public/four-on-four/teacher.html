@@ -998,3 +998,73 @@ document.getElementById("openClass").addEventListener("click",()=>{
   document.getElementById("flowNote").textContent=
     "הכיתה פתוחה ✓ עכשיו אפשר לשתף קישור, QR או לפתוח מצב מקרן.";
   drawQr();
+  renderProjectorBoard();
+  document.getElementById("shareSection").scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+
+document.getElementById("copyStudentLink").addEventListener("click",async()=>{
+  if(!state.classOpen)return;
+  const btn=document.getElementById("copyStudentLink");
+  const ok=await copyTextRobust(joinUrl());
+  btn.textContent=ok?"הקישור הועתק ✓":"לא ניתן להעתיק";
+  setTimeout(()=>btn.textContent="העתק קישור כתלמיד",1400);
+});
+
+document.getElementById("openAsStudent").addEventListener("click",()=>{
+  if(!state.classOpen)return;
+  window.open(joinUrl(),"_blank");
+});
+
+document.getElementById("createGame").addEventListener("click",()=>{
+  const need=requiredGroups();
+  if(state.groups.length<need){
+    alert(`חסרות רביעיות. נטענו ${state.groups.length} מתוך ${need}.`);
+    return;
+  }
+  const hasEmpty=state.groups.slice(0,need).some(g=>g.some(x=>!String(x).trim()));
+  if(hasEmpty){
+    alert("יש רביעיות עם מושגים ריקים. השלם אותן לפני יצירת המשחק.");
+    return;
+  }
+
+  state.created=true;
+  state.archived=false;
+  state.classOpen=false;
+  state.code="";
+  document.getElementById("saveStage").hidden=false;
+  document.getElementById("shareSection").hidden=true;
+  document.getElementById("openProjector").disabled=true;
+  document.getElementById("createGame").textContent="צור מחדש";
+  document.getElementById("archiveStatus").textContent="";
+  document.getElementById("flowNote").textContent=
+    "המשחק מוכן. אפשר לשמור אותו בארכיון האישי ו/או לפתוח כיתה חיה.";
+  renderProjectorBoard();
+});
+
+
+document.getElementById("openProjector").addEventListener("click",()=>{
+  if(!state.classOpen)return;
+  document.getElementById("projTitle").textContent=els.activityName.value||"ארבע על ארבע";
+  document.getElementById("projSubtitle").textContent=`${els.subject.value||""} · ${els.className.value||""}`;
+  drawQr();
+  renderProjectorBoard();
+  document.getElementById("projectorModal").classList.add("show");
+});
+document.getElementById("closeProjector").addEventListener("click",()=>document.getElementById("projectorModal").classList.remove("show"));
+
+document.getElementById("openProjectorInline").addEventListener("click",()=>{
+  document.getElementById("openProjector").click();
+});
+
+
+window.addEventListener("qr-ready",()=>drawQr());
+
+buildPrompt();
+renderGroups();
+setSize(3);
+drawQr();
+renderProjectorBoard();
+</script>
+</body>
+</html>
