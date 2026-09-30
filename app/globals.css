@@ -4342,3 +4342,52 @@ main.catalog-page:has(#theme-mauve:target) .catalog-card.mapi .theme-card-mauve{
     padding:7px 2px 8px;
   }
 }
+
+
+/* Botanical internal pages — cream dominant */
+main.catalog-page:has(#theme-botanical:target),
+main.library-page:has(#theme-botanical:target),
+main.account-page:has(#theme-botanical:target){
+  background:
+    radial-gradient(circle at 12% 10%,rgba(229,111,130,.04),transparent 24%),
+    radial-gradient(circle at 88% 18%,rgba(214,162,79,.03),transparent 24%),
+    #FFF9F0 !important;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-hero,
+main:has(#theme-botanical:target) .account-hero,
+main:has(#theme-botanical:target) .library-hero{
+  background:
+    radial-gradient(circle at 86% 14%,rgba(229,111,130,.045),transparent 22%),
+    linear-gradient(135deg,#FFFDF8 0%,#FFF9F0 64%,#FBF3E7 100%) !important;
+  border-color:#E3D7C9 !important;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-card,
+main:has(#theme-botanical:target) .account-summary>div,
+main:has(#theme-botanical:target) .my-app-card,
+main:has(#theme-botanical:target) .library-card,
+main:has(#theme-botanical:target) .account-loading,
+main:has(#theme-botanical:target) .account-login-state{
+  background:#FFFDF8 !important;
+  border-color:#E5DBCF !important;
+  box-shadow:0 12px 30px rgba(88,72,61,.045) !important;
+}
+
+main:has(#theme-botanical:target) .library-toolbar,
+main:has(#theme-botanical:target) .library-count-box,
+main:has(#theme-botanical:target) .library-search-wrap,
+main:has(#theme-botanical:target) .library-filter-grid select{
+  background:#FFFDF8 !important;
+  border-color:#E5DBCF !important;
+}
+
+main:has(#theme-botanical:target) .library-card-preview,
+main:has(#theme-botanical:target) .library-card-preview-fallback{
+  background:linear-gradient(145deg,#FFF9F0,#FBF3E7 72%,#F8E9E6) !important;
+}
+
+main.catalog-page:has(#theme-botanical:target) .catalog-filter{
+  background:#FFFDF8 !important;
+  border-color:#E5DBCF !important;
+}
