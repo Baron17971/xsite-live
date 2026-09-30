@@ -206,6 +206,7 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
   z-index:8;
   box-shadow:0 5px 10px rgba(35,50,60,.22),inset 0 1px 0 rgba(255,255,255,.12);
   cursor:pointer;
+  touch-action:none;
 }
 .teacher-x-tile.selected{outline:3px solid rgba(30,165,175,.45);outline-offset:-2px}
 .teacher-x-tile.dragging{opacity:.65;transform:scale(.97)}
@@ -576,18 +577,13 @@ function renderTeacherBoardInto(id){
 
     if(teacherSelected===idx)el.classList.add("selected");
 
-    el.querySelector(".x-core").onclick=(ev)=>{
-      ev.stopPropagation();
-      teacherTiles[idx].rot=(teacherTiles[idx].rot+90)%360;
-      teacherSelected=null;
-      renderBoard();
-    };
-
     el.addEventListener("pointerdown",ev=>{
-      if(ev.target.closest(".x-core"))return;
-      teacherDragIndex=idx;teacherDragging=false;
+      teacherDragIndex=idx;
+      teacherDragging=false;
+      el.dataset.startedOnCenter=ev.target.closest(".x-core")?"1":"0";
       el.setPointerCapture?.(ev.pointerId);
-      el.dataset.startX=ev.clientX;el.dataset.startY=ev.clientY;
+      el.dataset.startX=ev.clientX;
+      el.dataset.startY=ev.clientY;
     });
     el.addEventListener("pointermove",ev=>{
       if(teacherDragIndex!==idx)return;
@@ -606,8 +602,13 @@ function renderTeacherBoardInto(id){
       const targetIndex=target?Number(target.dataset.index):null;
       document.querySelectorAll(".teacher-x-tile.drop-target").forEach(x=>x.classList.remove("drop-target"));
 
+      const startedOnCenter=el.dataset.startedOnCenter==="1";
+
       if(teacherDragging&&targetIndex!==null&&targetIndex!==idx){
         [teacherTiles[idx],teacherTiles[targetIndex]]=[teacherTiles[targetIndex],teacherTiles[idx]];
+      }else if(!teacherDragging&&startedOnCenter){
+        teacherTiles[idx].rot=(teacherTiles[idx].rot+90)%360;
+        teacherSelected=null;
       }else if(!teacherDragging){
         if(teacherSelected===null)teacherSelected=idx;
         else if(teacherSelected===idx)teacherSelected=null;
@@ -616,9 +617,17 @@ function renderTeacherBoardInto(id){
           teacherSelected=null;
         }
       }
-      teacherDragIndex=null;teacherDragging=false;renderBoard();
+      delete el.dataset.startedOnCenter;
+      teacherDragIndex=null;
+      teacherDragging=false;
+      renderBoard();
     });
-    el.addEventListener("pointercancel",()=>{teacherDragIndex=null;teacherDragging=false;renderBoard();});
+    el.addEventListener("pointercancel",()=>{
+      delete el.dataset.startedOnCenter;
+      teacherDragIndex=null;
+      teacherDragging=false;
+      renderBoard();
+    });
     board.appendChild(el);
   });
 }
