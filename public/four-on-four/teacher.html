@@ -382,7 +382,7 @@ button{cursor:pointer}
         <small>יוצרים פעילות, טוענים רביעיות ופותחים כיתה</small>
       </div>
     </div>
-    <button class="projector-btn" id="openProjector" disabled>מצב מקרן</button>
+    <button class="projector-btn" id="openProjector" disabled style="display:none">מצב מקרן</button>
   </header>
 
   <section class="card">
@@ -466,7 +466,7 @@ button{cursor:pointer}
   </div>
 
   <div class="flow-note" id="flowNote">
-    יצירת המשחק אינה פותחת כיתה אוטומטית.
+    יצירת המשחק אינה פותחת כיתה אוטומטית. „פתח כיתה” יעביר למסך כיתה נפרד.
   </div>
 </section>
 
@@ -987,19 +987,26 @@ document.getElementById("saveArchive").addEventListener("click",()=>{
 
 document.getElementById("openClass").addEventListener("click",()=>{
   if(!state.created)return;
-
-  state.classOpen=true;
   if(!state.code){
     state.code=String(Math.floor(100000+Math.random()*900000));
   }
-
-  document.getElementById("shareSection").hidden=false;
-  document.getElementById("openProjector").disabled=false;
-  document.getElementById("flowNote").textContent=
-    "הכיתה פתוחה ✓ עכשיו אפשר לשתף קישור, QR או לפתוח מצב מקרן.";
-  drawQr();
-  renderProjectorBoard();
-  document.getElementById("shareSection").scrollIntoView({behavior:"smooth",block:"start"});
+  state.classOpen=true;
+  const payload={
+    activityName:els.activityName.value.trim(),
+    subject:els.subject.value.trim(),
+    className:els.className.value.trim(),
+    topic:els.topic.value.trim(),
+    n:state.n,
+    groups:state.groups.slice(0,requiredGroups()),
+    code:state.code
+  };
+  try{
+    sessionStorage.setItem("fourOnFourCurrentClass",JSON.stringify(payload));
+  }catch(e){}
+  const bytes=new TextEncoder().encode(JSON.stringify(payload));
+  let bin=""; bytes.forEach(b=>bin+=String.fromCharCode(b));
+  const encoded=encodeURIComponent(btoa(bin));
+  window.location.href="class.html#game="+encoded;
 });
 
 
