@@ -1164,6 +1164,8 @@ let answerShown=false,savedBeforeAnswer=null;
 let liveSolvedKeys=new Set();
 
 let PLAYER_NAME="";
+let PLAYER_ID=null;
+let resultSubmitted=false;
 let playerState="playing"; // playing | finished | forfeited
 let winners=[];
 document.getElementById("playerName").textContent="—";
@@ -1573,8 +1575,16 @@ function showAnswer(){
   document.getElementById("forfeitModal").classList.add("show");
 }
 
-function forfeitAndReveal(){
+async function forfeitAndReveal(){
   playerState="forfeited";
+  if(SESSION_ID && PLAYER_ID){
+    try{
+      await sbRequest("/rest/v1/four_on_four_players?id=eq."+encodeURIComponent(PLAYER_ID),{
+        method:"PATCH",
+        body:JSON.stringify({forfeited:true,attempts:attempts})
+      });
+    }catch(e){}
+  }
   document.getElementById("forfeitModal").classList.remove("show");
   document.getElementById("playerStatus").textContent="פרש וצפה בפתרון";
 
@@ -1588,17 +1598,52 @@ function forfeitAndReveal(){
   showToast("יצאת מהתחרות — הפתרון מוצג");
 }
 
-function registerWinner(){
+async function registerWinner(){
   if(playerState!=="playing")return null;
   playerState="finished";
   document.getElementById("playerStatus").textContent="סיים";
 
+  const elapsedMs=startTime?Math.max(0,Date.now()-startTime):0;
+
+  if(SESSION_ID && PLAYER_ID && !resultSubmitted){
+    resultSubmitted=true;
+    try{
+      const patch=await sbRequest(
+        "/rest/v1/four_on_four_players?id=eq."+encodeURIComponent(PLAYER_ID),
+        {
+          method:"PATCH",
+          headers:{Prefer:"return=representation"},
+          body:JSON.stringify({
+            elapsed_ms:elapsedMs,
+            finished_at:new Date().toISOString(),
+            attempts:attempts,
+            forfeited:false
+          })
+        }
+      );
+      if(!patch.ok) throw new Error("finish");
+
+      const topRes=await sbRequest(
+        "/rest/v1/four_on_four_players?session_id=eq."+encodeURIComponent(SESSION_ID)+
+        "&forfeited=eq.false&elapsed_ms=not.is.null&select=id,name,elapsed_ms&order=elapsed_ms.asc,finished_at.asc&limit=3"
+      );
+      const top=await topRes.json();
+      if(topRes.ok && Array.isArray(top)){
+        winners=top.map((w,i)=>({name:w.name,place:i+1,elapsed_ms:w.elapsed_ms,id:w.id}));
+        renderPodium();
+        const mine=winners.find(w=>w.id===PLAYER_ID);
+        return mine?mine.place:null;
+      }
+    }catch(e){
+      resultSubmitted=false;
+    }
+  }
+
   const existing=winners.find(w=>w.name===PLAYER_NAME);
   if(existing)return existing.place;
-
   if(winners.length<3){
     const place=winners.length+1;
-    winners.push({name:PLAYER_NAME,place});
+    winners.push({name:PLAYER_NAME,place,elapsed_ms:elapsedMs});
     renderPodium();
     return place;
   }
@@ -1633,7 +1678,7 @@ function showToast(msg){
   toastTimer=setTimeout(()=>toast.classList.remove("show"),1450);
 }
 
-document.getElementById("checkBtn").onclick=()=>{
+document.getElementById("checkBtn").onclick=async()=>{
   attempts++;
   attemptsEl.textContent=`${attempts} בדיקות`;
   const {ok,total}=score();
@@ -1644,7 +1689,7 @@ document.getElementById("checkBtn").onclick=()=>{
       return;
     }
 
-    const place=registerWinner();
+    const place=await registerWinner();
     const time=document.getElementById("timer").textContent;
 
     if(place&&place<=3){
@@ -1672,6 +1717,10 @@ document.getElementById("cancelForfeit").onclick=()=>{
 document.getElementById("confirmForfeit").onclick=forfeitAndReveal;
 
 document.getElementById("shuffleBtn").onclick=()=>{
+  if(playerState==="finished" && SESSION_ID){
+    showToast("כבר סיימת את המשחק");
+    return;
+  }
   answerShown=false;
   savedBeforeAnswer=null;
   playerState="playing";
@@ -1763,6 +1812,8 @@ document.getElementById("joinGameBtn").addEventListener("click",async()=>{
         headers:{Prefer:"resolution=merge-duplicates,return=representation"},
         body:JSON.stringify({session_id:SESSION_ID,name})
       });
+      const joinedRows=await res.json();
+      if(res.ok && Array.isArray(joinedRows) && joinedRows[0]) PLAYER_ID=joinedRows[0].id;
       if(!res.ok){
         const status=await getSessionStatus();
         if(status==="finished")throw new Error("finished");
