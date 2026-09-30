@@ -544,7 +544,7 @@ button{cursor:pointer}
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" onload="window.dispatchEvent(new Event('qr-ready'))"></script>
 <script>
 const state={n:3,groups:[],code:"",created:false,archived:false,classOpen:false};
 
