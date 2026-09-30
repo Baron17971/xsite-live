@@ -4391,3 +4391,36 @@ main.catalog-page:has(#theme-botanical:target) .catalog-filter{
   background:#FFFDF8 !important;
   border-color:#E5DBCF !important;
 }
+
+
+/* Botanical near-white page canvas */
+main:has(#theme-botanical:target),
+main.catalog-page:has(#theme-botanical:target),
+main.account-page:has(#theme-botanical:target),
+main.library-page:has(#theme-botanical:target){
+  background:#FFFDF8 !important;
+}
+
+main:has(#theme-botanical:target) .catalog-grid-section,
+main:has(#theme-botanical:target) .catalog-hero,
+main:has(#theme-botanical:target) .catalog-toolbar,
+main:has(#theme-botanical:target) .account-section,
+main:has(#theme-botanical:target) .library-section,
+main:has(#theme-botanical:target) .library-page-empty,
+main:has(#theme-botanical:target) .apps-section,
+main:has(#theme-botanical:target) .principles-section,
+main:has(#theme-botanical:target) .closing{
+  background:#FFFDF8 !important;
+}
+
+main:has(#theme-botanical:target) .catalog-card,
+main:has(#theme-botanical:target) .app-card,
+main:has(#theme-botanical:target) .my-app-card,
+main:has(#theme-botanical:target) .library-card,
+main:has(#theme-botanical:target) .account-summary>div,
+main:has(#theme-botanical:target) .library-toolbar,
+main:has(#theme-botanical:target) .library-count-box,
+main:has(#theme-botanical:target) .library-search-wrap,
+main:has(#theme-botanical:target) .library-filter-grid select{
+  background:#FFFEFB !important;
+}
