@@ -53,6 +53,19 @@ const apps = [
     ]
   },
   {
+    name: 'ארבע על ארבע',
+    eyebrow: 'פאזל רביעיות',
+    description: 'מסובבים ומחליפים ריבועים עד שבכל נקודת מפגש נפגשים ארבעה מושגים ששייכים לאותה רביעייה.',
+    href: '/four-on-four',
+    kind: 'fouronfour',
+    details: [
+      ['מה עושים?', 'המורה יוצר מאגר רביעיות ובוחר לוח 2×2, 3×3 או 4×4.'],
+      ['איך משחקים?', 'התלמידים מסובבים ומחליפים ריבועים עד שכל ארבעת המושגים סביב נקודת מפגש מתאימים.'],
+      ['כיתה חיה', 'התלמידים מצטרפים בקישור או QR, ממתינים לפתיחת המשחק, והמסיימים המהירים מוצגים למורה.'],
+      ['מתאים ל־', 'תרגול קבוצות מושגים, קטגוריות, קשרים בין ארבעה פריטים וסיכום יחידה.']
+    ]
+  },
+  {
     name: 'X בריבוע',
     eyebrow: 'פאזל התאמות',
     description: 'מסובבים, מזיזים ומחברים ריבועים עד שכל המושגים שנפגשים בצלע משותפת מתאימים זה לזה.',
@@ -213,6 +226,13 @@ export default function Home() {
                     <img className="app-card-image theme-card theme-card-mauve" src="/domiknow-purple.png" alt="DomiKnow" />
                     <img className="app-card-image theme-card theme-card-botanical domiknow-botanical-image" src="/DomiKnow-card.png" alt="DomiKnow" />
                   </>
+                )}
+                {app.kind === 'fouronfour' && (
+                  <div className="app-card-image fouronfour-card-fallback" role="img" aria-label="ארבע על ארבע">
+                    <span className="fouronfour-card-symbol">4×4</span>
+                    <span className="fouronfour-card-title">ארבע על ארבע</span>
+                    <span className="fouronfour-card-tagline">ארבעה מושגים. נקודת מפגש אחת.</span>
+                  </div>
                 )}
                 {app.kind === 'xsquared' && (
                   <div className="app-card-image xsquared-card-fallback" role="img" aria-label="X בריבוע">
