@@ -258,7 +258,7 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
 <div class="app">
 <header class="top">
   <div class="brand"><div class="logo" id="sizeBadge">X²</div><div><h1 id="activityTitle">X בריבוע</h1><small id="activityMeta"></small></div></div>
-  <div style="display:flex;gap:8px"><button class="btn primary" id="projectorBtn">מצב מקרן</button><button class="btn soft" onclick="history.back()">חזרה לעריכה</button></div>
+  <div style="display:flex;gap:8px"><button class="btn primary" id="projectorBtn">פתח מקרן</button><button class="btn soft" onclick="location.href='teacher.html'">חזרה לעריכה</button></div>
 </header>
 
 <section class="card">
@@ -267,10 +267,11 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
       <div class="codebox">
         <div class="sub">קוד כניסה לכיתה</div>
         <div class="code" id="classCode">------</div>
+        <button class="btn soft" id="copyCode" style="margin-top:8px">העתק קוד</button>
       </div>
       <div class="actions">
-        <button class="btn primary" id="copyStudent">העתק קישור לתלמיד</button>
-        <button class="btn soft" id="openStudent">פתח כתלמיד</button>
+        <button class="btn primary" id="copyStudent">העתק קישור תלמיד</button>
+        <button class="btn soft" id="openStudent">צפה כתלמיד</button>
       </div>
       <div class="note">הקישור עצמו אינו מוצג במסך. אפשר להעתיק אותו או לפתוח אותו כתלמיד.</div>
     </div>
@@ -742,10 +743,15 @@ async function boot(){
   await refreshLive();
   rosterTimer=setInterval(refreshLive,1000);
 }
+document.getElementById("copyCode").onclick=async()=>{
+  const b=document.getElementById("copyCode"),ok=await copyText(String(game?.code||""));
+  b.textContent=ok?"הועתק ✓":"לא ניתן להעתיק";
+  setTimeout(()=>b.textContent="העתק קוד",1300);
+};
 document.getElementById("copyStudent").onclick=async()=>{
   const b=document.getElementById("copyStudent"),ok=await copyText(studentUrl());
   b.textContent=ok?"הקישור הועתק ✓":"לא ניתן להעתיק";
-  setTimeout(()=>b.textContent="העתק קישור לתלמיד",1300);
+  setTimeout(()=>b.textContent="העתק קישור תלמיד",1300);
 };
 document.getElementById("openStudent").onclick=()=>window.open(studentUrl(),"_blank");
 document.getElementById("startClassBtn").onclick=async()=>{
