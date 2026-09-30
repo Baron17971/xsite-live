@@ -1,0 +1,1000 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ארבע על ארבע — דף תלמיד</title>
+<style>
+:root{
+  --bg:#faf7f1;
+  --bg2:#f1ece5;
+  --panel:#fffaf3;
+  --panel-soft:rgba(255,250,243,.86);
+  --ink:#214c63;
+  --muted:#7b878f;
+  --line:#ddd4c9;
+  --good:#6f917f;
+  --cream:#fff6e9;
+  --shadow:0 10px 28px rgba(46,55,62,.10);
+  --shadow-soft:0 5px 14px rgba(46,55,62,.06);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+  background:
+    radial-gradient(ellipse at 7% 5%, rgba(140,204,211,.16) 0 8%, transparent 21%),
+    radial-gradient(ellipse at 2% 18%, rgba(176,216,216,.12) 0 7%, transparent 20%),
+    radial-gradient(ellipse at 96% 9%, rgba(222,197,177,.12) 0 8%, transparent 22%),
+    radial-gradient(ellipse at 92% 92%, rgba(154,190,178,.10) 0 8%, transparent 22%),
+    linear-gradient(180deg,var(--bg),var(--bg2));
+  color:var(--ink);
+}
+.app{max-width:900px;margin:auto;min-height:100vh;padding:14px 12px 24px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+.brand{display:flex;align-items:center;gap:11px}
+.logo{
+  width:54px;height:54px;border-radius:17px;
+  background:linear-gradient(145deg,#315a6d,#214454);
+  color:var(--cream);display:grid;place-items:center;
+  font-weight:900;font-size:20px;box-shadow:var(--shadow)
+}
+.brand h1{font-size:22px;margin:0}
+.brand small{display:block;color:var(--muted);margin-top:2px}
+.timer{
+  background:var(--panel);border:1px solid var(--line);
+  border-radius:16px;padding:10px 14px;font-weight:900;
+  min-width:92px;text-align:center;box-shadow:var(--shadow-soft)
+}
+.info{
+  display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
+  background:var(--panel-soft);border:1px solid var(--line);
+  border-radius:18px;padding:10px;margin-bottom:10px;box-shadow:var(--shadow-soft)
+}
+.progress-track{height:10px;background:#ebe4dc;border-radius:999px;overflow:hidden}
+.progress{height:100%;width:0;background:linear-gradient(90deg,#4f8593,#75aaa1);transition:.25s}
+.progress-text{font-size:13px;color:var(--muted);margin-top:5px}
+.player{
+  background:var(--panel);border:1px solid var(--line);border-radius:14px;
+  padding:8px 12px;text-align:center;font-size:13px;min-width:145px
+}
+.podium{
+  background:rgba(255,250,243,.72);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:10px 12px;
+  margin-bottom:12px;
+  box-shadow:var(--shadow-soft);
+}
+.podium-title{font-size:12px;color:var(--muted);text-align:center;margin-bottom:7px}
+.podium-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.podium-slot{
+  min-height:36px;display:flex;align-items:center;justify-content:center;
+  border-radius:12px;background:rgba(255,255,255,.55);
+  border:1px solid rgba(221,212,201,.75);
+  color:var(--ink);font-size:13px;font-weight:800;text-align:center;padding:6px 8px
+}
+.podium-slot.filled{background:rgba(255,246,233,.92)}
+
+.board-wrap{
+  background:rgba(255,255,255,.52);border:1px solid var(--line);
+  border-radius:26px;padding:14px;box-shadow:var(--shadow)
+}
+.board{
+  position:relative;
+  direction:ltr;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:10px;aspect-ratio:1/1
+}
+.intersection-layer{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:20;
+}
+.intersection-spark{
+  position:absolute;
+  width:22px;
+  height:22px;
+  transform:translate(-50%,-50%) scale(.72);
+  opacity:0;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(255,248,229,.98) 0 18%, rgba(255,231,150,.88) 19% 40%, rgba(255,219,92,.45) 41% 62%, rgba(255,219,92,0) 63%);
+  box-shadow:
+    0 0 12px rgba(255,225,118,.55),
+    0 0 22px rgba(255,225,118,.28);
+  filter:saturate(110%);
+}
+.intersection-spark::before,
+.intersection-spark::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  border-radius:999px;
+  background:linear-gradient(90deg, transparent, rgba(255,244,197,.95), transparent);
+}
+.intersection-spark::before{
+  width:26px;
+  height:2px;
+}
+.intersection-spark::after{
+  width:2px;
+  height:26px;
+  background:linear-gradient(180deg, transparent, rgba(255,244,197,.95), transparent);
+}
+.intersection-spark.active{
+  opacity:1;
+  animation:sparkFloat 1.8s ease-in-out infinite;
+}
+.intersection-spark.burst{
+  animation:sparkBurst .85s ease-out both, sparkFloat 1.8s .85s ease-in-out infinite;
+}
+@keyframes sparkBurst{
+  0%{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(.32);
+    filter:brightness(1.2);
+  }
+  35%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1.18);
+    filter:brightness(1.4);
+  }
+  70%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+  }
+  100%{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+  }
+}
+@keyframes sparkFloat{
+  0%,100%{
+    box-shadow:
+      0 0 10px rgba(255,225,118,.52),
+      0 0 18px rgba(255,225,118,.24);
+  }
+  50%{
+    box-shadow:
+      0 0 14px rgba(255,225,118,.70),
+      0 0 28px rgba(255,225,118,.34);
+  }
+}
+.tile{
+  position:relative;
+  border-radius:20px;
+  border:1px solid rgba(255,246,233,.14);
+  box-shadow:0 10px 22px rgba(42,49,54,.14);
+  overflow:hidden;user-select:none;touch-action:none;cursor:grab;
+  transition:transform .16s ease,box-shadow .16s ease,outline-color .16s ease
+}
+.tile:active{cursor:grabbing}
+.tile.theme-0{background:linear-gradient(145deg,#6e86a8,#5d7396)}
+.tile.theme-1{background:linear-gradient(145deg,#739f99,#5f8882)}
+.tile.theme-2{background:linear-gradient(145deg,#4e849f,#3f6f88)}
+.tile.theme-3{background:linear-gradient(145deg,#a97d72,#8f675e)}
+.tile.theme-4{background:linear-gradient(145deg,#8f846d,#746b58)}
+.tile.selected{
+  outline:4px solid rgba(255,239,214,.34);
+  box-shadow:0 0 0 8px rgba(255,239,214,.08),0 14px 28px rgba(53,59,67,.14)
+}
+.tile.dragging{opacity:.62;transform:scale(.96);z-index:10}
+.tile.drop-target{outline:4px solid rgba(143,195,181,.45);transform:scale(.98)}
+.tile.wrong{animation:shake .25s linear}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(4px)}
+  75%{transform:translateX(-4px)}
+}
+.tile::after{
+  content:"";position:absolute;inset:10px;border-radius:15px;
+  border:1px dashed rgba(255,246,233,.10);pointer-events:none
+}
+
+/* PLUS: divides each tile into four quadrants */
+.plus-lines::before,.plus-lines::after{
+  content:"";position:absolute;left:50%;top:50%;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,246,233,.14) 10%,
+    rgba(255,246,233,.48) 50%,
+    rgba(255,246,233,.14) 90%,
+    transparent 100%);
+  z-index:1;pointer-events:none
+}
+.plus-lines::before{
+  width:90%;height:2px;transform:translate(-50%,-50%)
+}
+.plus-lines::after{
+  width:2px;height:90%;
+  background:linear-gradient(180deg,
+    transparent 0%,
+    rgba(255,246,233,.14) 10%,
+    rgba(255,246,233,.48) 50%,
+    rgba(255,246,233,.14) 90%,
+    transparent 100%);
+  transform:translate(-50%,-50%)
+}
+.plus-core{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:42px;height:42px;border-radius:14px;
+  display:grid;place-items:center;background:#1d3f51;color:var(--cream);
+  font-size:22px;font-weight:900;box-shadow:0 5px 12px rgba(0,0,0,.18);
+  z-index:3;pointer-events:none
+}
+.concept{
+  position:absolute;direction:rtl;display:flex;align-items:center;justify-content:center;
+  text-align:center;color:var(--cream);font-weight:800;line-height:1.06;padding:3px;
+  z-index:4;overflow:hidden;white-space:normal;overflow-wrap:anywhere;word-break:normal;
+  hyphens:auto;pointer-events:none
+}
+.concept.tl{left:4%;top:4%;width:40%;height:38%}
+.concept.tr{right:4%;top:4%;width:40%;height:38%}
+.concept.bl{left:4%;bottom:4%;width:40%;height:38%}
+.concept.br{right:4%;bottom:4%;width:40%;height:38%}
+
+.rotate{
+  position:absolute;left:8px;bottom:8px;z-index:6;
+  width:31px;height:31px;min-width:31px;min-height:31px;padding:0;
+  border-radius:50%;border:1px solid rgba(255,246,233,.18);
+  background:rgba(28,57,72,.82);color:var(--cream);
+  display:grid;place-items:center;font-size:15px;line-height:1;cursor:pointer;
+  box-shadow:0 2px 7px rgba(0,0,0,.08)
+}
+.tile-id{
+  direction:ltr;position:absolute;right:8px;bottom:8px;
+  color:rgba(255,246,233,.48);font-size:10px;font-weight:800;z-index:5
+}
+.actions{
+  display:grid;grid-template-columns:1fr 1.15fr 1fr;
+  gap:12px;margin-top:14px;align-items:stretch
+}
+button{
+  font:inherit;border:none;border-radius:18px;
+  min-height:52px;padding:12px 14px;font-weight:900;cursor:pointer
+}
+.reset,.answer{
+  background:#f3ece3;color:var(--ink);
+  border:1px solid var(--line);box-shadow:var(--shadow-soft)
+}
+.check{
+  background:linear-gradient(145deg,#356f80,#285d6c);
+  color:#fff8ed;box-shadow:0 10px 22px rgba(40,93,108,.18)
+}
+.tip{text-align:center;color:var(--muted);font-size:13px;margin-top:10px}
+.move-tip{
+  display:flex;justify-content:center;gap:8px;align-items:center;
+  color:#66737c;font-size:12px;margin-top:7px
+}
+.test-panel{
+  margin-top:12px;
+  background:rgba(255,250,243,.82);
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:12px;
+  box-shadow:var(--shadow-soft);
+}
+.board-move-toggle{
+  width:100%;
+  min-height:44px;
+  border-radius:14px;
+  background:linear-gradient(145deg,#eef3f4,#e6ecee);
+  color:var(--ink);
+  border:1px solid var(--line);
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:none;
+}
+.board-move-content{
+  display:none;
+  margin-top:10px;
+}
+.board-move-content.open{display:block;}
+.test-note{
+  text-align:center;
+  font-size:12px;
+  color:#7a868d;
+  margin-bottom:10px;
+}
+.test-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.test-box{
+  background:#fffdf9;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:10px;
+}
+.test-box-title{
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:800;
+  margin-bottom:8px;
+}
+.test-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.test-btn{
+  min-height:42px !important;
+  border-radius:12px !important;
+  padding:8px 9px !important;
+  background:#eef3f4;
+  color:var(--ink);
+  border:1px solid var(--line) !important;
+  box-shadow:none !important;
+  font-size:12px;
+  line-height:1.2;
+}
+@media(max-width:620px){
+  .test-grid{grid-template-columns:1fr}
+  .test-panel{padding:10px}
+  .test-btn{min-height:40px !important;font-size:11px}
+}
+.move-icon{
+  width:22px;height:22px;border-radius:7px;border:1px solid var(--line);
+  display:grid;place-items:center;background:#fff;font-size:12px
+}
+.toast{
+  position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.78);
+  background:rgba(31,43,51,.96);color:var(--cream);
+  padding:18px 24px;border-radius:20px;opacity:0;pointer-events:none;
+  box-shadow:0 18px 50px rgba(0,0,0,.24);z-index:50;
+  max-width:min(82vw,420px);text-align:center;font-weight:800;
+  font-size:clamp(18px,4.5vw,25px);line-height:1.25
+}
+.toast.show{animation:toastPop 1.45s ease both}
+@keyframes toastPop{
+  0%{opacity:0;transform:translate(-50%,-50%) scale(.72)}
+  16%{opacity:1;transform:translate(-50%,-50%) scale(1.06)}
+  27%{transform:translate(-50%,-50%) scale(1)}
+  78%{opacity:1}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(.92)}
+}
+.modal{
+  position:fixed;inset:0;background:rgba(20,28,33,.42);
+  display:none;place-items:center;padding:18px;z-index:30
+}
+.modal.show{display:grid}
+.card{
+  width:min(420px,100%);background:var(--panel);border-radius:24px;
+  padding:24px;box-shadow:0 25px 80px rgba(0,0,0,.2);text-align:center
+}
+.card .medal{font-size:58px}
+.card h2{font-size:29px;margin:8px 0}
+.card p{color:var(--muted)}
+.card button{width:100%;background:var(--ink);color:#fff}
+.confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.cancel-forfeit{background:#eee7de !important;color:var(--ink) !important}
+.confirm-forfeit{background:#7d5d5d !important;color:#fff6e9 !important}
+
+@media(max-width:620px){
+  .app{padding:10px 10px 20px}
+  .logo{width:46px;height:46px;font-size:17px}
+  .brand h1{font-size:19px}
+  .info{grid-template-columns:1fr}
+  .board-wrap{padding:8px;border-radius:20px}
+  .board{gap:6px}
+  .tile{border-radius:14px}
+  .plus-core{width:31px;height:31px;font-size:17px;border-radius:10px}
+  .concept{padding:2px}
+  .rotate{width:23px;height:23px;min-width:23px;min-height:23px;font-size:12px;left:4px;bottom:4px}
+  .tile-id{right:5px;bottom:5px;font-size:8px}
+  .actions{grid-template-columns:1fr 1.15fr 1fr;gap:8px}
+  button{min-height:50px;padding:10px 8px;border-radius:17px}
+  .podium-slot{font-size:11px;padding:5px}
+  .intersection-spark{width:18px;height:18px}
+  .intersection-spark::before{width:22px}
+  .intersection-spark::after{height:22px}
+}
+
+/* Sticky top bar: title + timer stay visible while the rest of the page scrolls */
+.top{
+  position:sticky!important;
+  top:0!important;
+  z-index:100!important;
+  margin:0 -12px 12px!important;
+  padding:12px 12px 10px!important;
+  background:rgba(250,247,241,.94)!important;
+  backdrop-filter:blur(14px)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+  border-bottom:1px solid rgba(221,212,201,.78)!important;
+  box-shadow:0 7px 18px rgba(46,55,62,.09)!important;
+}
+
+/* keep the sticky bar compact on mobile */
+@media(max-width:620px){
+  .top{
+    margin:0 -10px 10px!important;
+    padding:9px 10px 8px!important;
+  }
+  .logo{
+    width:50px!important;
+    height:50px!important;
+  }
+  .brand h1{
+    font-size:21px!important;
+  }
+  .brand small{
+    font-size:12px!important;
+  }
+  .timer{
+    min-width:88px!important;
+    padding:9px 12px!important;
+  }
+}
+
+
+/* Interaction update: + is the rotate control; double tap/click selects a tile */
+.plus-core{
+  cursor:pointer!important;
+  pointer-events:auto!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+  touch-action:manipulation!important;
+  transition:transform .14s ease, box-shadow .14s ease!important;
+}
+.plus-core:active{
+  transform:translate(-50%,-50%) scale(.92)!important;
+}
+.tile.selected{
+  outline:4px solid rgba(255,221,116,.78)!important;
+  box-shadow:
+    0 0 0 6px rgba(255,221,116,.18),
+    0 14px 28px rgba(53,59,67,.18)!important;
+}
+
+.instructions-card{
+  width:min(440px,100%);
+  background:var(--panel);
+  border-radius:26px;
+  padding:24px 22px;
+  text-align:right;
+  box-shadow:0 25px 80px rgba(0,0,0,.22);
+}
+.instructions-card h2{
+  margin:0 0 14px;
+  font-size:27px;
+  text-align:center;
+}
+.instructions-list{
+  display:grid;
+  gap:11px;
+  margin:0 0 18px;
+}
+.instruction-row{
+  display:grid;
+  grid-template-columns:42px 1fr;
+  align-items:center;
+  gap:10px;
+  background:#fffdf8;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:10px 12px;
+  color:var(--ink);
+  font-weight:750;
+  line-height:1.35;
+}
+.instruction-icon{
+  width:38px;
+  height:38px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  background:#eef3f4;
+  color:var(--ink);
+  font-size:21px;
+  font-weight:950;
+}
+.instructions-start{
+  width:100%;
+  background:linear-gradient(145deg,#31434f,#223039);
+  color:#fff;
+  min-height:50px;
+}
+
+
+/* v2 interaction cleanup:
+   + rotates; dragging moves the whole tile with its own color; no double-click selection. */
+.tile.selected{
+  outline:none!important;
+  box-shadow:inherit!important;
+}
+.drag-ghost{
+  position:fixed!important;
+  z-index:9999!important;
+  pointer-events:none!important;
+  margin:0!important;
+  opacity:.96!important;
+  transform:translate(-50%,-50%) scale(1.03)!important;
+  box-shadow:0 18px 34px rgba(25,40,48,.28)!important;
+  transition:none!important;
+}
+.tile.dragging{
+  opacity:.24!important;
+}
+
+
+/* smoother, forgiving drag/swap interaction */
+.tile{
+  transition:
+    transform .18s cubic-bezier(.2,.8,.2,1),
+    box-shadow .18s ease,
+    opacity .18s ease!important;
+}
+.tile.dragging{
+  opacity:.18!important;
+  transform:scale(.96)!important;
+}
+.tile.drop-target{
+  outline:3px solid rgba(255,221,116,.72)!important;
+  transform:scale(.96)!important;
+  box-shadow:
+    0 0 0 5px rgba(255,221,116,.16),
+    0 12px 24px rgba(36,52,60,.16)!important;
+}
+.drag-ghost{
+  opacity:.90!important;
+  transform:translate(-50%,-50%) scale(.92)!important;
+  border-radius:18px!important;
+  box-shadow:0 14px 28px rgba(25,40,48,.24)!important;
+}
+
+
+/* visual refinement for 4×4 */
+
+/* 1) Lighter four-zone tile palette with subtle depth */
+.tile{
+  --zone-a:#dfeaf4;
+  --zone-b:#e4efe8;
+  --zone-c:#f1e4de;
+  --zone-d:#e8e7f3;
+  border-radius:18px!important;
+  border:1px solid rgba(76,96,108,.22)!important;
+  box-shadow:
+    0 8px 16px rgba(42,58,66,.12),
+    0 2px 5px rgba(42,58,66,.08),
+    inset 0 1px 0 rgba(255,255,255,.82)!important;
+  background:#f8f6ef!important;
+}
+
+.tile.theme-0{--zone-a:#dfeaf4;--zone-b:#e4efe8;--zone-c:#f1e4de;--zone-d:#e8e7f3}
+.tile.theme-1{--zone-a:#e1edf4;--zone-b:#e6f0e2;--zone-c:#f3e7da;--zone-d:#ece7f1}
+.tile.theme-2{--zone-a:#e4edf6;--zone-b:#dfede7;--zone-c:#f4e6e1;--zone-d:#e6e8f4}
+.tile.theme-3{--zone-a:#dce9f1;--zone-b:#e7efe5;--zone-c:#f0e2dc;--zone-d:#ebe8f4}
+.tile.theme-4{--zone-a:#e2edf5;--zone-b:#e1eee8;--zone-c:#f3e5dd;--zone-d:#e8e8f2}
+
+.tile .q1,
+.tile .quadrant.q1,
+.tile .zone-a{background:linear-gradient(145deg,color-mix(in srgb,var(--zone-a) 96%,#fff 4%),var(--zone-a))!important}
+.tile .q2,
+.tile .quadrant.q2,
+.tile .zone-b{background:linear-gradient(145deg,color-mix(in srgb,var(--zone-b) 96%,#fff 4%),var(--zone-b))!important}
+.tile .q3,
+.tile .quadrant.q3,
+.tile .zone-c{background:linear-gradient(145deg,color-mix(in srgb,var(--zone-c) 96%,#fff 4%),var(--zone-c))!important}
+.tile .q4,
+.tile .quadrant.q4,
+.tile .zone-d{background:linear-gradient(145deg,color-mix(in srgb,var(--zone-d) 96%,#fff 4%),var(--zone-d))!important}
+
+/* 2) Larger text with tighter auto-fit ceiling/floor support */
+.tile .concept,
+.tile .word,
+.tile .label{
+  color:#274e61!important;
+  font-weight:850!important;
+  line-height:1.03!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.6)!important;
+}
+
+/* 3) Compact winners area */
+.podium{
+  padding:7px 10px!important;
+  margin-bottom:8px!important;
+  border-radius:16px!important;
+}
+.podium-title{
+  margin-bottom:5px!important;
+  font-size:11px!important;
+}
+.podium-slots{
+  gap:6px!important;
+}
+.podium-slot{
+  min-height:31px!important;
+  padding:4px 6px!important;
+  font-size:11px!important;
+  border-radius:10px!important;
+}
+
+/* 4) Smaller, elegant center plus */
+.plus-core{
+  width:34px!important;
+  height:34px!important;
+  min-width:34px!important;
+  min-height:34px!important;
+  border-radius:11px!important;
+  background:linear-gradient(145deg,#2b4655,#1c313d)!important;
+  color:#fff8eb!important;
+  font-size:22px!important;
+  font-weight:900!important;
+  box-shadow:
+    0 4px 9px rgba(28,45,55,.22),
+    inset 0 1px 0 rgba(255,255,255,.10)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+}
+.plus-core:active{
+  transform:translate(-50%,-50%) scale(.94)!important;
+}
+
+/* slightly slimmer board spacing so board gains room */
+.board-wrap{
+  padding:12px!important;
+}
+.board{
+  gap:9px!important;
+}
+
+@media(max-width:620px){
+  .board-wrap{padding:9px!important}
+  .board{gap:7px!important}
+  .plus-core{
+    width:31px!important;
+    height:31px!important;
+    min-width:31px!important;
+    min-height:31px!important;
+    font-size:20px!important;
+    border-radius:10px!important;
+  }
+  .podium{padding:6px 8px!important}
+  .podium-slot{min-height:29px!important;font-size:10.5px!important}
+}
+
+
+/* v2 — visible four-zone structure + safer text fitting */
+
+/* Four actual colored quadrants inside every tile */
+.tile{
+  --zone-tl:#dceaf3;
+  --zone-tr:#e3eee5;
+  --zone-bl:#f1e4dd;
+  --zone-br:#e7e6f1;
+  background:
+    linear-gradient(to right,
+      var(--zone-tl) 0 50%,
+      var(--zone-tr) 50% 100%) top/100% 50% no-repeat,
+    linear-gradient(to right,
+      var(--zone-bl) 0 50%,
+      var(--zone-br) 50% 100%) bottom/100% 50% no-repeat!important;
+  border:1px solid rgba(69,91,103,.22)!important;
+  box-shadow:
+    0 8px 16px rgba(42,58,66,.12),
+    0 2px 5px rgba(42,58,66,.08),
+    inset 0 1px 0 rgba(255,255,255,.84)!important;
+}
+
+.tile.theme-1{
+  --zone-tl:#e2edf4; --zone-tr:#e9f0df;
+  --zone-bl:#f3e7dd; --zone-br:#ece7f1;
+}
+.tile.theme-2{
+  --zone-tl:#e0ebf3; --zone-tr:#dfede8;
+  --zone-bl:#f2e3df; --zone-br:#e5e8f3;
+}
+.tile.theme-3{
+  --zone-tl:#dce9f1; --zone-tr:#e7efe4;
+  --zone-bl:#efe1dc; --zone-br:#ebe7f2;
+}
+.tile.theme-4{
+  --zone-tl:#e3edf4; --zone-tr:#e2eee8;
+  --zone-bl:#f2e6dd; --zone-br:#e9e8f1;
+}
+
+/* Clear but quiet cross between the four zones */
+.plus-lines::before{
+  width:88%!important;
+  height:1.5px!important;
+  background:rgba(55,82,95,.22)!important;
+}
+.plus-lines::after{
+  width:1.5px!important;
+  height:88%!important;
+  background:rgba(55,82,95,.22)!important;
+}
+
+/* More breathing room so long Hebrew terms cannot escape their quadrant */
+.concept{
+  color:#274e61!important;
+  font-weight:850!important;
+  line-height:1.04!important;
+  padding:4px!important;
+  overflow:hidden!important;
+  overflow-wrap:anywhere!important;
+  word-break:normal!important;
+  hyphens:none!important;
+}
+.concept.tl{left:5%!important;top:5%!important;width:38%!important;height:36%!important}
+.concept.tr{right:5%!important;top:5%!important;width:38%!important;height:36%!important}
+.concept.bl{left:5%!important;bottom:5%!important;width:38%!important;height:36%!important}
+.concept.br{right:5%!important;bottom:5%!important;width:38%!important;height:36%!important}
+
+/* Keep the refined plus */
+.plus-core{
+  width:32px!important;
+  height:32px!important;
+  min-width:32px!important;
+  min-height:32px!important;
+  border-radius:10px!important;
+  font-size:20px!important;
+}
+
+/* Slightly more definition between tiles */
+.board{gap:8px!important}
+
+
+/* v3 — one color per TILE, not per matching quartet.
+   The color belongs to the tile object and therefore moves with it when dragged. */
+
+.tile{
+  --tile-color:#dfeaf4;
+  background:linear-gradient(145deg,
+    color-mix(in srgb,var(--tile-color) 96%,#fff 4%),
+    color-mix(in srgb,var(--tile-color) 98%,#b9c8cf 2%)
+  )!important;
+  border:1px solid rgba(69,91,103,.22)!important;
+  box-shadow:
+    0 8px 16px rgba(42,58,66,.12),
+    0 2px 5px rgba(42,58,66,.08),
+    inset 0 1px 0 rgba(255,255,255,.84)!important;
+}
+
+/* Each tile theme is a distinct tile color.
+   These classes travel with the tile because theme is stored on the tile object. */
+.tile.theme-0{--tile-color:#dce9f3}
+.tile.theme-1{--tile-color:#e4efe5}
+.tile.theme-2{--tile-color:#f1e4de}
+.tile.theme-3{--tile-color:#e8e7f2}
+.tile.theme-4{--tile-color:#efe8d8}
+
+/* Neutralize quadrant-specific fills from v2 */
+.tile .q1,
+.tile .q2,
+.tile .q3,
+.tile .q4,
+.tile .quadrant,
+.tile .zone-a,
+.tile .zone-b,
+.tile .zone-c,
+.tile .zone-d{
+  background:transparent!important;
+}
+
+/* Keep the four-part structure visible only through the cross lines */
+.plus-lines::before{
+  width:88%!important;
+  height:1.4px!important;
+  background:rgba(55,82,95,.24)!important;
+}
+.plus-lines::after{
+  width:1.4px!important;
+  height:88%!important;
+  background:rgba(55,82,95,.24)!important;
+}
+
+/* Text remains dark and readable */
+.concept{
+  color:#274e61!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.58)!important;
+}
+
+/* During drag, clone keeps the same theme/color */
+.drag-ghost{
+  filter:none!important;
+}
+
+
+/* Student join flow */
+.join-card{
+  width:min(420px,100%);
+  background:var(--panel);
+  border-radius:26px;
+  padding:25px 22px;
+  box-shadow:0 25px 80px rgba(0,0,0,.22);
+  text-align:center;
+}
+.join-card h2{margin:0 0 8px;font-size:28px}
+.join-card p{margin:0 0 16px;color:var(--muted)}
+.join-card input{
+  width:100%;min-height:52px;border:1px solid var(--line);
+  border-radius:15px;background:#fff;padding:10px 13px;
+  font:inherit;font-size:18px;color:var(--ink);text-align:center;outline:none;
+}
+.join-card input:focus{border-color:#6eabb2;box-shadow:0 0 0 3px rgba(78,141,160,.12)}
+.join-card button{
+  width:100%;margin-top:11px;min-height:50px;border:0;border-radius:15px;
+  background:linear-gradient(145deg,#315e72,#24495a);color:#fff;font-weight:950;
+}
+.join-error{min-height:18px;margin-top:7px;color:#a45e5e;font-size:13px}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand">
+      <div class="logo" id="sizeBadge">4×4</div>
+      <div>
+        <h1 id="gameTitle">ארבע על ארבע</h1>
+        <small id="gameSubtitle">מסובבים. מזיזים. מחברים רביעיות.</small>
+      </div>
+    </div>
+    <div class="timer" id="timer">00:00</div>
+  </div>
+
+  <div class="info">
+    <div>
+      <div class="progress-track"><div class="progress" id="progress"></div></div>
+      <div class="progress-text" id="progressText">0 מתוך 0 רביעיות נכונות</div>
+    </div>
+    <div class="player">
+      שחקן: <b id="playerName">נועם</b><br>
+      <span id="playerStatus">משחק</span> · <span id="attempts">0 בדיקות</span>
+    </div>
+  </div>
+
+  <div class="podium" id="podium">
+    <div class="podium-title">המנצחים הראשונים</div>
+    <div class="podium-slots">
+      <div class="podium-slot" id="winner1">🥇 מקום ראשון — פנוי</div>
+      <div class="podium-slot" id="winner2">🥈 מקום שני — פנוי</div>
+      <div class="podium-slot" id="winner3">🥉 מקום שלישי — פנוי</div>
+    </div>
+  </div>
+
+  <div class="board-wrap">
+    <div class="board" id="board"></div>
+  </div>
+
+  <div class="actions">
+    <button class="reset" id="shuffleBtn">ערבב מחדש</button>
+    <button class="check" id="checkBtn">בדיקת 4×4</button>
+    <button class="answer" id="answerBtn">הצג תשובה</button>
+  </div>
+
+  <div class="test-panel">
+    <button class="board-move-toggle" id="boardMoveToggle">הזזת לוח</button>
+    <div class="board-move-content" id="boardMoveContent">
+    <div class="test-note">העבר שורה או עמודה שלמה במהלך אחד — בלי לסובב את האריחים.</div>
+    <div class="test-grid">
+      <div class="test-box">
+        <div class="test-box-title">שורות — למעלה / למטה</div>
+        <div class="test-buttons">
+          <button class="test-btn" id="topToBottomBtn">שורה עליונה ↓ לתחתית</button>
+          <button class="test-btn" id="bottomToTopBtn">שורה תחתונה ↑ לראש</button>
+        </div>
+      </div>
+      <div class="test-box">
+        <div class="test-box-title">עמודות — ימין / שמאל</div>
+        <div class="test-buttons">
+          <button class="test-btn" id="rightToLeftBtn">עמודה ימנית ← לשמאל</button>
+          <button class="test-btn" id="leftToRightBtn">עמודה שמאלית → לימין</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <div class="tip">+ לחיצה אחת: סיבוב • גרירה: העברת האריח יחד עם הצבע שלו</div>
+  <div class="move-tip"><span class="move-icon">↔</span><span>בכל נקודת מפגש צריכים להיפגש ארבעה מושגים קשורים</span></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="modal" id="winModal">
+  <div class="card">
+    <div class="medal">🏆</div>
+    <h2 id="winTitle">4×4 הושלם!</h2>
+    <p id="winText">כל הרביעיות במקום.</p>
+    <button onclick="document.getElementById('winModal').classList.remove('show')">סגור</button>
+  </div>
+</div>
+
+<div class="modal" id="forfeitModal">
+  <div class="card">
+    <div class="medal">👁️</div>
+    <h2>להציג את התשובה?</h2>
+    <p>הצגת התשובה תוציא אותך מהתחרות ולא תוכל להיכנס למקומות 1–3.</p>
+    <div class="confirm-actions">
+      <button class="cancel-forfeit" id="cancelForfeit">חזור למשחק</button>
+      <button class="confirm-forfeit" id="confirmForfeit">כן, הצג תשובה</button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal show" id="joinModal">
+  <div class="join-card">
+    <h2>מצטרפים למשחק</h2>
+    <p id="joinActivity">ארבע על ארבע</p>
+    <input id="playerNameInput" maxlength="28" autocomplete="name" placeholder="הקלד שם">
+    <div class="join-error" id="joinError"></div>
+    <button id="joinGameBtn">הצטרף למשחק</button>
+  </div>
+</div>
+
+<div class="modal" id="instructionsModal">
+  <div class="instructions-card">
+    <h2>איך משחקים?</h2>
+    <div class="instructions-list">
+      <div class="instruction-row">
+        <div class="instruction-icon">+</div>
+        <div><b>לחיצה אחת על הפלוס</b> מסובבת את האריח ב־90°.</div>
+      </div>
+      <div class="instruction-row">
+        <div class="instruction-icon">↔</div>
+        <div><b>גרירה קצרה</b> לכיוון אריח אחר מחליפה ביניהם מקום — הצבע נשאר עם האריח.</div>
+      </div>
+      <div class="instruction-row">
+        <div class="instruction-icon">4</div>
+        <div>בכל נקודת מפגש צריכים להיפגש <b>ארבעה מושגים קשורים</b>.</div>
+      </div>
+    </div>
+    <button class="instructions-start" id="startGameBtn">הבנתי, מתחילים</button>
+  </div>
+</div>
+
+<script>
+function decodeGameConfig(){
+  try{
+    const hash=location.hash||"";
+    const m=hash.match(/(?:^#|&)game=([^&]+)/);
+    if(!m)return null;
+    const raw=decodeURIComponent(m[1]);
+    const bin=atob(raw);
+    const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));
+    return JSON.parse(new TextDecoder().decode(bytes));
+  }catch(e){return null}
+}
+const GAME=decodeGameConfig()||{};
+const N=[2,3,4].includes(Number(GAME.n))?Number(GAME.n):3;
+const boardEl=document.getElementById("board");
+const progressEl=document.getElementById("progress");
+const progressText=document.getElementById("progressText");
+const toast=document.getElementById("toast");
+const attemptsEl=document.getElementById("attempts");
+
+const DEFAULT_GROUPS=[
+  ["DNA","גן","כרומוזום","גרעין"],
+  ["גלוקוז","חמצן","מיטוכונדריה","ATP"],
+  ["ריבוזום","RNA","חומצת אמינו","חלבון"],
+  ["קרום התא","מפל ריכוזים","דיפוזיה","אוסמוזה"],
+  ["מיטוזה","כרומוזומים","חלוקת תא","תאי בת"],
+  ["כלורופלסט","אור","פחמן דו־חמצני","גלוקוז"],
+  ["הומאוסטזיס","קולטן","משוב שלילי","יציבות"],
+  ["תא","רקמה","איבר","מערכת"],
+  ["אנזים","אתר פעיל","סובסטרט","תוצר"],
+  ["חמצן","פחמן דו־חמצני","נאדיות","נשימה"],
+  ["מים","מומסים","קרום","אוסמוזה"],
+  ["קולטן","תגובה","גירוי","מערכת עצבים"],
+  ["נוגדן","אנטיגן","תגובה חיסונית","לימפוציט"],
+  ["גן","אלל","תכונה","תורשה"],
+  ["ATP","אנזים","תגובה","אנרגיה"],
+  ["RNA","ריבוזום","חומצת אמינו","חלבון"]
+];
+const SOURCE_GROUPS=(Array.isArray(GAME.groups)&&GAME.groups.length?GAME.groups:DEFAULT_GROUPS);
+const GROUPS=Array.from({length:N*N},(_,i)=>({
+  id:i,
+  items:(SOURCE_GROUPS[i]||DEFAULT_GROUPS[i%DEFAULT_GROUPS.length]).slice(0,4)
+}));
+
+const filler=[
+  "תא","רקמה","איבר","מערכת",
+  "אנזים","ממברנה","ציטופלזמה","מים",
