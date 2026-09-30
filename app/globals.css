@@ -4253,3 +4253,38 @@ main:has(#theme-botanical:target) .library-favorite-filter.active{
   background:#F7E7B8;
   border-color:#D6A24F;
 }
+
+
+/* Purple theme card crop refinement */
+main:has(#theme-mauve:target) .app-card .theme-card-mauve,
+main.catalog-page:has(#theme-mauve:target) .catalog-card .theme-card-mauve{
+  object-fit:cover;
+  object-position:center 32%;
+  transform:none !important;
+  height:100% !important;
+}
+
+main:has(#theme-mauve:target) .app-card.bingo .theme-card-mauve,
+main.catalog-page:has(#theme-mauve:target) .catalog-card.bingo .theme-card-mauve{
+  object-position:center 24%;
+}
+
+main:has(#theme-mauve:target) .app-card.domiknow .theme-card-mauve,
+main.catalog-page:has(#theme-mauve:target) .catalog-card.domiknow .theme-card-mauve{
+  object-position:center 30%;
+}
+
+main:has(#theme-mauve:target) .app-card.cloud .theme-card-mauve,
+main.catalog-page:has(#theme-mauve:target) .catalog-card.cloud .theme-card-mauve{
+  object-position:center 31%;
+}
+
+main:has(#theme-mauve:target) .app-card.linkit .theme-card-mauve,
+main.catalog-page:has(#theme-mauve:target) .catalog-card.linkit .theme-card-mauve{
+  object-position:center 30%;
+}
+
+main:has(#theme-mauve:target) .app-card.mapi .theme-card-mauve,
+main.catalog-page:has(#theme-mauve:target) .catalog-card.mapi .theme-card-mauve{
+  object-position:center 30%;
+}
