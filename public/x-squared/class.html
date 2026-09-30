@@ -63,6 +63,33 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
 .xedge.top{top:3%;left:27%;width:46%;height:25%}.xedge.bottom{bottom:3%;left:27%;width:46%;height:25%}
 .xedge.left{left:3%;top:37%;width:28%;height:26%}.xedge.right{right:3%;top:37%;width:28%;height:26%}
 .xmark{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;color:#263f4b;font-weight:950;font-size:18px}
+
+.real-student-preview-card{overflow:hidden}
+.real-student-preview{display:flex;justify-content:center;align-items:flex-start;padding:4px 0 8px}
+.student-shell-frame{
+  width:min(100%,460px);
+  aspect-ratio:9/16;
+  height:auto;
+  min-height:760px;
+  border:0;
+  border-radius:22px;
+  background:#f7f3ea;
+  box-shadow:0 14px 34px rgba(40,48,56,.12);
+}
+.real-projector-card{display:flex;justify-content:center;align-items:flex-start;background:#efe9dd!important}
+.projector-student-frame{
+  width:min(100%,520px);
+  aspect-ratio:9/16;
+  min-height:880px;
+  border:0;
+  border-radius:22px;
+  background:#f7f3ea;
+  box-shadow:0 14px 36px rgba(40,48,56,.18);
+}
+@media(max-width:720px){
+  .student-shell-frame{width:100%;min-height:690px}
+  .projector-student-frame{width:100%;min-height:720px}
+}
 </style>
 </head>
 <body>
@@ -98,9 +125,11 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
   <button class="start-class-btn" id="startClassBtn">פתח את המשחק לתלמידים</button>
 </section>
 
-<section class="card board-wrap">
+<section class="card board-wrap real-student-preview-card">
   <div class="board-title"><h2 id="topicTitle"></h2><div id="classTitle"></div></div>
-  <div class="board" id="board"></div>
+  <div class="real-student-preview">
+    <iframe id="studentPreviewFrame" class="student-shell-frame" title="תצוגת תלמיד"></iframe>
+  </div>
 </section>
 
 <section class="card podium-card">
@@ -120,13 +149,8 @@ button{font:inherit;cursor:pointer}.app{max-width:980px;margin:auto;padding:14px
       <button class="projector-close" id="closeProjector">×</button>
     </div>
     <div class="projector-main">
-      <div class="projector-board-card">
-        <div class="board-title"><h2 id="projectorTopic"></h2><div id="projectorClass"></div></div>
-        <div class="projector-board" id="projectorBoard"></div>
-        <div class="projector-winners">
-          <div class="podium-title">🏆 שלושת המסיימים המהירים</div>
-          <div class="podium-grid" id="projectorPodium"></div>
-        </div>
+      <div class="projector-board-card real-projector-card">
+        <iframe id="projectorStudentFrame" class="projector-student-frame" title="מצב מקרן — X בריבוע"></iframe>
       </div>
       <div class="projector-side">
         <div class="projector-code"><div class="sub">קוד כניסה</div><div class="code" id="projectorCode">------</div></div>
@@ -166,6 +190,11 @@ function studentUrl(){
   const p=u.pathname.split("/");p[p.length-1]="student.html";u.pathname=p.join("/");
   u.search="?session="+encodeURIComponent(SESSION_ID);
   u.hash="";
+  return u.toString();
+}
+function projectorStudentUrl(){
+  const u=new URL(studentUrl());
+  u.searchParams.set("projector","1");
   return u.toString();
 }
 async function copyText(t){
@@ -220,11 +249,11 @@ function renderPodiums(players){
   if(pp)pp.innerHTML=html;
 }
 function renderProjectorBoard(){
-  const src=document.getElementById("board");
-  const dst=document.getElementById("projectorBoard");
-  if(!src||!dst)return;
-  dst.style.gridTemplateColumns=src.style.gridTemplateColumns;
-  dst.innerHTML=src.innerHTML;
+  const preview=document.getElementById("studentPreviewFrame");
+  const projector=document.getElementById("projectorStudentFrame");
+  const src=projectorStudentUrl();
+  if(preview&&preview.src!==src)preview.src=src;
+  if(projector&&projector.src!==src)projector.src=src;
 }
 function drawProjectorQr(){
   const q=document.getElementById("projectorQr");
@@ -320,6 +349,8 @@ document.getElementById("startClassBtn").onclick=async()=>{
 };
 document.getElementById("projectorBtn").onclick=()=>{
   renderProjectorBoard();
+  const frame=document.getElementById("projectorStudentFrame");
+  if(frame)frame.src=projectorStudentUrl()+"&t="+Date.now();
   drawProjectorQr();
   document.getElementById("projectorModal").classList.add("show");
 };
