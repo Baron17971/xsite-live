@@ -1168,7 +1168,7 @@ body.projector-mode{overflow:auto}
 .tile .x-core{
   pointer-events:auto!important;
   cursor:pointer!important;
-  touch-action:manipulation!important;
+  touch-action:none!important;
   width:34px!important;
   height:34px!important;
   min-width:34px!important;
@@ -1573,18 +1573,10 @@ function render(){
 
     if(selected===idx) d.classList.add("selected");
 
-    d.querySelector(".x-core").addEventListener("click",ev=>{
-      ev.stopPropagation();
-      tile.rot=(tile.rot+90)%360;
-      selected=null;
-      render();
-      update();
-    });
-
     d.addEventListener("pointerdown",ev=>{
-      if(ev.target.closest(".x-core")) return;
       dragIndex=idx;
       pointerDragging=false;
+      d.dataset.startedOnCenter=ev.target.closest(".x-core")?"1":"0";
       d.setPointerCapture?.(ev.pointerId);
       d.dataset.startX=ev.clientX;
       d.dataset.startY=ev.clientY;
@@ -1615,8 +1607,15 @@ function render(){
       const targetIndex=target ? Number(target.dataset.index) : null;
       clearTargets();
 
+      const startedOnCenter=d.dataset.startedOnCenter==="1";
+
       if(pointerDragging && targetIndex!==null && targetIndex!==idx){
         swapTiles(idx,targetIndex);
+      }else if(!pointerDragging && startedOnCenter){
+        tile.rot=(tile.rot+90)%360;
+        selected=null;
+        render();
+        update();
       }else if(!pointerDragging){
         if(selected===null){
           selected=idx;
@@ -1629,6 +1628,8 @@ function render(){
         }
       }
 
+      delete d.dataset.startedOnCenter;
+      delete d.dataset.startedOnCenter;
       dragIndex=null;
       pointerDragging=false;
     });
