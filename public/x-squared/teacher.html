@@ -1090,6 +1090,52 @@ document.getElementById("openProjectorInline").addEventListener("click",()=>{
 });
 
 
+
+async function loadXsiteProjectFromUrl(){
+  const projectId=new URLSearchParams(location.search).get("edit");
+  if(!projectId)return;
+
+  const session=getXsiteAuthSession();
+  if(!session){
+    alert("כדי לפתוח פעילות מהספרייה יש להתחבר ל־Xsite.");
+    return;
+  }
+
+  try{
+    const res=await fetch("https://zydhfhfhspflvhlpmokj.supabase.co/rest/v1/teacher_projects?id=eq."+encodeURIComponent(projectId)+"&app_id=eq.x-squared&select=id,payload,title",{
+      headers:{
+        apikey:"sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x",
+        Authorization:"Bearer "+session.access_token
+      }
+    });
+    const rows=await res.json();
+    const project=Array.isArray(rows)?rows[0]:null;
+    if(!res.ok||!project?.payload){
+      alert("לא הצלחנו לפתוח את הפעילות מהספרייה.");
+      return;
+    }
+
+    const p=project.payload;
+    els.activityName.value=p.activityName||project.title||"";
+    els.subject.value=p.subject||"";
+    els.className.value=p.className||"";
+    els.topic.value=p.topic||"";
+    state.n=Number(p.n)||3;
+    state.groups=Array.isArray(p.pairs)?p.pairs.map(g=>Array.isArray(g)?g.slice():g):[];
+
+    document.querySelectorAll(".size-option").forEach(btn=>{
+      btn.classList.toggle("active",Number(btn.dataset.n)===state.n);
+    });
+
+    buildPrompt();
+    renderGroups();
+    renderProjectorBoard();
+    document.getElementById("flowNote").textContent="הפעילות נטענה מהספרייה האישית של Xsite. אפשר לערוך וליצור מחדש.";
+  }catch(e){
+    alert("לא הצלחנו לפתוח את הפעילות מהספרייה.");
+  }
+}
+
 window.addEventListener("qr-ready",()=>drawQr());
 
 buildPrompt();
@@ -1097,6 +1143,7 @@ renderGroups();
 setSize(3);
 drawQr();
 renderProjectorBoard();
+loadXsiteProjectFromUrl();
 </script>
 </body>
 </html>
