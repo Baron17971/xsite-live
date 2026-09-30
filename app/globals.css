@@ -4288,3 +4288,22 @@ main:has(#theme-mauve:target) .app-card.mapi .theme-card-mauve,
 main.catalog-page:has(#theme-mauve:target) .catalog-card.mapi .theme-card-mauve{
   object-position:center 30%;
 }
+
+
+/* Mauve is the default theme even when there is no #theme-mauve hash.
+   Keep the purple cards aligned correctly in that default state too. */
+.app-card.bingo .theme-card-mauve,
+.catalog-card.bingo .theme-card-mauve{
+  object-fit:cover;
+  object-position:center 45% !important;
+  transform:none !important;
+  height:100% !important;
+}
+
+.app-card.domiknow .theme-card-mauve,
+.catalog-card.domiknow .theme-card-mauve{
+  object-fit:cover;
+  object-position:center 24% !important;
+  transform:none !important;
+  height:100% !important;
+}
