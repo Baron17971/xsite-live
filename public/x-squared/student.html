@@ -1973,6 +1973,41 @@ document.getElementById("joinGameBtn").addEventListener("click",async()=>{
     document.getElementById("instructionsModal").classList.add("show");
   }
 });
+
+async function resumeSavedPlayer(){
+  if(!SESSION_ID||PROJECTOR_MODE)return false;
+  let saved=null;
+  try{saved=JSON.parse(localStorage.getItem("xSquaredPlayer:"+SESSION_ID)||"null")}catch(e){}
+  if(!saved?.id||!saved?.token)return false;
+  try{
+    const res=await sbRequest("/rest/v1/rpc/x_squared_resume_player",{
+      method:"POST",
+      body:JSON.stringify({
+        p_player_id:saved.id,
+        p_player_token:saved.token,
+        p_session_id:SESSION_ID
+      })
+    });
+    const rows=await res.json();
+    const player=Array.isArray(rows)?rows[0]:null;
+    if(!res.ok||!player){
+      localStorage.removeItem("xSquaredPlayer:"+SESSION_ID);
+      return false;
+    }
+    PLAYER_ID=player.id;
+    PLAYER_TOKEN=saved.token;
+    PLAYER_NAME=player.display_name||saved.displayName||"תלמיד";
+    document.getElementById("playerName").textContent=PLAYER_NAME;
+    document.getElementById("waitingPlayerName").textContent=PLAYER_NAME;
+    document.getElementById("joinModal").classList.remove("show");
+    document.getElementById("waitingModal").classList.add("show");
+    waitForTeacherStart();
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+
 document.getElementById("playerNameInput").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("joinGameBtn").click();});
 document.getElementById("startGameBtn").addEventListener("click",()=>{
   document.getElementById("instructionsModal").classList.remove("show");gameStarted=true;startTime=Date.now();document.getElementById("timer").textContent="00:00";
@@ -2005,6 +2040,8 @@ if(PROJECTOR_MODE){
 
 renderPodium();
 shuffle();
+
+if(!PROJECTOR_MODE)resumeSavedPlayer();
 
 if(PROJECTOR_MODE){
   refreshProjectorPodium();
