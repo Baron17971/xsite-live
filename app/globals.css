@@ -3044,8 +3044,8 @@ main:has(#theme-botanical:target){
   --wine:#6F7F64;
   --rose:#E56F82;
   --blush:#F3D8D8;
-  --cream:#F8F3E8;
-  --cream-2:#F1E9DB;
+  --cream:#FFF9F0;
+  --cream-2:#FBF3E7;
   --ink:#463E38;
   --muted:#766B61;
   --line:#DDD4C5;
@@ -3059,8 +3059,8 @@ main:has(#theme-botanical:target){
   --theme-secondary:#E56F82;
   --theme-secondary-strong:#B95567;
   --theme-secondary-soft:#F8E3E4;
-  --theme-surface:#F8F3E8;
-  --theme-surface-alt:#F1E9DB;
+  --theme-surface:#FFF9F0;
+  --theme-surface-alt:#FBF3E7;
   --theme-border:#D8CFBE;
   --theme-text:#463E38;
   --theme-text-soft:#766B61;
@@ -3068,8 +3068,8 @@ main:has(#theme-botanical:target){
 }
 
 main:has(#theme-botanical:target) .topbar{
-  border-bottom-color:rgba(135,146,118,.42);
-  background:linear-gradient(90deg,rgba(248,243,232,.98),rgba(238,241,226,.96));
+  border-bottom-color:rgba(183,100,119,.20);
+  background:linear-gradient(90deg,#FFF9F0 0%,#FFFDF8 56%,#FBF3E7 100%);
 }
 
 main:has(#theme-botanical:target) .primary{
@@ -3082,12 +3082,12 @@ main:has(#theme-botanical:target) .primary:hover{
 
 main:has(#theme-botanical:target) .hero,
 main:has(#theme-botanical:target) .hero-copy{
-  background:linear-gradient(135deg,#FBF7EF 0%,#F8F3E8 60%,#EEF0E4 100%);
+  background:linear-gradient(135deg,#FFFDF8 0%,#FFF9F0 62%,#FBF3E7 100%);
 }
 
 main:has(#theme-botanical:target) .hero-art{
   background-image:
-    linear-gradient(90deg,rgba(248,243,232,0) 74%,rgba(248,243,232,.90) 100%),
+    linear-gradient(90deg,rgba(255,249,240,0) 74%,rgba(255,249,240,.90) 100%),
     url('/hero-botanical.png');
   background-position:24% center;
 }
@@ -3096,37 +3096,36 @@ main:has(#theme-botanical:target) .hero-art:before{
   background:linear-gradient(
     90deg,
     rgba(255,255,255,0) 0%,
-    rgba(248,243,232,.05) 62%,
-    rgba(248,243,232,.22) 80%,
-    rgba(248,243,232,.62) 94%,
-    rgba(248,243,232,.90) 100%
+    rgba(255,249,240,.05) 62%,
+    rgba(255,249,240,.22) 80%,
+    rgba(255,249,240,.62) 94%,
+    rgba(255,249,240,.90) 100%
   );
 }
 
 main:has(#theme-botanical:target) .manifesto{
-  background:linear-gradient(120deg,#FFFDF8 0%,#F4EDDF 48%,#E9EDDF 100%);
-  border-color:#D7CEBD;
+  background:linear-gradient(120deg,#FFFDF8 0%,#FFF7EE 58%,#F9EEE8 100%);
+  border-color:#E3D7C9;
 }
 
 main:has(#theme-botanical:target) .feature-section,
 main:has(#theme-botanical:target) .closing{
-  background:linear-gradient(180deg,rgba(232,235,220,.82),rgba(248,243,232,0) 44%);
+  background:linear-gradient(180deg,rgba(248,227,228,.34),rgba(255,249,240,0) 46%);
 }
 
 main:has(#theme-botanical:target) .apps-section{
-  background:linear-gradient(180deg,rgba(244,220,216,.64) 0%,rgba(248,243,232,0) 40%);
-  border-top-color:rgba(135,146,118,.48);
+  background:linear-gradient(180deg,rgba(248,227,228,.42) 0%,rgba(255,249,240,0) 42%);
+  border-top-color:rgba(183,100,119,.18);
 }
 
 main:has(#theme-botanical:target) .teacher-panel{
   position:relative;
   overflow:hidden;
   background:
-    radial-gradient(circle at 14% 16%, rgba(229,111,130,.16), transparent 22%),
-    radial-gradient(circle at 86% 18%, rgba(214,162,79,.14), transparent 20%),
-    radial-gradient(circle at 18% 82%, rgba(143,162,138,.16), transparent 24%),
-    radial-gradient(circle at 82% 86%, rgba(229,111,130,.12), transparent 22%),
-    linear-gradient(135deg,#FBF7EF 0%,#F7F3EA 58%,#F2EEE4 100%);
+    radial-gradient(circle at 14% 16%, rgba(229,111,130,.10), transparent 22%),
+    radial-gradient(circle at 86% 18%, rgba(214,162,79,.09), transparent 20%),
+    radial-gradient(circle at 82% 86%, rgba(229,111,130,.07), transparent 22%),
+    linear-gradient(135deg,#FFFDF8 0%,#FFF9F0 60%,#FBF3E7 100%);
   color:#5A5048;
 }
 
@@ -4171,9 +4170,9 @@ main:has(#theme-botanical:target) .soft{
 /* Botanical refinement — cream dominant, sage as accent */
 main.account-page:has(#theme-botanical:target){
   background:
-    radial-gradient(circle at 14% 10%,rgba(229,111,130,.055),transparent 22%),
-    radial-gradient(circle at 88% 18%,rgba(135,146,118,.05),transparent 24%),
-    #F8F3E8;
+    radial-gradient(circle at 14% 10%,rgba(229,111,130,.045),transparent 22%),
+    radial-gradient(circle at 88% 18%,rgba(214,162,79,.035),transparent 24%),
+    #FFF9F0;
 }
 main:has(#theme-botanical:target) .account-hero{
   border-color:#DDD4C5;
