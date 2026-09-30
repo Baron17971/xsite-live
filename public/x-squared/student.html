@@ -507,14 +507,6 @@ body{display:flex;justify-content:center;align-items:flex-start}
   --c-left:#fff7e5;
 }
 
-/* A few extra alternating families for more interest across the 3x3 board */
-.tile:nth-child(2){--c-top:#f9eeee;--c-right:#f6dfe7;--c-bottom:#dfe7fa;--c-left:#f6e7ef}
-.tile:nth-child(4){--c-top:#f1f8e9;--c-right:#e8f5e8;--c-bottom:#dcefe2;--c-left:#f5f8ec}
-.tile:nth-child(5){--c-top:#edf5fb;--c-right:#e2eff8;--c-bottom:#d8eaf6;--c-left:#e9f2f9}
-.tile:nth-child(6){--c-top:#eef8ea;--c-right:#e4f2e6;--c-bottom:#d8ecdf;--c-left:#f4f8ec}
-.tile:nth-child(7){--c-top:#fcebed;--c-right:#f8dce7;--c-bottom:#e2e4f8;--c-left:#f5e6ef}
-.tile:nth-child(8){--c-top:#efeffb;--c-right:#e8e7fa;--c-bottom:#dfe2f7;--c-left:#f3f1fb}
-.tile:nth-child(9){--c-top:#fff3d3;--c-right:#f9e7b6;--c-bottom:#f5e3ad;--c-left:#fff8e7}
 
 /* Use flatter, cleaner facet fills like the reference, not muddy gradients. */
 .tile .tri.top{
@@ -1306,6 +1298,18 @@ function nextPair(){
 function border(){
   return {pair:null,text:borderWords[bi++ % borderWords.length],border:true};
 }
+const WORD_BG_PALETTES=[
+  {top:"#e8f4fb",right:"#f8ebe8",bottom:"#dff1ea",left:"#e4eff8"},
+  {top:"#f9eeee",right:"#f6dfe7",bottom:"#dfe7fa",left:"#f6e7ef"},
+  {top:"#fff4d8",right:"#faecc4",bottom:"#f7e7bb",left:"#fff7e5"},
+  {top:"#f1f8e9",right:"#e8f5e8",bottom:"#dcefe2",left:"#f5f8ec"},
+  {top:"#edf5fb",right:"#e2eff8",bottom:"#d8eaf6",left:"#e9f2f9"},
+  {top:"#eef8ea",right:"#e4f2e6",bottom:"#d8ecdf",left:"#f4f8ec"},
+  {top:"#fcebed",right:"#f8dce7",bottom:"#e2e4f8",left:"#f5e6ef"},
+  {top:"#efeffb",right:"#e8e7fa",bottom:"#dfe2f7",left:"#f3f1fb"},
+  {top:"#fff3d3",right:"#f9e7b6",bottom:"#f5e3ad",left:"#fff8e7"}
+];
+
 function makeSolved(){
   pi=0;bi=0;
   const t=Array.from({length:N*N},(_,i)=>({
@@ -1338,6 +1342,15 @@ function makeSolved(){
       t[j].edges.top={pair:p.id,text:p.b};
     }
   }
+
+  // Attach the visual triangle color to the word/edge itself.
+  // This makes the color move with the word when the tile is rotated, dragged or swapped.
+  t.forEach((tile,idx)=>{
+    const p=WORD_BG_PALETTES[idx % WORD_BG_PALETTES.length];
+    ["top","right","bottom","left"].forEach(side=>{
+      if(tile.edges[side]) tile.edges[side].bg=p[side];
+    });
+  });
 
   return t;
 }
@@ -1524,10 +1537,10 @@ function render(){
     d.dataset.index=idx;
     d.innerHTML=`
       <div class="x-lines"></div>
-      <div class="concept top"></div>
-      <div class="concept right"></div>
-      <div class="concept bottom"></div>
-      <div class="concept left"></div>
+      <div class="concept top" style="background:${e.top?.bg||"#e8f4fb"}"></div>
+      <div class="concept right" style="background:${e.right?.bg||"#f8ebe8"}"></div>
+      <div class="concept bottom" style="background:${e.bottom?.bg||"#dff1ea"}"></div>
+      <div class="concept left" style="background:${e.left?.bg||"#e4eff8"}"></div>
       <span class="concept-text top">${e.top.text}</span>
       <span class="concept-text right">${e.right.text}</span>
       <span class="concept-text bottom">${e.bottom.text}</span>
