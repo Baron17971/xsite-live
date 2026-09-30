@@ -1163,6 +1163,28 @@ body.projector-mode .modal{display:none!important}
 body.projector-mode .stage{pointer-events:none}
 body.projector-mode .hotspot{pointer-events:none!important}
 body.projector-mode{overflow:auto}
+
+/* Final interaction override: the visible center X is the rotation control. */
+.tile .x-core{
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+  width:34px!important;
+  height:34px!important;
+  min-width:34px!important;
+  min-height:34px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  background:transparent!important;
+  border:0!important;
+  box-shadow:none!important;
+  -webkit-tap-highlight-color:transparent;
+}
+.tile .x-core span{
+  pointer-events:none!important;
+}
+
 </style>
 </head>
 <body>
