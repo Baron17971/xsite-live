@@ -102,6 +102,7 @@ const benefits = [
 export default function Home() {
   return (
     <main>
+      <AuthBridge />
       <div id="theme-cream" className="theme-anchor"></div>
       <div id="theme-sage" className="theme-anchor"></div>
       <div id="theme-mauve" className="theme-anchor"></div>
