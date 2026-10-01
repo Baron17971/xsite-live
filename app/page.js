@@ -1,4 +1,5 @@
 import SiteHeader from './components/SiteHeader';
+import AuthBridge from './components/AuthBridge';
 
 const apps = [
   {
