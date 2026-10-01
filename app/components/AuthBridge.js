@@ -5,7 +5,7 @@ import { createClient } from "@supabase/supabase-js";
 
 const XSITE_SUPABASE_URL = "https://zydhfhfhspflvhlpmokj.supabase.co";
 const XSITE_SUPABASE_KEY = "sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x";
-const XSITE_HOME = "https://xsite-live-anats-projects-8c3e7bfa.vercel.app/";
+const XSITE_HOME = "https://xsite-live.vercel.app/";
 const STORAGE_KEY = "xsiteAuthReturnTargetV1";
 const LOCAL_STORAGE_KEY = "xsiteAuthReturnTargetPersistentV1";
 const ALLOWED_TARGETS = [
