@@ -57,7 +57,7 @@ const apps = [
     name: 'ארבע על ארבע',
     eyebrow: 'פאזל רביעיות',
     description: 'מסובבים ומחליפים ריבועים עד שבכל נקודת מפגש נפגשים ארבעה מושגים ששייכים לאותה רביעייה.',
-    href: '/four-on-four',
+    href: 'https://four-on-four-live.vercel.app',
     kind: 'fouronfour',
     details: [
       ['מה עושים?', 'המורה יוצר מאגר רביעיות ובוחר לוח 2×2, 3×3 או 4×4.'],
@@ -70,7 +70,7 @@ const apps = [
     name: 'X בריבוע',
     eyebrow: 'פאזל התאמות',
     description: 'מסובבים, מזיזים ומחברים ריבועים עד שכל המושגים שנפגשים בצלע משותפת מתאימים זה לזה.',
-    href: '/x-squared',
+    href: 'https://x-squared-live.vercel.app',
     kind: 'xsquared',
     details: [
       ['מה עושים?', 'המורה יוצר מאגר של זוגות מושגים והתאמות ובוחר לוח 3×3, 4×4 או 5×5.'],
