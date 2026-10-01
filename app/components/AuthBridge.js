@@ -7,6 +7,7 @@ const XSITE_SUPABASE_URL = "https://zydhfhfhspflvhlpmokj.supabase.co";
 const XSITE_SUPABASE_KEY = "sb_publishable_DJN48TNChvPce3MZ7bDaiw_5Q8Eam6x";
 const XSITE_HOME = "https://xsite-live-anats-projects-8c3e7bfa.vercel.app/";
 const STORAGE_KEY = "xsiteAuthReturnTargetV1";
+const LOCAL_STORAGE_KEY = "xsiteAuthReturnTargetPersistentV1";
 const ALLOWED_TARGETS = [
   "https://classroom-bingo-live.vercel.app",
   "https://linkup-classroom-live.vercel.app",
@@ -35,9 +36,14 @@ export default function AuthBridge() {
 
       if (requestedTarget) {
         sessionStorage.setItem(STORAGE_KEY, requestedTarget);
+        localStorage.setItem(LOCAL_STORAGE_KEY, requestedTarget);
       }
 
-      const pendingTarget = allowedTarget(sessionStorage.getItem(STORAGE_KEY) || "");
+      const pendingTarget = allowedTarget(
+        sessionStorage.getItem(STORAGE_KEY) ||
+        localStorage.getItem(LOCAL_STORAGE_KEY) ||
+        ""
+      );
       if (!pendingTarget) return;
 
       const { data: sessionData } = await supabase.auth.getSession();
@@ -45,6 +51,7 @@ export default function AuthBridge() {
 
       if (session?.access_token && session?.refresh_token) {
         sessionStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
         const hash = new URLSearchParams({
           oauth_bridge: "1",
           access_token: session.access_token,
@@ -66,6 +73,7 @@ export default function AuthBridge() {
         });
         if (error && active) {
           sessionStorage.removeItem(STORAGE_KEY);
+          localStorage.removeItem(LOCAL_STORAGE_KEY);
           console.error("Xsite OAuth bridge failed", error);
         }
       }
