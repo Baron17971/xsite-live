@@ -11,7 +11,9 @@ const LOCAL_STORAGE_KEY = "xsiteAuthReturnTargetPersistentV1";
 const ALLOWED_TARGETS = [
   "https://classroom-bingo-live.vercel.app",
   "https://linkup-classroom-live.vercel.app",
-  "https://domiknow.vercel.app"
+  "https://domiknow.vercel.app",
+  "https://x-squared-live.vercel.app",
+  "https://four-on-four-live.vercel.app"
 ];
 
 function allowedTarget(raw) {
