@@ -12,6 +12,8 @@ const ALLOWED_TARGETS = [
   "https://classroom-bingo-live.vercel.app",
   "https://linkup-classroom-live.vercel.app",
   "https://domiknow.vercel.app",
+  "https://mapi-interactive.vercel.app",
+  "https://hebrew-wordcloud-live.vercel.app",
   "https://x-squared-live.vercel.app",
   "https://four-on-four-live.vercel.app"
 ];
